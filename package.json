@@ -1,7 +1,7 @@
 {
   "name": "coffee-chats-backend",
   "version": "1.0.0",
-  "description": "backend for coffee chats app",
+  "description": "Backend for Coffee Chats app",
   "main": "build/app.js",
   "scripts": {
     "start": "tsc && node build/app.js"
