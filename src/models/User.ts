@@ -1,13 +1,14 @@
 import {
   Column,
   Entity,
-  ManyToMany,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity('users')
 class User {
+
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   /** Google ID of user */
   @Column('character varying')

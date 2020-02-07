@@ -1,13 +1,20 @@
-import express from 'express';
+import 'reflect-metadata';
+import API from './API';
+import DBConnection from './db/DBConnection';
 
-const app = express();
-const port = 3000;
-app.get('/', (req, res) => {
-  res.send('This is Pear');
-});
-app.listen(port, err => {
-  if (err) {
-    return console.error(err);
-  }
-  return console.log(`server is listening on ${port}`);
-});
+const app = new API();
+const server = app.getServer(false);
+const PORT: number = +process.env.PORT || 5000;
+const SERVER_ADDRESS: string = '0.0.0.0';
+
+
+DBConnection().then(async (connection: any) => {
+  app.express.listen(PORT, () => {
+    console.log(
+      `App is running on ${SERVER_ADDRESS}:${PORT}...`,
+    );
+    console.log('Press CTRL-C to stop\n');
+  });
+}).catch((error: any) => console.log(error));
+
+export { server };
