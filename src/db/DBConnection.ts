@@ -1,6 +1,6 @@
 import { Connection, ConnectionOptions, createConnection } from 'typeorm';
 
-import User from '../models/User';
+import User from '../entities/User';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
