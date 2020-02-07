@@ -3,6 +3,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { SerializedUser } from '../common/types';
 
 @Entity('users')
 class User {
@@ -26,20 +27,15 @@ class User {
   @Column('character varying')
   lastName: string = '';
 
-  /**
-   * Method to create a dummy user. (For testing purposes)
-   * @function
-   * @param {string} id - google id used to create new user
-   * @return {User} a new user with supplied google id
-   */
-  static dummy(id: string): User {
-    const user = new User();
-    user.googleID = id;
-    user.firstName = '';
-    user.lastName = '';
-    user.netID = '';
-    return user;
+  serialize(): SerializedUser {
+    return {
+      netID: this.netID,
+      googleID: this.googleID,
+      firstName: this.firstName,
+      lastName: this.lastName
+    };
   }
+
 }
 
 export default User

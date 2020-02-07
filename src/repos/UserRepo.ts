@@ -5,15 +5,17 @@ const db = (): Repository<User> => getConnectionManager().get().getRepository(Us
 
 const createUser = async (
   netID: string,
+  googleID: string,
   firstName: string,
   lastName: string,
 ): Promise<User> => {
   try {
-    if (!(netID && firstName && lastName)) {
+    if (!(netID && googleID && firstName && lastName)) {
       throw Error();
     }
     const user = db().create({
       netID,
+      googleID,
       firstName,
       lastName,
     });

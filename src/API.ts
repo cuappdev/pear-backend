@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import { Router } from 'express';
 import ApplicationAPI from './appdev/ApplicationAPI';
+import CreateUserRouter from './routers/CreateUserRouter'
 
 class API extends ApplicationAPI {
   getPath(): string {
@@ -16,7 +17,9 @@ class API extends ApplicationAPI {
   routerGroups(): { [index: string]: Router[] } {
     return {
       docs: [],
-      v1: [],
+      v1: [
+        CreateUserRouter
+      ],
     };
   }
 }
