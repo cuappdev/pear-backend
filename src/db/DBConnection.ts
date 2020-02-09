@@ -9,17 +9,17 @@ const models = [
 ];
 
 const connectionOptions: ConnectionOptions = {
-  entities: models,
-  type: 'postgres',
-  host: process.env.DB_HOST,
-  port: isProduction ? +process.env.DB_PORT : 5432,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  synchronize: true,
+  entities: models,
   extra: {
     ssl: isProduction,
   },
+  host: process.env.DB_HOST,
+  port: isProduction ? +process.env.DB_PORT : 5432,
+  password: process.env.DB_PASSWORD,
+  type: 'postgres',
+  synchronize: true,
+  username: process.env.DB_USERNAME,
 };
 
 const dbConnection = (): Promise<Connection> => createConnection(connectionOptions);

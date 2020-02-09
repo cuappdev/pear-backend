@@ -13,7 +13,7 @@ class CreateUserRouter extends ApplicationRouter<SerializedUser> {
   }
 
   async content(req: Request): Promise<SerializedUser> {
-    const { netID, googleID, firstName, lastName } = req.body;
+    const { firstName, googleID, lastName, netID } = req.body;
     const user = await UserRepo.createUser(netID, googleID, firstName, lastName)
     return user.serialize()
   }
