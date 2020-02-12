@@ -1,0 +1,8 @@
+export PORT=[port]
+export DB_PORT=[db port]
+export HOST=[host]
+export DB_USERNAME=[db username]
+export DB_PASS=[db pass]
+export DB_NAME=[db name]
+export NODE_ENV=[node env]
+
