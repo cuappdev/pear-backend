@@ -11,7 +11,7 @@ const createUser = async (
 ): Promise<User> => {
   try {
     if (!(netID && googleID && firstName && lastName)) {
-      throw Error();
+      throw Error('Invalid parameters');
     }
     const user = db().create({
       netID,

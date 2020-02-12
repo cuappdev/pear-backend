@@ -12,20 +12,32 @@ class User {
   id: string;
 
   /** User first name */
-  @Column('character varying')
-  firstName: string = '';
+  @Column({
+    type: 'varchar',
+    default: ''
+  })
+  firstName: string;
 
   /** Google ID of user */
-  @Column('character varying')
-  googleID: string = '';
+  @Column({
+    type: 'varchar',
+    default: ''
+  })
+  googleID: string;
 
   /** User last name */
-  @Column('character varying')
-  lastName: string = '';
+  @Column({
+    type: 'varchar',
+    default: ''
+  })
+  lastName: string;
 
   /** Net ID of user */
-  @Column('character varying')
-  netID: string = '';
+  @Column({
+    type: 'varchar',
+    default: ''
+  })
+  netID: string;
 
 
   serialize(): SerializedUser {
