@@ -1,4 +1,5 @@
 import { getConnectionManager, Repository } from 'typeorm';
+
 import User from '../entities/User';
 
 const db = (): Repository<User> => getConnectionManager().get().getRepository(User);
