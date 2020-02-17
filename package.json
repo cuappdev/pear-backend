@@ -1,5 +1,5 @@
 {
-  "name": "coffee-chats-backend",
+  "name": "pear-backend",
   "version": "1.0.0",
   "description": "Backend for Coffee Chats app",
   "main": "build/app.js",
@@ -8,19 +8,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cuappdev/coffee-chats-backend.git"
+    "url": "git+https://github.com/cuappdev/pear-backend.git"
   },
   "author": "Cornell AppDev",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/cuappdev/coffee-chats-backend/issues"
+    "url": "https://github.com/cuappdev/pear-backend/issues"
   },
-  "homepage": "https://github.com/cuappdev/coffee-chats-backend#readme",
+  "homepage": "https://github.com/cuappdev/pear-backend#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "^7.18.1",
+    "typeorm": "^0.2.22"
   },
   "devDependencies": {
     "@types/express": "^4.17.2",
+    "@types/node": "^13.7.0",
     "typescript": "^3.7.5"
   }
 }
