@@ -57,6 +57,10 @@ const updateUser = async (
   lastName: string,
   netID: string
 ): Promise<Boolean> => {
+  const possible_user = await db().findOne({ netID });
+  if (!(possible_user == null)) {
+    throw Error('User with that netID already exists');
+  }
   await db()
     .createQueryBuilder()
     .update(User)
