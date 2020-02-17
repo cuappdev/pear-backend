@@ -14,7 +14,7 @@ const createUser = async (
   }
   const possible_user = await db().findOne({ netID });
   if (!(possible_user == null)) {
-    throw Error('User with that netID already exists')
+    throw Error('User with that netID already exists');
   }
   const user = db().create({
     firstName,
@@ -40,15 +40,15 @@ const deleteUser = async (
     .execute()
     .then(dr => {
       if (dr.affected == 0) {
-        throw Error('User does not exist')
+        throw Error('User does not exist');
       }
     }
     )
     .catch(e => {
-      throw Error('Unable to execute sql')
+      throw Error('Unable to execute sql');
     }
     )
-  return true
+  return true;
 };
 
 const updateUser = async (
@@ -69,23 +69,23 @@ const updateUser = async (
     .execute()
     .then(ur => {
       if (ur.affected == 0) {
-        throw Error('User does not exist')
+        throw Error('User does not exist');
       }
     }
     )
     .catch(e => {
-      throw Error('Unable to execute sql')
+      throw Error('Unable to execute sql');
     }
     )
-  return true
+  return true;
 };
 
 const getUserByNetID = async (netID: string): Promise<User> => {
   const user = await db().findOne({ netID });
   if (user == null) {
-    throw Error('User with that netID does not exist')
+    throw Error('User with that netID does not exist');
   }
-  return user
+  return user;
 };
 
 export default {
