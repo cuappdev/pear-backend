@@ -18,8 +18,8 @@ class UpdateUserRouter extends ApplicationRouter<void> {
     await UserRepo.updateUser(
       currentNetID,
       firstName == null ? user.firstName : firstName,
-      netID == null ? user.netID : netID,
       lastName == null ? user.lastName : lastName,
+      netID == null ? user.netID : netID
     );
   }
 }

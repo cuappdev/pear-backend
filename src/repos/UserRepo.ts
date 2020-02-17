@@ -4,12 +4,12 @@ import User from '../entities/User';
 const db = (): Repository<User> => getConnectionManager().get().getRepository(User);
 
 const createUser = async (
-  netID: string,
-  googleID: string,
   firstName: string,
+  googleID: string,
   lastName: string,
+  netID: string
 ): Promise<User> => {
-  if (!(netID && googleID && firstName && lastName)) {
+  if (!(firstName && googleID && lastName && netID)) {
     throw Error('Invalid parameters');
   }
   const possible_user = await db().findOne({ netID });
@@ -17,10 +17,10 @@ const createUser = async (
     throw Error('User with that netID already exists')
   }
   const user = db().create({
-    netID,
-    googleID,
     firstName,
+    googleID,
     lastName,
+    netID
   });
   await db().save(user);
   return user;
@@ -54,16 +54,16 @@ const deleteUser = async (
 const updateUser = async (
   currentNetID: string,
   firstName: string,
-  netID: string,
-  lastName: string
+  lastName: string,
+  netID: string
 ): Promise<Boolean> => {
   await db()
     .createQueryBuilder()
     .update(User)
     .set({
       firstName: firstName,
-      netID: netID,
-      lastName: lastName
+      lastName: lastName,
+      netID: netID
     })
     .where("netID = :netID", { netID: currentNetID })
     .execute()
