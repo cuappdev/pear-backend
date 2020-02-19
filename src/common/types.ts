@@ -4,3 +4,8 @@ export type SerializedUser = {
   lastName: string,
   netID: string,
 };
+
+export type SerializedMatching = {
+  user1: SerializedUser,
+  user2: SerializedUser
+};
