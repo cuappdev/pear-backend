@@ -1,5 +1,4 @@
 import { getConnectionManager, Repository } from 'typeorm';
-
 import User from '../entities/User';
 
 const db = (): Repository<User> => getConnectionManager().get().getRepository(User);
@@ -12,7 +11,7 @@ const createUser = async (
 ): Promise<User> => {
   try {
     if (!(netID && googleID && firstName && lastName)) {
-      throw Error();
+      throw Error('Invalid parameters');
     }
     const user = db().create({
       netID,

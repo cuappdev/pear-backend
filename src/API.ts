@@ -1,7 +1,7 @@
 import bodyParser from 'body-parser';
 import { Router } from 'express';
 import ApplicationAPI from './appdev/ApplicationAPI';
-import CreateUserRouter from './routers/CreateUserRouter'
+import CreateUserRouter from './routers/CreateUserRouter';
 
 class API extends ApplicationAPI {
   getPath(): string {
