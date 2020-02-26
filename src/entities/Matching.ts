@@ -1,12 +1,13 @@
 import {
-  Column,
   Entity,
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { SerializedMatching } from '../common/types';
 import User from './User'
+import DaySchedule from './DaySchedule';
 
 @Entity('matching')
 class Matching {
@@ -19,16 +20,17 @@ class Matching {
   @JoinTable()
   users: User[];
 
-  //Add many to many time relationship
+  @OneToMany(type => DaySchedule, schedule => schedule.matching)
+  schedule: DaySchedule[];
 
-
-  // serialize(): SerializedMatching {
-  //   callBack = (acc, user) => 
-  //   return {
-  //     users: [this.users.reduce()]
-  //   };
-  // }
+  serialize(): SerializedMatching {
+    const callback = (accum, currentVal) => accum.push(currentVal.serialize());
+    return {
+      users: [this.users.reduce(callback, [])],
+      schedule: [this.schedule.reduce(callback, [])]
+    };
+  }
 
 }
 
-export default User
+export default Matching
