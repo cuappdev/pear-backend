@@ -6,7 +6,7 @@ import ApplicationRouter from '../../appdev/ApplicationRouter';
 import UserSessionRepo from '../../repos/UserSessionRepo';
 import { SerializedUserSession } from '../../common/types';
 
-class InitializeSessionRouter extends ApplicationRouter<void | SerializedUserSession> {
+class InitializeSessionRouter extends ApplicationRouter<SerializedUserSession> {
     constructor() {
         super('POST');
     }
@@ -15,7 +15,7 @@ class InitializeSessionRouter extends ApplicationRouter<void | SerializedUserSes
         return '/auth/'
     }
 
-    async content(req: Request): Promise<void | SerializedUserSession> {
+    async content(req: Request): Promise<SerializedUserSession> {
         const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
         return client
@@ -24,8 +24,6 @@ class InitializeSessionRouter extends ApplicationRouter<void | SerializedUserSes
             audience: process.env.GOOGLE_CLIENT_ID
         })
         .then(login => UserSessionRepo.createUserAndInitializeSession(login))
-        .catch((e) => {console.log('Error authenticating ', e)})
-        
-        ;
+        .catch((e) => {throw Error('Unable to authenticate')});
     }
 }

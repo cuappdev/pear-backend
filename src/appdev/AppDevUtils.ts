@@ -1,4 +1,4 @@
-// General utility functions / Objects helpful in a JS setting across
+// General utility functions / Objects helpful in a TS setting across
 // all AppDev projects
 
 /**
