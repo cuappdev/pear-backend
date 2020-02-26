@@ -15,7 +15,7 @@ const connectionOptions: ConnectionOptions = {
     ssl: isProduction,
   },
   host: process.env.DB_HOST,
-  port: isProduction ? +process.env.DB_PORT : 5432,
+  port: isProduction ? parseInt(process.env.DB_PORT) : 5432,
   password: process.env.DB_PASSWORD,
   type: 'postgres',
   synchronize: true,

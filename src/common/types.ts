@@ -11,3 +11,7 @@ export type SerializedUserSession = {
   refreshToken: string,
   sessionExpiration: string
 }
+export type SerializedMatching = {
+  user1: SerializedUser,
+  user2: SerializedUser
+};
