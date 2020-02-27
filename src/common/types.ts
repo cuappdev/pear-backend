@@ -1,6 +1,6 @@
-export type SerializedUser = {
-  firstName: string,
-  googleID: string,
-  lastName: string,
-  netID: string,
-};
+export interface SerializedUser {
+  firstName: string;
+  googleID: string;
+  lastName: string;
+  netID: string;
+}

@@ -12,20 +12,13 @@ class API extends ApplicationAPI {
   }
 
   middleware(): any[] {
-    return [
-      bodyParser.json(),
-    ];
+    return [bodyParser.json()];
   }
 
   routerGroups(): { [index: string]: Router[] } {
     return {
       docs: [],
-      v1: [
-        CreateUserRouter,
-        DeleteUserRouter,
-        GetUserRouter,
-        UpdateUserRouter
-      ],
+      v1: [CreateUserRouter, DeleteUserRouter, GetUserRouter, UpdateUserRouter],
     };
   }
 }
