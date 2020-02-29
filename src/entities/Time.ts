@@ -11,11 +11,12 @@ class Time {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+
   @Column({
-    type: 'int',
-    default: ''
+    type: "float",
   })
-  time: TimeEnum
+  time: number
+
 
   serialize(): SerializedTime {
     return {

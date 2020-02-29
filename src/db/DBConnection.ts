@@ -1,11 +1,12 @@
 import { Connection, ConnectionOptions, createConnection } from 'typeorm';
-
+import Time from '../entities/Time'
 import User from '../entities/User';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 const models = [
-  User
+  User,
+  Time
 ];
 
 const connectionOptions: ConnectionOptions = {
