@@ -23,7 +23,7 @@ class CreateMatchingRouter extends ApplicationRouter<SerializedMatching> {
     const users = [];
     for (const netID of netIDs) {
       const user = await UserRepo.getUserByNetID(netID);
-      users.push(user)
+      users.push(user);
     }
     const matching = await MatchingRepo.createMatching(users, daySchedules);
     return matching.serialize();

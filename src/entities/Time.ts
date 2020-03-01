@@ -3,13 +3,13 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { SerializedTime } from '../common/types'
+import { SerializedTime } from '../common/types';
 
 @Entity('time')
 class Time {
 
   constructor(time) {
-    this.time = time
+    this.time = time;
   }
 
   @PrimaryGeneratedColumn('uuid')
@@ -19,7 +19,7 @@ class Time {
   @Column({
     type: "float",
   })
-  time: number
+  time: number;
 
   serialize(): SerializedTime {
     return {
@@ -29,4 +29,4 @@ class Time {
 
 }
 
-export default Time
+export default Time;

@@ -22,11 +22,11 @@ class API extends ApplicationAPI {
     return {
       docs: [],
       v1: [
+        CreateMatchingRouter,
         CreateUserRouter,
         DeleteUserRouter,
         GetUserRouter,
         UpdateUserRouter,
-        CreateMatchingRouter
       ],
     };
   }

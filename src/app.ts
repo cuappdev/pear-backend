@@ -11,8 +11,8 @@ const SERVER_ADDRESS: string = '0.0.0.0';
 
 
 DBConnection().then(async (connection: any) => {
-  // Pre-populate the times
-  Constants.VALID_TIMES.forEach(time => MatchingRepo.createTime(time))
+  // Pre-populate the database with times
+  Constants.VALID_TIMES.forEach(time => MatchingRepo.createTime(time));
   app.express.listen(PORT, () => {
     console.log(
       `App is running on ${SERVER_ADDRESS}:${PORT}...`,

@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { SerializedMatching } from '../common/types';
 import DaySchedule from './DaySchedule';
-import User from './User'
+import User from './User';
 
 @Entity('matching')
 class Matching {
@@ -30,11 +30,11 @@ class Matching {
       return accum;
     };
     return {
-      users: [this.users.reduce(callback, [])],
-      schedule: [this.schedule.reduce(callback, [])]
+      schedule: [this.schedule.reduce(callback, [])],
+      users: [this.users.reduce(callback, [])]
     };
   }
 
 }
 
-export default Matching
+export default Matching;

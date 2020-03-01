@@ -7,10 +7,10 @@ import Matching from '../entities/Matching';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const models = [
-  User,
-  Time,
   DaySchedule,
-  Matching
+  Matching,
+  Time,
+  User
 ];
 
 const connectionOptions: ConnectionOptions = {

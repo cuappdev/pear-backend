@@ -44,4 +44,4 @@ class DaySchedule {
 
 }
 
-export default DaySchedule
+export default DaySchedule;
