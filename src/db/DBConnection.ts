@@ -1,7 +1,7 @@
 import { Connection, ConnectionOptions, createConnection } from 'typeorm';
+import DaySchedule from '../entities/DaySchedule';
 import Time from '../entities/Time'
 import User from '../entities/User';
-import DaySchedule from '../entities/DaySchedule';
 import Matching from '../entities/Matching';
 
 const isProduction = process.env.NODE_ENV === 'production';

@@ -1,11 +1,8 @@
-import ApplicationRouter from '../appdev/ApplicationRouter';
 import { Request } from 'express';
 import { SerializedMatching } from '../common/types';
+import ApplicationRouter from '../appdev/ApplicationRouter';
 import MatchingRepo from '../repos/MatchingRepo';
 import UserRepo from '../repos/UserRepo';
-import DaySchedule from '../entities/DaySchedule';
-import User from '../entities/User'
-import Matching from '../entities/Matching';
 
 class CreateMatchingRouter extends ApplicationRouter<SerializedMatching> {
   constructor() {

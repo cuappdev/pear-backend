@@ -1,7 +1,7 @@
 import 'reflect-metadata';
+import { TimeEnum } from './common/types'
 import API from './API';
 import DBConnection from './db/DBConnection';
-import { TimeEnum } from './common/types'
 import MatchingRepo from './repos/MatchingRepo'
 
 const app = new API();

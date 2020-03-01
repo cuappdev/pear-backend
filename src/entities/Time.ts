@@ -1,9 +1,9 @@
 import {
+  Column,
   Entity,
   PrimaryGeneratedColumn,
-  Column,
 } from 'typeorm';
-import { SerializedTime, TimeEnum } from '../common/types'
+import { SerializedTime } from '../common/types'
 
 @Entity('time')
 class Time {
@@ -15,7 +15,7 @@ class Time {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-
+  /** Time formatted as a float (e.g. 14.5 = 2:30 PM) */
   @Column({
     type: "float",
   })

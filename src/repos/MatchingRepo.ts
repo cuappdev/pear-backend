@@ -1,8 +1,8 @@
 import { getConnectionManager, Repository } from 'typeorm';
+import DaySchedule from '../entities/DaySchedule';
 import Matching from '../entities/Matching';
 import Time from '../entities/Time';
 import User from '../entities/User';
-import DaySchedule from '../entities/DaySchedule';
 
 const matchingDB = (): Repository<Matching> => getConnectionManager().get().getRepository(Matching);
 const dayScheduleDB = (): Repository<DaySchedule> => getConnectionManager().get().getRepository(DaySchedule);

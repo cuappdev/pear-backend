@@ -1,7 +1,7 @@
 import {
-  Column,
-  Entity,
   PrimaryGeneratedColumn,
+  Column,
+  Entity
 } from 'typeorm';
 import { SerializedUser } from '../common/types';
 

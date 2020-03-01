@@ -1,13 +1,13 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
-  ManyToMany,
   JoinTable,
+  ManyToMany,
   OneToMany,
+  PrimaryGeneratedColumn
 } from 'typeorm';
 import { SerializedMatching } from '../common/types';
-import User from './User'
 import DaySchedule from './DaySchedule';
+import User from './User'
 
 @Entity('matching')
 class Matching {
@@ -15,11 +15,12 @@ class Matching {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  /** Users */
+  /** Users in this matching */
   @ManyToMany(type => User)
   @JoinTable()
   users: User[];
 
+  /** List of days and times for this matching */
   @OneToMany(type => DaySchedule, schedule => schedule.matching)
   schedule: DaySchedule[];
 
