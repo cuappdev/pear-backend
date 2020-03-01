@@ -16,17 +16,17 @@ class DaySchedule {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  /** The matching this day schedule belongs to */
-  @ManyToOne(type => Matching, matching => matching.schedule)
-  matching: Matching;
-
-  /** The day of this schedule */
+  /** The day of this day-schedule */
   @Column({
     type: 'varchar',
   })
   day: string;
 
-  /** The available times for this day */
+  /** The matching this day-schedule belongs to */
+  @ManyToOne(type => Matching, matching => matching.schedule)
+  matching: Matching;
+
+  /** The available times for this day-schedule */
   @ManyToMany(type => Time)
   @JoinTable()
   times: Time[];

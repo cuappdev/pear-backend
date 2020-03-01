@@ -6,8 +6,8 @@ export type SerializedUser = {
 };
 
 export type SerializedMatching = {
-  users: [SerializedUser],
-  schedule: [SerializedDaySchedule]
+  schedule: [SerializedDaySchedule],
+  users: [SerializedUser]
 };
 
 export type SerializedDaySchedule = {

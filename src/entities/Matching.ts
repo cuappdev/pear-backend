@@ -15,14 +15,14 @@ class Matching {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  /** List of days and times for this matching */
+  @OneToMany(type => DaySchedule, schedule => schedule.matching)
+  schedule: DaySchedule[];
+
   /** Users in this matching */
   @ManyToMany(type => User)
   @JoinTable()
   users: User[];
-
-  /** List of days and times for this matching */
-  @OneToMany(type => DaySchedule, schedule => schedule.matching)
-  schedule: DaySchedule[];
 
   serialize(): SerializedMatching {
     const callback = (accum, currentVal) => {
