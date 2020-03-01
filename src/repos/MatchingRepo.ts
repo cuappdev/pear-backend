@@ -27,7 +27,7 @@ const createTime = async (
 
 const createDaySchedule = async (
   day: string,
-  times: [number]
+  times: number[]
 ): Promise<DaySchedule> => {
   if (!(Constants.VALID_DAYS.includes(day))) {
     throw Error('Invalid day');

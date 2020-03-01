@@ -38,7 +38,7 @@ class DaySchedule {
     };
     return {
       day: this.day,
-      times: [this.times.reduce(callback, [])]
+      times: this.times.reduce(callback, [])
     };
   }
 
