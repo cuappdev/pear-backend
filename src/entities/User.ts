@@ -43,7 +43,7 @@ class User {
   netID: string;
 
   @ManyToMany(type => Matching, matching => matching.users)
-  matchings: Matching[]
+  matchings: Matching[];
 
   serialize(): SerializedUser {
     const callback = (accum, currentVal) => {

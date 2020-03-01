@@ -19,7 +19,7 @@ class Matching {
   @Column({
     type: 'bool'
   })
-  active: boolean
+  active: boolean;
 
   /** List of days and times for this matching */
   @OneToMany(type => DaySchedule, schedule => schedule.matching)
