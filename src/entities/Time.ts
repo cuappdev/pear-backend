@@ -8,10 +8,6 @@ import { SerializedTime } from '../common/types';
 @Entity('time')
 class Time {
 
-  constructor(time) {
-    this.time = time;
-  }
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -22,9 +18,7 @@ class Time {
   time: number;
 
   serialize(): SerializedTime {
-    return {
-      time: this.time
-    };
+    return this.time
   }
 
 }

@@ -32,15 +32,18 @@ const createDaySchedule = async (
   if (!(Constants.VALID_DAYS.includes(day))) {
     throw Error('Invalid day');
   }
-  const daySchedule = dayScheduleDB().create({ day });
-  const callback = (accum, currentVal) => {
-    if (!(Constants.VALID_TIMES.includes(currentVal))) {
+  const daySchedule = dayScheduleDB().create({
+    day: day,
+    times: []
+  });
+  times.forEach(async elt => {
+    if (!(Constants.VALID_TIMES.includes(elt))) {
       throw Error('Invalid time');
     }
-    accum.push(new Time(currentVal));
-    return accum;
-  }
-  daySchedule.times = times.reduce(callback, []);
+    const time = await timeDB().findOne({ time: elt })
+    daySchedule.times.push(time);
+    await timeDB().save(time)
+  });
   await dayScheduleDB().save(daySchedule);
   return daySchedule;
 }
@@ -54,24 +57,14 @@ const createMatching = async (
     schedule: schedule,
     active: true
   });
-  await matchingDB().save(matching);
   users.forEach(async user => {
-    if (typeof user.matchings !== 'undefined') {
-      user.matchings.push(matching)
-      user.matchings.forEach(matching => {
-        matching.active = false
-      });
-    } else {
-      user.matchings = [matching]
-    }
-    //console.log(user)
+    user.matchings.forEach(matching => {
+      matching.active = false
+    });
+    user.matchings.push(matching)
     await userDB().save(user)
-    const user2 = await userDB()
-      .createQueryBuilder("users")
-      .leftJoinAndSelect("users.matchings", "matching")
-      .getOne();
-    console.log(user2)
   });
+  await matchingDB().save(matching);
   return matching;
 }
 

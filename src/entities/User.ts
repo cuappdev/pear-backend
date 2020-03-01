@@ -50,7 +50,6 @@ class User {
       accum.push(currentVal.subSerialize());
       return accum;
     };
-    console.log(this.matchings)
     return {
       firstName: this.firstName,
       googleID: this.googleID,

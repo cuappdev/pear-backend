@@ -30,6 +30,4 @@ export type SerializedDaySchedule = {
   times: number[]
 };
 
-export type SerializedTime = {
-  time: number
-}
+export type SerializedTime = number

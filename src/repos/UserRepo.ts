@@ -20,7 +20,8 @@ const createUser = async (
     firstName: firstName,
     googleID: googleID,
     lastName: lastName,
-    netID: netID
+    netID: netID,
+    matchings: []
   });
   await db().save(user);
   return user;

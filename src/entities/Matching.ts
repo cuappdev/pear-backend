@@ -43,7 +43,6 @@ class Matching {
   }
 
   subSerialize(): SerializedMatching {
-    console.log(this)
     const callback = (accum, currentVal) => {
       accum.push(currentVal.constructor.name === 'User' ? currentVal.subSerialize() : currentVal.serialize());
       return accum;
