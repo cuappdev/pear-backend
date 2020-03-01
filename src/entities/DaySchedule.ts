@@ -6,7 +6,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn
 } from 'typeorm';
-import { DayEnum, SerializedDaySchedule } from '../common/types';
+import { SerializedDaySchedule } from '../common/types';
 import Matching from './Matching';
 import Time from './Time'
 
@@ -37,7 +37,7 @@ class DaySchedule {
       return accum;
     };
     return {
-      day: this.day as DayEnum,
+      day: this.day,
       times: [this.times.reduce(callback, [])]
     };
   }

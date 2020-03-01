@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { TimeEnum } from './common/types'
+import Constants from './common/constants'
 import API from './API';
 import DBConnection from './db/DBConnection';
 import MatchingRepo from './repos/MatchingRepo'
@@ -12,7 +12,7 @@ const SERVER_ADDRESS: string = '0.0.0.0';
 
 DBConnection().then(async (connection: any) => {
   // Pre-populate the times
-  Object.values(TimeEnum).filter(elt => typeof elt === 'number').forEach(time => MatchingRepo.createTime(time as number))
+  Constants.VALID_TIMES.forEach(time => MatchingRepo.createTime(time))
   app.express.listen(PORT, () => {
     console.log(
       `App is running on ${SERVER_ADDRESS}:${PORT}...`,

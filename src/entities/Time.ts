@@ -21,7 +21,6 @@ class Time {
   })
   time: number
 
-
   serialize(): SerializedTime {
     return {
       time: this.time
