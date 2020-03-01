@@ -11,6 +11,7 @@ const SERVER_ADDRESS: string = '0.0.0.0';
 
 
 DBConnection().then(async (connection: any) => {
+  // Pre-populate the times
   Object.values(TimeEnum).filter(elt => typeof elt === 'number').forEach(time => MatchingRepo.createTime(time as number))
   app.express.listen(PORT, () => {
     console.log(

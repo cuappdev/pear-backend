@@ -1,12 +1,16 @@
 import { Connection, ConnectionOptions, createConnection } from 'typeorm';
 import Time from '../entities/Time'
 import User from '../entities/User';
+import DaySchedule from '../entities/DaySchedule';
+import Matching from '../entities/Matching';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 const models = [
   User,
-  Time
+  Time,
+  DaySchedule,
+  Matching
 ];
 
 const connectionOptions: ConnectionOptions = {

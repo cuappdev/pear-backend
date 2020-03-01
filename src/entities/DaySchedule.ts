@@ -17,23 +17,25 @@ class DaySchedule {
   id: string;
 
   @ManyToOne(type => Matching, matching => matching.schedule)
-  matching: Matching
+  matching: Matching;
 
   @Column({
     type: 'varchar',
-    default: ''
   })
-  Day: DayEnum
+  day: string;
 
   @ManyToMany(type => Time)
   @JoinTable()
-  Times: Time[];
+  times: Time[];
 
   serialize(): SerializedDaySchedule {
-    const callback = (accum, currentVal) => accum.push(currentVal.serialize());
+    const callback = (accum, currentVal) => {
+      accum.push(currentVal.serialize());
+      return accum;
+    };
     return {
-      day: this.Day,
-      times: [this.Times.reduce(callback, [])]
+      day: this.day as DayEnum,
+      times: [this.times.reduce(callback, [])]
     };
   }
 

@@ -24,7 +24,10 @@ class Matching {
   schedule: DaySchedule[];
 
   serialize(): SerializedMatching {
-    const callback = (accum, currentVal) => accum.push(currentVal.serialize());
+    const callback = (accum, currentVal) => {
+      accum.push(currentVal.serialize());
+      return accum;
+    };
     return {
       users: [this.users.reduce(callback, [])],
       schedule: [this.schedule.reduce(callback, [])]
