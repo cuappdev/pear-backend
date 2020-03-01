@@ -1,9 +1,12 @@
 import {
   PrimaryGeneratedColumn,
   Column,
-  Entity
+  Entity,
+  ManyToMany,
+  JoinTable
 } from 'typeorm';
-import { SerializedUser } from '../common/types';
+import { SerializedUser, SubSerializedUser } from '../common/types';
+import Matching from './Matching';
 
 @Entity('users')
 class User {
@@ -39,8 +42,25 @@ class User {
   })
   netID: string;
 
+  @ManyToMany(type => Matching, matching => matching.users)
+  matchings: Matching[]
 
   serialize(): SerializedUser {
+    const callback = (accum, currentVal) => {
+      accum.push(currentVal.subSerialize());
+      return accum;
+    };
+    console.log(this.matchings)
+    return {
+      firstName: this.firstName,
+      googleID: this.googleID,
+      lastName: this.lastName,
+      netID: this.netID,
+      matchings: this.matchings.reduce(callback, [])
+    };
+  }
+
+  subSerialize(): SubSerializedUser {
     return {
       firstName: this.firstName,
       googleID: this.googleID,

@@ -5,9 +5,10 @@ import Matching from '../entities/Matching';
 import Time from '../entities/Time';
 import User from '../entities/User';
 
-const matchingDB = (): Repository<Matching> => getConnectionManager().get().getRepository(Matching);
 const dayScheduleDB = (): Repository<DaySchedule> => getConnectionManager().get().getRepository(DaySchedule);
+const matchingDB = (): Repository<Matching> => getConnectionManager().get().getRepository(Matching);
 const timeDB = (): Repository<Time> => getConnectionManager().get().getRepository(Time);
+const userDB = (): Repository<User> => getConnectionManager().get().getRepository(User);
 
 const createTime = async (
   time: number
@@ -49,10 +50,28 @@ const createMatching = async (
   schedule: DaySchedule[]
 ): Promise<Matching> => {
   const matching = matchingDB().create({
-    users,
-    schedule
+    users: users,
+    schedule: schedule,
+    active: true
   });
   await matchingDB().save(matching);
+  users.forEach(async user => {
+    if (typeof user.matchings !== 'undefined') {
+      user.matchings.push(matching)
+      user.matchings.forEach(matching => {
+        matching.active = false
+      });
+    } else {
+      user.matchings = [matching]
+    }
+    //console.log(user)
+    await userDB().save(user)
+    const user2 = await userDB()
+      .createQueryBuilder("users")
+      .leftJoinAndSelect("users.matchings", "matching")
+      .getOne();
+    console.log(user2)
+  });
   return matching;
 }
 

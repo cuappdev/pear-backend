@@ -17,10 +17,10 @@ const createUser = async (
     throw Error('User with that netID already exists');
   }
   const user = db().create({
-    firstName,
-    googleID,
-    lastName,
-    netID
+    firstName: firstName,
+    googleID: googleID,
+    lastName: lastName,
+    netID: netID
   });
   await db().save(user);
   return user;
@@ -85,7 +85,10 @@ const updateUser = async (
 };
 
 const getUserByNetID = async (netID: string): Promise<User> => {
-  const user = await db().findOne({ netID });
+  const user = await db().findOne({
+    where: { netID: netID }, relations: ["matchings", "matchings.users",
+      "matchings.schedule", "matchings.schedule.times"]
+  });
   if (user == null) {
     throw Error('User with that netID does not exist');
   }

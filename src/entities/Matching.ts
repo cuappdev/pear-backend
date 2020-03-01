@@ -1,9 +1,10 @@
 import {
+  Column,
   Entity,
   JoinTable,
   ManyToMany,
   OneToMany,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { SerializedMatching } from '../common/types';
 import DaySchedule from './DaySchedule';
@@ -15,12 +16,17 @@ class Matching {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column({
+    type: 'bool'
+  })
+  active: boolean
+
   /** List of days and times for this matching */
   @OneToMany(type => DaySchedule, schedule => schedule.matching)
   schedule: DaySchedule[];
 
   /** Users in this matching */
-  @ManyToMany(type => User)
+  @ManyToMany(type => User, user => user.matchings)
   @JoinTable()
   users: User[];
 
@@ -30,11 +36,24 @@ class Matching {
       return accum;
     };
     return {
-      schedule: [this.schedule.reduce(callback, [])],
-      users: [this.users.reduce(callback, [])]
+      active: this.active,
+      schedule: this.schedule.reduce(callback, []),
+      users: this.users.reduce(callback, [])
     };
   }
 
+  subSerialize(): SerializedMatching {
+    console.log(this)
+    const callback = (accum, currentVal) => {
+      accum.push(currentVal.constructor.name === 'User' ? currentVal.subSerialize() : currentVal.serialize());
+      return accum;
+    };
+    return {
+      active: this.active,
+      schedule: this.schedule.reduce(callback, []),
+      users: this.users.reduce(callback, [])
+    };
+  }
 }
 
 export default Matching;
