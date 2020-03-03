@@ -20,25 +20,25 @@ class UserSession {
 
   /** Access token associated with session */
   @Column('character varying')
-  sessionToken: string = '';
+  sessionToken = '';
 
   /** Timestamp of when the session expires (Unix time) */
   @Column('bigint')
-  expiresAt: string = '-1';
+  expiresAt = '-1';
 
   /** Refresh token associated with session */
   @Column('character varying')
-  updateToken: string = '';
+  updateToken = '';
 
   /** Whether the session is active or not */
   @Column('boolean')
-  isActive: boolean = true;
+  isActive = true;
 
   user: SerializedUser = null;
   static fromUser(
     user: User,
     accessToken?: string,
-    refreshToken?: string,
+    refreshToken?: string
   ): UserSession {
     const session = new UserSession();
     session.user = user;
@@ -51,7 +51,9 @@ class UserSession {
     this.updateToken = updateToken || crypto.randomBytes(64).toString('hex');
 
     // Session length is 1 day
-    this.expiresAt = String(Math.floor(new Date().getTime() / 1000) + 60 * 60 * 24);
+    this.expiresAt = String(
+      Math.floor(new Date().getTime() / 1000) + 60 * 60 * 24
+    );
     this.activate();
     return this;
   }

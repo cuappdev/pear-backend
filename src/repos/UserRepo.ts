@@ -94,5 +94,5 @@ export default {
   createUser,
   deleteUser,
   getUserByNetID,
-  updateUser
+  updateUser,
 };

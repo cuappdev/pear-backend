@@ -6,11 +6,10 @@ import {
   JoinTable,
 } from 'typeorm';
 import { SerializedMatching } from '../common/types';
-import User from './User'
+import User from './User';
 
 @Entity('matching')
 class Matching {
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -21,14 +20,12 @@ class Matching {
 
   //Add many to many time relationship
 
-
   // serialize(): SerializedMatching {
-  //   callBack = (acc, user) => 
+  //   callBack = (acc, user) =>
   //   return {
   //     users: [this.users.reduce()]
   //   };
   // }
-
 }
 
-export default User
+export default User;
