@@ -6,8 +6,6 @@
   "scripts": {
     "start": "./node_modules/.bin/tsc && node build/app.js",
     "check": "./node_modules/.bin/gts check",
-    "clean": "./node_modules/.bin/gts clean",
-    "compile": "./node_modules/.bin/tsc -p .",
     "fix": "./node_modules/.bin/gts fix"
   },
   "repository": {
