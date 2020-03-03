@@ -26,7 +26,7 @@ class Matching {
   schedule: DaySchedule[];
 
   /** Users in this matching */
-  @ManyToMany(type => User, user => user.matchings)
+  @ManyToMany(type => User, user => user.matches)
   @JoinTable()
   users: User[];
 

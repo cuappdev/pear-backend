@@ -13,7 +13,7 @@ const createUser = async (
     throw Error('Invalid parameters');
   }
   const possible_user = await db().findOne({ netID });
-  if (!(possible_user == null)) {
+  if (possible_user) {
     throw Error('User with that netID already exists');
   }
   const user = db().create({
@@ -21,7 +21,7 @@ const createUser = async (
     googleID: googleID,
     lastName: lastName,
     netID: netID,
-    matchings: []
+    matches: []
   });
   await db().save(user);
   return user;
@@ -59,7 +59,7 @@ const updateUser = async (
   netID: string
 ): Promise<Boolean> => {
   const possible_user = await db().findOne({ netID });
-  if (!(possible_user == null)) {
+  if (possible_user) {
     throw Error('User with that netID already exists');
   }
   await db()
@@ -87,10 +87,10 @@ const updateUser = async (
 
 const getUserByNetID = async (netID: string): Promise<User> => {
   const user = await db().findOne({
-    where: { netID: netID }, relations: ["matchings", "matchings.users",
-      "matchings.schedule", "matchings.schedule.times"]
+    where: { netID: netID }, relations: ["matches", "matches.users",
+      "matches.schedule", "matches.schedule.times"]
   });
-  if (user == null) {
+  if (!(user)) {
     throw Error('User with that netID does not exist');
   }
   return user;

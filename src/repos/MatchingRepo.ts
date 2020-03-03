@@ -17,7 +17,7 @@ const createTime = async (
     throw Error('Invalid time');
   }
   const possible_time = await timeDB().findOne({ time });
-  if (possible_time == null) {
+  if (!(possible_time)) {
     const time_obj = timeDB().create({
       time
     });
@@ -30,19 +30,19 @@ const createDaySchedule = async (
   times: number[]
 ): Promise<DaySchedule> => {
   if (!(Constants.VALID_DAYS.includes(day))) {
-    throw Error('Invalid day');
+    throw Error('Invalid day ' + day + ' is not in [' + Constants.VALID_DAYS + "]");
   }
   const daySchedule = dayScheduleDB().create({
     day: day,
     times: []
   });
-  for await (const elt of times) {
-    if (!(Constants.VALID_TIMES.includes(elt))) {
-      throw Error('Invalid time');
+  for await (const time of times) {
+    if (!(Constants.VALID_TIMES.includes(time))) {
+      throw Error('Invalid time ' + time + ' is not in [' + Constants.VALID_TIMES + ']');
     }
-    const time = await timeDB().findOne({ time: elt })
-    daySchedule.times.push(time);
-    await timeDB().save(time);
+    const time_obj = await timeDB().findOne({ time: time });
+    daySchedule.times.push(time_obj);
+    await timeDB().save(time_obj);
   }
   await dayScheduleDB().save(daySchedule);
   return daySchedule;
@@ -59,10 +59,10 @@ const createMatching = async (
   });
   await matchingDB().save(matching);
   for await (const user of users) {
-    user.matchings.forEach(matching => {
+    user.matches.forEach(matching => {
       matching.active = false
     });
-    user.matchings.push(matching);
+    user.matches.push(matching);
     await userDB().save(user);
   }
   await matchingDB().save(matching);

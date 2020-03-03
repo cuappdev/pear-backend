@@ -43,7 +43,7 @@ class User {
   netID: string;
 
   @ManyToMany(type => Matching, matching => matching.users)
-  matchings: Matching[];
+  matches: Matching[];
 
   serialize(): SerializedUser {
     const callback = (accum, currentVal) => {
@@ -55,7 +55,7 @@ class User {
       googleID: this.googleID,
       lastName: this.lastName,
       netID: this.netID,
-      matchings: this.matchings.reduce(callback, [])
+      matches: this.matches.reduce(callback, [])
     };
   }
 
