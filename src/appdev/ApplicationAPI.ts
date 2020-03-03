@@ -1,11 +1,21 @@
-import express, { Application, NextFunction, Request, Response, Router } from 'express';
+import express, {
+  Application,
+  NextFunction,
+  Request,
+  Response,
+  Router,
+} from 'express';
 import http from 'http';
 
 /**
  * ExpressHandlerFunction - the function signature of callbacks for Express
  * Router objects
  */
-export type ExpressCallback = (req: Request, res: Response, next: NextFunction) => any;
+export type ExpressCallback = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => any;
 
 /**
  * ApplicationAPI - create an Express Application object from a series of middleware
@@ -16,7 +26,6 @@ export type ExpressCallback = (req: Request, res: Response, next: NextFunction) 
  * initialization with middleware functions and routers.
  */
 class ApplicationAPI {
-
   express: Application;
 
   /**
@@ -39,9 +48,9 @@ class ApplicationAPI {
       this.express.use(middleware[i]);
     }
 
-    Object.keys(routerGroups).forEach((version) => {
+    Object.keys(routerGroups).forEach(version => {
       const routers = routerGroups[version];
-      routers.forEach((router) => {
+      routers.forEach(router => {
         this.express.use(this.getPath() + version, router);
       });
     });
@@ -63,8 +72,8 @@ class ApplicationAPI {
   }
 
   /**
-     * Subclasses must override this to supply middleware for the API.
-     */
+   * Subclasses must override this to supply middleware for the API.
+   */
   routerGroups(): { [index: string]: Router[] } {
     return {};
   }
@@ -86,7 +95,6 @@ class ApplicationAPI {
     server.on('listening', onListening);
     return server;
   }
-
 }
 
 export default ApplicationAPI;
