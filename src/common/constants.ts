@@ -1,4 +1,4 @@
-const VALID_DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+const VALID_DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 
 const VALID_TIMES = [
   9.5,
@@ -23,10 +23,10 @@ const VALID_TIMES = [
   19,
   19.5,
   20,
-  20.5
+  20.5,
 ];
 
 export default {
   VALID_DAYS,
-  VALID_TIMES
+  VALID_TIMES,
 };
