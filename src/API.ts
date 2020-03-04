@@ -1,9 +1,10 @@
+import { Router } from 'express';
 import ApplicationAPI from './appdev/ApplicationAPI';
 import bodyParser from 'body-parser';
 import CreateUserRouter from './routers/CreateUserRouter';
 import DeleteUserRouter from './routers/DeleteUserRouter';
 import GetUserRouter from './routers/GetUserRouter';
-import { Router } from 'express';
+import CreateMatchingRouter from './routers/CreateMatchingRouter';
 import UpdateUserRouter from './routers/UpdateUserRouter';
 
 class API extends ApplicationAPI {
@@ -21,10 +22,11 @@ class API extends ApplicationAPI {
     return {
       docs: [],
       v1: [
+        CreateMatchingRouter,
         CreateUserRouter,
         DeleteUserRouter,
         GetUserRouter,
-        UpdateUserRouter
+        UpdateUserRouter,
       ],
     };
   }
