@@ -17,10 +17,7 @@ class CreateMatchingRouter extends ApplicationRouter<SerializedMatching> {
     const { netIDs, schedule } = req.body;
     const daySchedules = [];
     for (const ds of schedule) {
-      const daySchedule = await MatchingRepo.createDaySchedule(
-        ds.day,
-        ds.times
-      );
+      const daySchedule = await MatchingRepo.createDaySchedule(ds.day, ds.times);
       daySchedules.push(daySchedule);
     }
     const users = [];

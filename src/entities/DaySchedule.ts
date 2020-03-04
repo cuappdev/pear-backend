@@ -4,14 +4,15 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn
 } from 'typeorm';
-import { SerializedDaySchedule, SerializedTime } from '../common/types';
+import { SerializedDaySchedule } from '../common/types';
 import Matching from './Matching';
-import Time from './Time';
+import Time from './Time'
 
 @Entity('dayschedule')
 class DaySchedule {
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -22,10 +23,7 @@ class DaySchedule {
   day: string;
 
   /** The matching this day-schedule belongs to */
-  @ManyToOne(
-    type => Matching,
-    matching => matching.schedule
-  )
+  @ManyToOne(type => Matching, matching => matching.schedule)
   matching: Matching;
 
   /** The available times for this day-schedule */
@@ -34,15 +32,16 @@ class DaySchedule {
   times: Time[];
 
   serialize(): SerializedDaySchedule {
-    const callback = (accum: SerializedTime[], currentVal: Time) => {
+    const callback = (accum, currentVal) => {
       accum.push(currentVal.serialize());
       return accum;
     };
     return {
       day: this.day,
-      times: this.times.reduce(callback, []),
+      times: this.times.reduce(callback, [])
     };
   }
+
 }
 
 export default DaySchedule;
