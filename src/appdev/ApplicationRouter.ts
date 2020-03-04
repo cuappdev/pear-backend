@@ -111,7 +111,7 @@ class ApplicationRouter<T> {
         const content = await this.content(req);
         res.json(new AppDevResponse(true, content));
       } catch (e) {
-          res.json(new AppDevResponse(false, { errors: [e.message] }));
+        res.json(new AppDevResponse(false, { errors: [e.message] }));
       }
       next();
     };

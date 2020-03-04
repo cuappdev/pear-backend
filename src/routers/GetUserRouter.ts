@@ -1,6 +1,6 @@
-import ApplicationRouter from '../appdev/ApplicationRouter';
 import { Request } from 'express';
 import { SerializedUser } from '../common/types';
+import ApplicationRouter from '../appdev/ApplicationRouter';
 import UserRepo from '../repos/UserRepo';
 
 class GetUserRouter extends ApplicationRouter<SerializedUser> {
@@ -15,7 +15,7 @@ class GetUserRouter extends ApplicationRouter<SerializedUser> {
   async content(req: Request): Promise<SerializedUser> {
     const { netID } = req.query;
     const user = await UserRepo.getUserByNetID(netID);
-    return user;
+    return user.serialize();
   }
 }
 

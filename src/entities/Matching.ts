@@ -1,11 +1,19 @@
 import {
   Column,
   Entity,
-  PrimaryGeneratedColumn,
-  ManyToMany,
   JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-import { SerializedMatching } from '../common/types';
+import {
+  SerializedMatching,
+  SerializedDaySchedule,
+  SerializedUser,
+  SubSerializedMatching,
+  SubSerializedUser,
+} from '../common/types';
+import DaySchedule from './DaySchedule';
 import User from './User';
 
 @Entity('matching')
@@ -13,19 +21,63 @@ class Matching {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  /** Users */
-  @ManyToMany(type => User)
+  @Column({
+    type: 'bool',
+  })
+  active: boolean;
+
+  /** List of days and times for this matching */
+  @OneToMany(
+    type => DaySchedule,
+    schedule => schedule.matching
+  )
+  schedule: DaySchedule[];
+
+  /** Users in this matching */
+  @ManyToMany(
+    type => User,
+    user => user.matches
+  )
   @JoinTable()
   users: User[];
 
-  //Add many to many time relationship
+  serialize(): SerializedMatching {
+    const callbackSchedule = (
+      accum: SerializedDaySchedule[],
+      currentVal: DaySchedule
+    ) => {
+      accum.push(currentVal.serialize());
+      return accum;
+    };
+    const callbackUser = (accum: SerializedUser[], currentVal: User) => {
+      accum.push(currentVal.serialize());
+      return accum;
+    };
+    return {
+      active: this.active,
+      schedule: this.schedule.reduce(callbackSchedule, []),
+      users: this.users.reduce(callbackUser, []),
+    };
+  }
 
-  // serialize(): SerializedMatching {
-  //   callBack = (acc, user) =>
-  //   return {
-  //     users: [this.users.reduce()]
-  //   };
-  // }
+  subSerialize(): SubSerializedMatching {
+    const callbackSchedule = (
+      accum: SerializedDaySchedule[],
+      currentVal: DaySchedule
+    ) => {
+      accum.push(currentVal.serialize());
+      return accum;
+    };
+    const callbackUser = (accum: SubSerializedUser[], currentVal: User) => {
+      accum.push(currentVal.subSerialize());
+      return accum;
+    };
+    return {
+      active: this.active,
+      schedule: this.schedule.reduce(callbackSchedule, []),
+      users: this.users.reduce(callbackUser, []),
+    };
+  }
 }
 
-export default User;
+export default Matching;
