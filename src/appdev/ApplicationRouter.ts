@@ -9,7 +9,11 @@ export type RequestType = 'GET' | 'POST' | 'DELETE';
  * ExpressHandlerFunction - the function signature of callbacks for Express
  * Router objects
  */
-export type ExpressCallback = (req: Request, res: Response, next: NextFunction) => any;
+export type ExpressCallback = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => any;
 
 /**
  * AppDevResponse - the response from an HTTP request
@@ -57,7 +61,7 @@ class ApplicationRouter<T> {
     const middleware = this.middleware();
 
     // Attach middleware to router
-    middleware.forEach((mw) => {
+    middleware.forEach(mw => {
       this.router.use(mw);
     });
 
@@ -94,7 +98,7 @@ class ApplicationRouter<T> {
    * for the given request.
    */
   async content(req: Request): Promise<T> {
-    throw new Error(null);
+    throw new Error('You must implement content()!');
   }
 
   /**
@@ -107,16 +111,11 @@ class ApplicationRouter<T> {
         const content = await this.content(req);
         res.json(new AppDevResponse(true, content));
       } catch (e) {
-        if (e.message === null) {
-          throw new Error('You must implement content()!');
-        } else {
-          res.json(new AppDevResponse(false, { errors: [e.message] }));
-        }
+        res.json(new AppDevResponse(false, { errors: [e.message] }));
       }
       next();
     };
   }
-
 }
 
 export default ApplicationRouter;

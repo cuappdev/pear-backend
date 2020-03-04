@@ -1,7 +1,10 @@
 import { getConnectionManager, Repository } from 'typeorm';
 import User from '../entities/User';
 
-const db = (): Repository<User> => getConnectionManager().get().getRepository(User);
+const db = (): Repository<User> =>
+  getConnectionManager()
+    .get()
+    .getRepository(User);
 
 const createUser = async (
   firstName: string,
@@ -12,24 +15,22 @@ const createUser = async (
   if (!(firstName && googleID && lastName && netID)) {
     throw Error('Invalid request body');
   }
-  const possible_user = await db().findOne({ netID });
-  if (possible_user) {
+  const possibleUser = await db().findOne({ netID });
+  if (possibleUser) {
     throw Error('User with that netID already exists');
   }
   const user = db().create({
-    firstName: firstName,
-    googleID: googleID,
-    lastName: lastName,
-    netID: netID,
-    matches: []
+    firstName,
+    googleID,
+    lastName,
+    netID,
+    matches: [],
   });
   await db().save(user);
   return user;
 };
 
-const deleteUser = async (
-  netID: string
-): Promise<Boolean> => {
+const deleteUser = async (netID: string): Promise<boolean> => {
   const user = await getUserByNetID(netID);
   await db().delete(user);
   return true;
@@ -39,8 +40,8 @@ const updateUser = async (
   currentNetID: string,
   firstName: string,
   lastName: string,
-  netID: string,
-): Promise<Boolean> => {
+  netID: string
+): Promise<boolean> => {
   const user = await getUserByNetID(currentNetID);
   user.firstName = firstName ? firstName : user.firstName;
   user.lastName = lastName ? lastName : user.lastName;
@@ -51,10 +52,15 @@ const updateUser = async (
 
 const getUserByNetID = async (netID: string): Promise<User> => {
   const user = await db().findOne({
-    where: { netID: netID }, relations: ["matches", "matches.users",
-      "matches.schedule", "matches.schedule.times"]
+    where: { netID },
+    relations: [
+      'matches',
+      'matches.users',
+      'matches.schedule',
+      'matches.schedule.times',
+    ],
   });
-  if (!(user)) {
+  if (!user) {
     throw Error('User with that netID does not exist');
   }
   return user;
@@ -64,5 +70,5 @@ export default {
   createUser,
   deleteUser,
   getUserByNetID,
-  updateUser
+  updateUser,
 };

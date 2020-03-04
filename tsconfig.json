@@ -1,4 +1,5 @@
 {
+  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
@@ -6,7 +7,12 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "build",
+    "rootDir": ".",
     "sourceMap": true,
-    "target": "es2016"
-  }
+    "strictPropertyInitialization": false
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ]
 }
