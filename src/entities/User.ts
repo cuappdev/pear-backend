@@ -53,8 +53,8 @@ class User {
   matches: Matching[];
 
   serialize(): SerializedUser {
-    const callback = (accum: SerializedMatching[], currentVal: Matching) => {
-      accum.push(currentVal.serialize());
+    const callback = (accum: SubSerializedMatching[], currentVal: Matching) => {
+      accum.push(currentVal.subSerialize());
       return accum;
     };
     return {

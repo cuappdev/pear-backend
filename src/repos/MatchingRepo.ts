@@ -55,7 +55,7 @@ const createDaySchedule = async (
       );
     }
     const timeObj = await timeDB().findOne({ time });
-    if (!timeObj) throw new Error('time not found');
+    if (!timeObj) throw new Error('Internal error');
     daySchedule.times.push(timeObj);
     await timeDB().save(timeObj);
   }

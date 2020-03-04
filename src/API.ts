@@ -19,7 +19,13 @@ class API extends ApplicationAPI {
   routerGroups(): { [index: string]: Router[] } {
     return {
       docs: [],
-      v1: [CreateUserRouter, DeleteUserRouter, GetUserRouter, UpdateUserRouter],
+      v1: [
+        CreateMatchingRouter,
+        CreateUserRouter,
+        DeleteUserRouter,
+        GetUserRouter,
+        UpdateUserRouter,
+      ],
     };
   }
 }

@@ -24,6 +24,7 @@ const createUser = async (
     googleID,
     lastName,
     netID,
+    matches: [],
   });
   await db().save(user);
   return user;
@@ -61,9 +62,8 @@ const getUserByNetID = async (netID: string): Promise<User> => {
   });
   if (!user) {
     throw Error('User with that netID does not exist');
-  } else {
-    return user;
   }
+  return user;
 };
 
 export default {
