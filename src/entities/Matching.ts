@@ -6,76 +6,51 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import {
-  SerializedMatching,
-  SerializedDaySchedule,
-  SerializedUser,
-  SubSerializedMatching,
-  SubSerializedUser,
-} from '../common/types';
+import { SerializedMatching } from '../common/types';
 import DaySchedule from './DaySchedule';
 import User from './User';
 
 @Entity('matching')
 class Matching {
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({
-    type: 'bool',
+    type: 'bool'
   })
   active: boolean;
 
   /** List of days and times for this matching */
-  @OneToMany(
-    type => DaySchedule,
-    schedule => schedule.matching
-  )
+  @OneToMany(type => DaySchedule, schedule => schedule.matching)
   schedule: DaySchedule[];
 
   /** Users in this matching */
-  @ManyToMany(
-    type => User,
-    user => user.matches
-  )
+  @ManyToMany(type => User, user => user.matches)
   @JoinTable()
   users: User[];
 
   serialize(): SerializedMatching {
-    const callbackSchedule = (
-      accum: SerializedDaySchedule[],
-      currentVal: DaySchedule
-    ) => {
-      accum.push(currentVal.serialize());
-      return accum;
-    };
-    const callbackUser = (accum: SerializedUser[], currentVal: User) => {
+    const callback = (accum, currentVal) => {
       accum.push(currentVal.serialize());
       return accum;
     };
     return {
       active: this.active,
-      schedule: this.schedule.reduce(callbackSchedule, []),
-      users: this.users.reduce(callbackUser, []),
+      schedule: this.schedule.reduce(callback, []),
+      users: this.users.reduce(callback, [])
     };
   }
 
-  subSerialize(): SubSerializedMatching {
-    const callbackSchedule = (
-      accum: SerializedDaySchedule[],
-      currentVal: DaySchedule
-    ) => {
-      accum.push(currentVal.serialize());
-      return accum;
-    };
-    const callbackUser = (accum: SubSerializedUser[], currentVal: User) => {
-      accum.push(currentVal.subSerialize());
+  subSerialize(): SerializedMatching {
+    const callback = (accum, currentVal) => {
+      accum.push(currentVal.constructor.name === 'User' ? currentVal.subSerialize() : currentVal.serialize());
       return accum;
     };
     return {
       active: this.active,
-      schedule: this.schedule.reduce(callbackSchedule, []),
-      users: this.users.reduce(callbackUser, []),
+      schedule: this.schedule.reduce(callback, []),
+      users: this.users.reduce(callback, [])
     };
   }
 }
