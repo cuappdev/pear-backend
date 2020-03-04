@@ -3,9 +3,14 @@ import {
   Column,
   Entity,
   ManyToMany,
-  JoinTable
+  JoinTable,
 } from 'typeorm';
-import { SerializedUser, SubSerializedUser } from '../common/types';
+import {
+  SerializedUser,
+  SubSerializedUser,
+  SubSerializedMatching,
+  SerializedMatching,
+} from '../common/types';
 import Matching from './Matching';
 
 @Entity('users')
@@ -41,12 +46,15 @@ class User {
   })
   netID: string;
 
-  @ManyToMany(type => Matching, matching => matching.users)
+  @ManyToMany(
+    type => Matching,
+    matching => matching.users
+  )
   matches: Matching[];
 
   serialize(): SerializedUser {
-    const callback = (accum, currentVal) => {
-      accum.push(currentVal.subSerialize());
+    const callback = (accum: SerializedMatching[], currentVal: Matching) => {
+      accum.push(currentVal.serialize());
       return accum;
     };
     return {
@@ -54,7 +62,7 @@ class User {
       googleID: this.googleID,
       lastName: this.lastName,
       netID: this.netID,
-      matches: this.matches.reduce(callback, [])
+      matches: this.matches.reduce(callback, []),
     };
   }
 

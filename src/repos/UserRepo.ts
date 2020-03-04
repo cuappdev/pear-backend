@@ -29,9 +29,7 @@ const createUser = async (
   return user;
 };
 
-const deleteUser = async (
-  netID: string
-): Promise<boolean> => {
+const deleteUser = async (netID: string): Promise<boolean> => {
   const user = await getUserByNetID(netID);
   await db().delete(user);
   return true;
@@ -41,7 +39,7 @@ const updateUser = async (
   currentNetID: string,
   firstName: string,
   lastName: string,
-  netID: string,
+  netID: string
 ): Promise<boolean> => {
   const user = await getUserByNetID(currentNetID);
   user.firstName = firstName ? firstName : user.firstName;
@@ -53,11 +51,18 @@ const updateUser = async (
 
 const getUserByNetID = async (netID: string): Promise<User> => {
   const user = await db().findOne({
-    where: { netID: netID }, relations: ["matches", "matches.users",
-      "matches.schedule", "matches.schedule.times"]
+    where: { netID },
+    relations: [
+      'matches',
+      'matches.users',
+      'matches.schedule',
+      'matches.schedule.times',
+    ],
   });
-  if (!(user)) {
+  if (!user) {
     throw Error('User with that netID does not exist');
+  } else {
+    return user;
   }
 };
 
