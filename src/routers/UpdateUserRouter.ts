@@ -1,5 +1,5 @@
-import ApplicationRouter from '../appdev/ApplicationRouter';
 import { Request } from 'express';
+import ApplicationRouter from '../appdev/ApplicationRouter';
 import UserRepo from '../repos/UserRepo';
 
 class UpdateUserRouter extends ApplicationRouter<void> {
@@ -14,13 +14,7 @@ class UpdateUserRouter extends ApplicationRouter<void> {
   async content(req: Request): Promise<void> {
     const { firstName, lastName, netID } = req.body;
     const currentNetID = req.query.netID;
-    const user = await UserRepo.getUserByNetID(currentNetID);
-    await UserRepo.updateUser(
-      currentNetID,
-      firstName == null ? user.firstName : firstName,
-      lastName == null ? user.lastName : lastName,
-      netID == null ? user.netID : netID
-    );
+    await UserRepo.updateUser(currentNetID, firstName, lastName, netID);
   }
 }
 

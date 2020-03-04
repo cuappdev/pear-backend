@@ -13,7 +13,7 @@ const createUser = async (
   netID: string
 ): Promise<User> => {
   if (!(firstName && googleID && lastName && netID)) {
-    throw Error('Invalid parameters');
+    throw Error('Invalid request body');
   }
   const possibleUser = await db().findOne({ netID });
   if (possibleUser) {
@@ -29,24 +29,11 @@ const createUser = async (
   return user;
 };
 
-const deleteUser = async (netID: string): Promise<boolean> => {
-  if (!netID) {
-    throw Error('Invalid parameter');
-  }
-  await db()
-    .createQueryBuilder()
-    .delete()
-    .from(User)
-    .where('netID = :netID', { netID })
-    .execute()
-    .then(dr => {
-      if (dr.affected === 0) {
-        throw Error('User does not exist');
-      }
-    })
-    .catch(e => {
-      throw Error('Unable to execute sql');
-    });
+const deleteUser = async (
+  netID: string
+): Promise<boolean> => {
+  const user = await getUserByNetID(netID);
+  await db().delete(user);
   return true;
 };
 
@@ -54,38 +41,22 @@ const updateUser = async (
   currentNetID: string,
   firstName: string,
   lastName: string,
-  netID: string
+  netID: string,
 ): Promise<boolean> => {
-  const possibleUser = await db().findOne({ netID });
-  if (possibleUser) {
-    throw Error('User with that netID already exists');
-  }
-  await db()
-    .createQueryBuilder()
-    .update(User)
-    .set({
-      firstName,
-      lastName,
-      netID,
-    })
-    .where('netID = :netID', { netID: currentNetID })
-    .execute()
-    .then(ur => {
-      if (ur.affected === 0) {
-        throw Error('User does not exist');
-      }
-    })
-    .catch(e => {
-      throw Error('Unable to execute sql');
-    });
+  const user = await getUserByNetID(currentNetID);
+  user.firstName = firstName ? firstName : user.firstName;
+  user.lastName = lastName ? lastName : user.lastName;
+  user.netID = netID ? netID : user.netID;
+  await db().save(user);
   return true;
 };
 
 const getUserByNetID = async (netID: string): Promise<User> => {
-  const user = await db().findOne({ netID });
-  if (user) {
-    return user;
-  } else {
+  const user = await db().findOne({
+    where: { netID: netID }, relations: ["matches", "matches.users",
+      "matches.schedule", "matches.schedule.times"]
+  });
+  if (!(user)) {
     throw Error('User with that netID does not exist');
   }
 };
