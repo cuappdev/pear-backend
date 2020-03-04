@@ -2,9 +2,9 @@
   "name": "pear-backend",
   "version": "1.0.0",
   "description": "Backend for Coffee Chats app",
-  "main": "build/app.js",
+  "main": "build/src/app.js",
   "scripts": {
-    "start": "./node_modules/.bin/tsc && node build/app.js",
+    "start": "./node_modules/.bin/tsc && node build/src/app.js",
     "check": "./node_modules/.bin/gts check",
     "fix": "./node_modules/.bin/gts fix"
   },

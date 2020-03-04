@@ -4,7 +4,7 @@ import DBConnection from './db/DBConnection';
 
 const app = new API();
 const server = app.getServer(false);
-const PORT = process.env.PORT || 5000;
+const PORT = +process.env.PORT || 5000;
 const SERVER_ADDRESS = '0.0.0.0';
 
 DBConnection()
