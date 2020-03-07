@@ -6,7 +6,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 import { SerializedUserSession } from '../common/types';
 import { SerializedUser } from '../common/types';
@@ -32,9 +32,13 @@ class UserSession {
 
   /** Whether the session is active or not */
   @Column('boolean')
-  isActive = true;
+  active = true;
 
-  user: SerializedUser = null;
+  /** User that the session belongs to */
+  @OneToOne(type => User)
+  @JoinColumn()
+  user: User;
+
   static fromUser(
     user: User,
     accessToken?: string,
@@ -59,19 +63,19 @@ class UserSession {
   }
 
   activate(): UserSession {
-    this.isActive = true;
+    this.active = true;
     return this;
   }
 
   logOut(): UserSession {
-    this.isActive = false;
+    this.active = false;
     return this;
   }
 
   serialize(): SerializedUserSession {
     return {
       accessToken: this.sessionToken,
-      isActive: this.isActive,
+      active: this.active,
       refreshToken: this.updateToken,
       sessionExpiration: this.expiresAt,
     };

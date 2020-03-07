@@ -36,24 +36,33 @@ const createUserAndInitializeSession = async (
   login: LoginTicket
 ): Promise<SerializedUserSession> => {
   const payload = login.getPayload();
+
+  if (!payload) {
+    throw new Error("Unable to login with Google");
+  }
+
   const googleID = payload.sub;
-  const first = payload.given_name;
-  const last = payload.family_name;
+  const first = payload.given_name? payload.given_name : "";
+  const last = payload.family_name? payload.family_name : "";
+
+  if (!payload.email) {
+    throw new Error("No email associated with Google account");
+  }
   const netID = AppDevUtils.netIDFromEmail(payload.email);
 
   let user = await UserRepo.getUserByNetID(netID);
 
   if (!user) {
-    user = await UserRepo.createUser(netID, googleID, first, last);
+    user = await UserRepo.createUser(netID, googleID, first,  last);
   }
 
-  const session = await createOrUpdateSession(user, null, null);
+  const session = await createOrUpdateSession(user, undefined, undefined);
 
   return {
-    accessToken: session.sessionToken,
+    accessToken: session.sessionToken,    
+    active: session.active,
     refreshToken: session.updateToken,
     sessionExpiration: session.expiresAt,
-    isActive: session.isActive,
   };
 };
 
