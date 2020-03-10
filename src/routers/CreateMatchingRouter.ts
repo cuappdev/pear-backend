@@ -14,7 +14,7 @@ class CreateMatchingRouter extends ApplicationRouter<SerializedMatching> {
   }
 
   async content(req: Request): Promise<SerializedMatching> {
-    const { accessToken, netIDs, schedule } = req.body;
+    const { netIDs, schedule } = req.body;
     const daySchedules = [];
     for (const ds of schedule) {
       const daySchedule = await MatchingRepo.createDaySchedule(
@@ -25,7 +25,8 @@ class CreateMatchingRouter extends ApplicationRouter<SerializedMatching> {
     }
     const users = [];
     for (const netID of netIDs) {
-      const user = await UserRepo.findUser(accessToken, netID);
+      const user = await UserRepo.getUserByNetID(netID);
+      if (!user) throw Error ("User with that netID does not exist"); 
       users.push(user);
     }
     const matching = await MatchingRepo.createMatching(users, daySchedules);
