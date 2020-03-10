@@ -4,7 +4,7 @@ export interface SerializedUser {
   googleID: string;
   lastName: string;
   netID: string;
-  matches: SerializedMatching[];
+  matches: SubSerializedMatching[];
 }
 
 // ** Represents a User without matches shown */
