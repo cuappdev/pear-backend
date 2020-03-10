@@ -15,7 +15,7 @@ class GetUserRouter extends ApplicationRouter<SerializedUser> {
 
   async content(req: Request): Promise<SerializedUser> {
     const { accessToken, netID } = req.query;
-    const user = await UserRepo.findUser(accessToken, netID)
+    const user = await UserRepo.findUser(accessToken, netID);
     return user.serialize();
   }
 }

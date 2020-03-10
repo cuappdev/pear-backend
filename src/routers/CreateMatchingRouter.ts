@@ -14,7 +14,7 @@ class CreateMatchingRouter extends ApplicationRouter<SerializedMatching> {
   }
 
   async content(req: Request): Promise<SerializedMatching> {
-    const { netIDs, schedule } = req.body;
+    const { accessToken, netIDs, schedule } = req.body;
     const daySchedules = [];
     for (const ds of schedule) {
       const daySchedule = await MatchingRepo.createDaySchedule(
@@ -25,7 +25,7 @@ class CreateMatchingRouter extends ApplicationRouter<SerializedMatching> {
     }
     const users = [];
     for (const netID of netIDs) {
-      const user = await UserRepo.getUserByNetID(netID);
+      const user = await UserRepo.findUser(accessToken, netID);
       users.push(user);
     }
     const matching = await MatchingRepo.createMatching(users, daySchedules);

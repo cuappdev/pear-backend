@@ -21,7 +21,6 @@ class API extends ApplicationAPI {
     return {
       docs: [],
       v1: [
-        CreateUserRouter,
         DeleteUserRouter,
         GetUserRouter,
         UpdateUserRouter,
