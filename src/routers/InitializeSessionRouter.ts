@@ -1,8 +1,5 @@
 import { Request } from 'express';
-import {
-  OAuth2Client,
-  LoginTicket
-} from 'google-auth-library';
+import { OAuth2Client, LoginTicket } from 'google-auth-library';
 
 import ApplicationRouter from '../appdev/ApplicationRouter';
 
@@ -30,7 +27,9 @@ class InitializeSessionRouter extends ApplicationRouter<SerializedUserSession> {
         UserSessionRepo.createUserAndInitializeSession(login)
       )
       .catch(e => {
-        throw Error('Unable to authenticate');
+        throw Error(e);
       });
   }
 }
+
+export default new InitializeSessionRouter().router;

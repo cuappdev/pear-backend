@@ -6,6 +6,7 @@ import DeleteUserRouter from './routers/DeleteUserRouter';
 import GetUserRouter from './routers/GetUserRouter';
 import CreateMatchingRouter from './routers/CreateMatchingRouter';
 import UpdateUserRouter from './routers/UpdateUserRouter';
+import InitializeSessionRouter from './routers/InitializeSessionRouter';
 
 class API extends ApplicationAPI {
   getPath(): string {
@@ -19,7 +20,13 @@ class API extends ApplicationAPI {
   routerGroups(): { [index: string]: Router[] } {
     return {
       docs: [],
-      v1: [CreateUserRouter, DeleteUserRouter, GetUserRouter, UpdateUserRouter],
+      v1: [
+        CreateUserRouter,
+        DeleteUserRouter,
+        GetUserRouter,
+        UpdateUserRouter,
+        InitializeSessionRouter,
+      ],
     };
   }
 }

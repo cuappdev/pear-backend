@@ -12,9 +12,8 @@ class UpdateUserRouter extends ApplicationRouter<void> {
   }
 
   async content(req: Request): Promise<void> {
-    const { firstName, lastName, netID } = req.body;
-    const currentNetID = req.query.netID;
-    await UserRepo.updateUser(currentNetID, firstName, lastName, netID);
+    const { accessToken, firstName, lastName, netID } = req.body;
+    await UserRepo.updateUser(accessToken, firstName, lastName, netID);
   }
 }
 

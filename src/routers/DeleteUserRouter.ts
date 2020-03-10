@@ -12,8 +12,8 @@ class DeleteUserRouter extends ApplicationRouter<void> {
   }
 
   async content(req: Request): Promise<void> {
-    const { netID } = req.query;
-    await UserRepo.deleteUser(netID);
+    const { accessToken } = req.query;
+    await UserRepo.deleteUser(accessToken);
   }
 }
 

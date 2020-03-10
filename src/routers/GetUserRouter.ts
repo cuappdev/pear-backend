@@ -2,6 +2,7 @@ import { Request } from 'express';
 import { SerializedUser } from '../common/types';
 import ApplicationRouter from '../appdev/ApplicationRouter';
 import UserRepo from '../repos/UserRepo';
+import UserSessionRepo from '../repos/UserSessionRepo';
 
 class GetUserRouter extends ApplicationRouter<SerializedUser> {
   constructor() {
@@ -13,8 +14,8 @@ class GetUserRouter extends ApplicationRouter<SerializedUser> {
   }
 
   async content(req: Request): Promise<SerializedUser> {
-    const { netID } = req.query;
-    const user = await UserRepo.getUserByNetID(netID);
+    const { accessToken, netID } = req.query;
+    const user = await UserRepo.findUser(accessToken, netID)
     return user.serialize();
   }
 }
