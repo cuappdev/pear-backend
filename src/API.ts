@@ -14,6 +14,7 @@ class API extends ApplicationAPI {
   }
 
   middleware(): any[] {
+    // tslint:disable-next-line: deprecation
     return [bodyParser.json()];
   }
 

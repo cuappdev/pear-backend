@@ -26,7 +26,7 @@ class CreateMatchingRouter extends ApplicationRouter<SerializedMatching> {
     const users = [];
     for (const netID of netIDs) {
       const user = await UserRepo.getUserByNetID(netID);
-      if (!user) throw Error ("User with that netID does not exist"); 
+      if (!user) throw Error('User with that netID does not exist');
       users.push(user);
     }
     const matching = await MatchingRepo.createMatching(users, daySchedules);

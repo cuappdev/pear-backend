@@ -16,13 +16,11 @@ const db = (): Repository<UserSession> =>
  * Create or update session for a user
  * @param {User} user - User to either create or update a session for
  * @param {string | undefined} accessToken - Access token to be used for the session
- * @param {string | undefined} refreshToken - Refresh token to be used for the session
  * @return {UserSession} New or updated session
  */
 const createOrUpdateSession = async (
   user: User,
-  accessToken?: string,
-  refreshToken?: string
+  accessToken?: string
 ): Promise<UserSession> => {
   let session = await db()
     .createQueryBuilder('usersessions')
@@ -30,10 +28,10 @@ const createOrUpdateSession = async (
     .setParameters({ userID: user.id })
     .getOne();
   if (session) {
-    session.update(accessToken, refreshToken);
+    session.update(accessToken);
     session.user = user;
   } else {
-    session = UserSession.fromUser(user, accessToken, refreshToken);
+    session = UserSession.fromUser(user, accessToken);
   }
 
   return db().save(session);
@@ -68,12 +66,11 @@ const createUserAndInitializeSession = async (
     user = await UserRepo.createUser(netID, googleID, first, last);
   }
 
-  const session = await createOrUpdateSession(user, undefined, undefined);
+  const session = await createOrUpdateSession(user, undefined);
 
   return {
     accessToken: session.sessionToken,
     active: session.active,
-    refreshToken: session.updateToken,
     sessionExpiration: session.expiresAt,
   };
 };

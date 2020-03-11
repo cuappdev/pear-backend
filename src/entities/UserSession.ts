@@ -76,7 +76,6 @@ class UserSession {
     return {
       accessToken: this.sessionToken,
       active: this.active,
-      refreshToken: this.updateToken,
       sessionExpiration: this.expiresAt,
     };
   }
