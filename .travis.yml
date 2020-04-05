@@ -1,5 +1,33 @@
 language: node_js
 node_js:
 - '10'
-script:
-- npm run build
+services:
+- docker
+addons:
+  ssh_known_hosts:
+  - pear-backend.cornellappdev.com
+jobs:
+  include:
+  - if: branch = alicia/deploy 
+    env:
+    - NODE_IMAGE="pear"
+    - DOMAIN="pear-backend.cornellappdev.com"
+  - if: branch = release
+    env:
+    - NODE_IMAGE="pear"
+    - DOMAIN="pear-backend.cornellappdev.com"
+deploy:
+  provider: script
+  script: bash docker_push
+  skip_cleanup: true
+  on:
+    all_branches: true
+    condition: "$TRAVIS_BRANCH =~ ^alicia/deploy|release$"
+script: echo  
+env:
+  global:
+  - secure: J1sRhzo/Ade8pdLomth5ld5mPaDa9Ic/qFcHSxOoU+h5ZQu+2NfU9m8mehiTxykf6egSFO/j9zs8HNJg60r/IdxkFpt/gG0LPCInSd4VQ3ZSCE+eQ+JF9jEhJsn0J53jz+VC3ybvkWc3yiLd1srx2ApUeQuRSASSAhxIiSeubyOcbv9V9J320eewtE5uTs7VfIrly1dXRbfb8gv9rbIY+NBYw149GoQm2n4bEjoFAOHTFc5F3y272Vg6pTcBWNmue+ILoCrrcgz5s5fH5npzRO6pHZePeikJHB3iMhzKswAE0SXjZZUpN2ZgJwUWWK4L2tFNnahsBjSGDRRRdSHuuC884ZhLbl+216YU7s/KUQ7qapEWFqIByv34WUtTB3NXWuFiEwFeJlhMpdcyN0A9lcaxsLm2outwFZlCQYevdOd9lYI7xlf/chw61pnC3mIn5UTLZFu03BZPLxjLncKGvsGNvjTsVc1439J0IFeYIpX+EKPwqidtrg5YnIE9QgBtnvqkq9EBaMp1UByDkx/hNEgAbUd2jLl2CBO15rSB3FI9squiPo2f+WTpQH9/WNdILMSA+YseidTh3DXPdSR69mQtUC2hQJnX7ekxzaBdbqw0eeJ+8ebvgkWYEhNwBthxlFHaaiysuMPgWcK9PtxgnGvoMmQ6NmRQebugEItQPew=
+  - secure: rHRTR43SXsDZCnpnl3n+kUE6HAL2CKK0ARk1anbLYuPfN7nuqPmUW931q3KNJnyTo7QDEAu7H0fofS0Jbx7xmhu7eP5vc76irT5EYs3BZz5/5GM1W3Z2mOazoin405b3UrDU9LH1Z+dCNofhx2ec/TbNpHTxrLiG/pdLhX6/hfuEy6uozw+Y0JRbx5ZSREcCal6QXjVNIAhcvM9jyQeTh2cgbs/85dzZqMD8Yz1VUWOE1JOzSjNNHJ/P0fP5/E3SkEa9o2TZ2zRdKjcWrNszUghDtO5Dy7BMmlliDb6TO9KgeNYXslS4Wgi08Ri7wj2x7UNNeff5MODTr9KJfXDcZkO+dgaueO0u+YHeQXB+9Z0gbrLTm3Jlgz4neRqT4k3c5C9+JO2zYeqR1HLgzPMrlh9z8JkGFtEO3dYBl/nBpbKK27rl9vOhTjeIr3bvMtsu+nhbRCdm4LjYG18hME0KHnQWM4gX8/Hc2SBOWEye6WT8xSkRjMtGRHqlV5pCB9oOK6nD+7a1ymd1AkDh9m5F5PgoQjr2fC2niQxiDvkkobZ1NCrh6lsuJsK8wAJIoN27p8CmsvwsZ8Z27eSmK76hz5SreuIQMtiMPllzNwfVuGLatqJeXvR3nHPDbIdo6vn6uzA7mcGq7376POUP/GL7bWqxVvFCmNkIOyaQzwDkh0I=
+before_install:
+- openssl aes-256-cbc -K $encrypted_bfd784009d19_key -iv $encrypted_bfd784009d19_iv
+  -in server.pem.enc -out server.pem -d
