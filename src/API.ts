@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import CreateUserRouter from './routers/CreateUserRouter';
 import DeleteUserRouter from './routers/DeleteUserRouter';
 import GetUserRouter from './routers/GetUserRouter';
+import HelloRouter from './routers/HelloRouter';
 import CreateMatchingRouter from './routers/CreateMatchingRouter';
 import UpdateUserRouter from './routers/UpdateUserRouter';
 import InitializeSessionRouter from './routers/InitializeSessionRouter';
@@ -25,6 +26,7 @@ class API extends ApplicationAPI {
         CreateMatchingRouter,
         DeleteUserRouter,
         GetUserRouter,
+        HelloRouter,
         UpdateUserRouter,
         InitializeSessionRouter,
       ],
