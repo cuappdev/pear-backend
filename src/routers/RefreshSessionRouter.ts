@@ -1,8 +1,7 @@
 import { Request } from 'express';
 
 import ApplicationRouter from '../appdev/ApplicationRouter';
-
-import UserSessionRepo from '../repos/UserSessionRepo';
+import auth from '../appdev/Authenticate';
 import { SerializedUserSession } from '../common/types';
 
 class RefreshSessionRouter extends ApplicationRouter<SerializedUserSession> {
@@ -14,15 +13,12 @@ class RefreshSessionRouter extends ApplicationRouter<SerializedUserSession> {
     return '/auth/refresh';
   }
 
+  middleware() {
+    return [auth.updateSession];
+  }
+
   async content(req: Request): Promise<SerializedUserSession> {
-    const { accessToken } = req.body;
-    const user = await UserSessionRepo.getUserFromToken(accessToken);
-    if (!user) throw Error('Unable to find user with given token');
-    const session = await UserSessionRepo.createOrUpdateSession(
-      user,
-      accessToken
-    );
-    return session.serialize();
+    return req.session;
   }
 }
 

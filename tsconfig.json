@@ -9,7 +9,11 @@
     "outDir": "build",
     "rootDir": ".",
     "sourceMap": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "typeRoots": [
+      "node_modules/@types",
+      "src/@types",
+    ]
   },
   "include": [
     "src/**/*.ts",

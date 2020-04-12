@@ -9,7 +9,6 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 import { SerializedUserSession } from '../common/types';
-import { SerializedUser } from '../common/types';
 import User from './User';
 
 @Entity('usersessions')
@@ -20,7 +19,7 @@ class UserSession {
 
   /** Access token associated with session */
   @Column('character varying')
-  sessionToken = '';
+  accessToken = '';
 
   /** Timestamp of when the session expires (Unix time) */
   @Column('bigint')
@@ -28,7 +27,7 @@ class UserSession {
 
   /** Refresh token associated with session */
   @Column('character varying')
-  updateToken = '';
+  refreshToken = '';
 
   /** Whether the session is active or not */
   @Column('boolean')
@@ -50,9 +49,9 @@ class UserSession {
     return session;
   }
 
-  update(accessToken?: string, updateToken?: string): UserSession {
-    this.sessionToken = accessToken || crypto.randomBytes(64).toString('hex');
-    this.updateToken = updateToken || crypto.randomBytes(64).toString('hex');
+  update(accessToken?: string, refreshToken?: string): UserSession {
+    this.accessToken = accessToken || crypto.randomBytes(64).toString('hex');
+    this.refreshToken = refreshToken || crypto.randomBytes(64).toString('hex');
 
     // Session length is 1 day
     this.expiresAt = String(
@@ -74,8 +73,9 @@ class UserSession {
 
   serialize(): SerializedUserSession {
     return {
-      accessToken: this.sessionToken,
+      accessToken: this.accessToken,
       active: this.active,
+      refreshToken: this.refreshToken,
       sessionExpiration: this.expiresAt,
     };
   }

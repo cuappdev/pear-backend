@@ -19,6 +19,7 @@ export interface SubSerializedUser {
 export interface SerializedUserSession {
   accessToken: string;
   active: boolean;
+  refreshToken: string;
   sessionExpiration: string;
 }
 

@@ -69,8 +69,9 @@ const createUserAndInitializeSession = async (
   const session = await createOrUpdateSession(user, undefined);
 
   return {
-    accessToken: session.sessionToken,
+    accessToken: session.accessToken,
     active: session.active,
+    refreshToken: session.refreshToken,
     sessionExpiration: session.expiresAt,
   };
 };
@@ -86,9 +87,30 @@ const getUserFromToken = async (
   const session = await db()
     .createQueryBuilder('usersessions')
     .leftJoinAndSelect('usersessions.user', 'user')
-    .where('usersessions.sessionToken = :accessToken', { accessToken })
+    .where('usersessions.accessToken = :accessToken', { accessToken })
     .getOne();
   return session?.user;
+};
+
+const updateSession = async (
+  refreshToken: string
+): Promise<SerializedUserSession | undefined> => {
+  let session = await db()
+    .createQueryBuilder('usersessions')
+    .leftJoinAndSelect('usersessions.user', 'user')
+    .where('usersessions.refreshToken = :refreshToken', { refreshToken })
+    .getOne();
+  if (!session) {
+    return undefined;
+  }
+  session = session.update();
+  await db().save(session);
+  return {
+    accessToken: session.accessToken,
+    active: session.active,
+    refreshToken: session.refreshToken,
+    sessionExpiration: session.expiresAt,
+  };
 };
 
 /**
@@ -99,7 +121,7 @@ const getUserFromToken = async (
 const verifySession = async (accessToken: string): Promise<boolean> => {
   const session = await db()
     .createQueryBuilder('usersessions')
-    .where('usersessions.sessionToken = :accessToken', { accessToken })
+    .where('usersessions.accessToken = :accessToken', { accessToken })
     .getOne();
   return session
     ? session.active &&
@@ -111,5 +133,6 @@ export default {
   createOrUpdateSession,
   createUserAndInitializeSession,
   getUserFromToken,
+  updateSession,
   verifySession,
 };

@@ -1,8 +1,7 @@
 import { Request } from 'express';
 import { SerializedUser } from '../common/types';
-import ApplicationRouter from '../appdev/ApplicationRouter';
 import UserRepo from '../repos/UserRepo';
-import UserSessionRepo from '../repos/UserSessionRepo';
+import ApplicationRouter from '../appdev/ApplicationRouter';
 
 class GetUserRouter extends ApplicationRouter<SerializedUser> {
   constructor() {

@@ -29,13 +29,11 @@ const createUser = async (
 };
 
 const deleteUser = async (accessToken: string): Promise<boolean> => {
-  if (await UserSessionRepo.verifySession(accessToken)) {
-    const user = await UserSessionRepo.getUserFromToken(accessToken);
-    if (user) {
-      await db().delete(user);
-      return true;
-    } else throw Error('Could not find user with given access token');
-  } else throw Error('Could not verify session');
+  const user = await UserSessionRepo.getUserFromToken(accessToken);
+  if (user) {
+    await db().delete(user);
+    return true;
+  } else throw Error('Could not find user with given access token');
 };
 
 const updateUser = async (
@@ -44,24 +42,20 @@ const updateUser = async (
   lastName: string,
   netID: string
 ): Promise<boolean> => {
-  if (await UserSessionRepo.verifySession(accessToken)) {
-    const user = await UserSessionRepo.getUserFromToken(accessToken);
-    if (user) {
-      user.firstName = firstName ? firstName : user.firstName;
-      user.lastName = lastName ? lastName : user.lastName;
-      user.netID = netID ? netID : user.netID;
-      await db().save(user);
-      return true;
-    } else throw Error('Could not find user with given access token');
-  } else throw Error('Could not verify session');
+  const user = await UserSessionRepo.getUserFromToken(accessToken);
+  if (user) {
+    user.firstName = firstName ? firstName : user.firstName;
+    user.lastName = lastName ? lastName : user.lastName;
+    user.netID = netID ? netID : user.netID;
+    await db().save(user);
+    return true;
+  } else throw Error('Could not find user with given access token');
 };
 
 const findUser = async (accessToken: string, netID: string): Promise<User> => {
-  if (await UserSessionRepo.verifySession(accessToken)) {
-    const user = await getUserByNetID(netID);
-    if (user) return user;
-    else throw Error('User with given netID not found');
-  } else throw Error('Could not verify session');
+  const user = await getUserByNetID(netID);
+  if (user) return user;
+  else throw Error('User with given netID not found');
 };
 
 const getUserByNetID = async (netID: string): Promise<User | undefined> => {
