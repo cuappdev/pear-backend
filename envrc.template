@@ -5,4 +5,3 @@ export DB_USERNAME=[db username]
 export HOST=[host]
 export NODE_ENV=[node env]
 export PORT=[port]
-

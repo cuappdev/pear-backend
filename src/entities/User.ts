@@ -3,20 +3,26 @@ import {
   Column,
   Entity,
   ManyToMany,
-  JoinTable,
 } from 'typeorm';
 import {
   SerializedUser,
   SubSerializedUser,
   SubSerializedMatching,
-  SerializedMatching,
 } from '../common/types';
 import Matching from './Matching';
+import Club from './Club';
 
 @Entity('users')
 class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  /** User's clubs */
+  @ManyToMany(
+    type => Club,
+    club => club.users
+  )
+  clubs: Club[];
 
   /** User first name */
   @Column({
@@ -46,6 +52,7 @@ class User {
   })
   netID: string;
 
+  /** User's matchings */
   @ManyToMany(
     type => Matching,
     matching => matching.users

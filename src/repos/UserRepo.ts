@@ -1,10 +1,31 @@
 import { getConnectionManager, Repository } from 'typeorm';
 import User from '../entities/User';
+import Club from '../entities/Club';
 
-const db = (): Repository<User> =>
+const userDB = (): Repository<User> =>
   getConnectionManager()
     .get()
     .getRepository(User);
+
+
+const clubDB = (): Repository<Club> =>
+  getConnectionManager()
+    .get()
+    .getRepository(Club);
+
+const createClub = async (
+  name: string
+): Promise<void> => {
+  const possibleClub = await clubDB().findOne({ name });
+  if (!possibleClub) {
+    const club = clubDB().create({
+      name,
+      users: []
+    })
+    await clubDB().save(club);
+  }
+  return;
+}
 
 const createUser = async (
   firstName: string,
@@ -15,24 +36,24 @@ const createUser = async (
   if (!(firstName && googleID && lastName && netID)) {
     throw Error('Invalid request body');
   }
-  const possibleUser = await db().findOne({ netID });
+  const possibleUser = await userDB().findOne({ netID });
   if (possibleUser) {
     throw Error('User with that netID already exists');
   }
-  const user = db().create({
+  const user = userDB().create({
     firstName,
     googleID,
     lastName,
     netID,
     matches: [],
   });
-  await db().save(user);
+  await userDB().save(user);
   return user;
 };
 
 const deleteUser = async (netID: string): Promise<boolean> => {
   const user = await getUserByNetID(netID);
-  await db().delete(user);
+  await userDB().delete(user);
   return true;
 };
 
@@ -46,12 +67,12 @@ const updateUser = async (
   user.firstName = firstName ? firstName : user.firstName;
   user.lastName = lastName ? lastName : user.lastName;
   user.netID = netID ? netID : user.netID;
-  await db().save(user);
+  await userDB().save(user);
   return true;
 };
 
 const getUserByNetID = async (netID: string): Promise<User> => {
-  const user = await db().findOne({
+  const user = await userDB().findOne({
     where: { netID },
     relations: [
       'matches',
@@ -67,6 +88,7 @@ const getUserByNetID = async (netID: string): Promise<User> => {
 };
 
 export default {
+  createClub,
   createUser,
   deleteUser,
   getUserByNetID,

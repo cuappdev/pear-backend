@@ -1,13 +1,13 @@
 import { Connection, ConnectionOptions, createConnection } from 'typeorm';
+import Club from '../entities/Club';
 import DaySchedule from '../entities/DaySchedule';
 import Matching from '../entities/Matching';
 import Time from '../entities/Time';
 import User from '../entities/User';
 
 const isProduction = process.env.NODE_ENV === 'production';
-const dbPort = process.env.DB_PORT;
 
-const models = [DaySchedule, Matching, Time, User];
+const models = [Club, DaySchedule, Matching, Time, User];
 
 const connectionOptions: ConnectionOptions = {
   database: process.env.DB_NAME,
