@@ -1,7 +1,6 @@
 import { Request } from 'express';
 import UserRepo from '../repos/UserRepo';
 import ApplicationRouter from '../appdev/ApplicationRouter';
-import auth from '../appdev/Authenticate';
 
 class UpdateUserRouter extends ApplicationRouter<void> {
   constructor() {

@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import UserRepo from '../repos/UserRepo';
 import ApplicationRouter from '../appdev/ApplicationRouter';
+import UserRepo from '../repos/UserRepo';
 
 class DeleteUserRouter extends ApplicationRouter<void> {
   constructor() {

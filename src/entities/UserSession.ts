@@ -21,17 +21,17 @@ class UserSession {
   @Column('character varying')
   accessToken = '';
 
+  /** Whether the session is active or not */
+  @Column('boolean')
+  active = true;
+
   /** Timestamp of when the session expires (Unix time) */
   @Column('bigint')
   expiresAt = '-1';
 
   /** Refresh token associated with session */
-  @Column('character varying')
+  @Column('varchar')
   refreshToken = '';
-
-  /** Whether the session is active or not */
-  @Column('boolean')
-  active = true;
 
   /** User that the session belongs to */
   @OneToOne(type => User)

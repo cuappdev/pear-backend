@@ -1,8 +1,7 @@
 import { Request } from 'express';
-
-import ApplicationRouter from '../appdev/ApplicationRouter';
-import auth from '../appdev/Authenticate';
 import { SerializedUserSession } from '../common/types';
+import auth from '../appdev/Authenticate';
+import ApplicationRouter from '../appdev/ApplicationRouter';
 
 class RefreshSessionRouter extends ApplicationRouter<SerializedUserSession> {
   constructor() {
@@ -10,7 +9,7 @@ class RefreshSessionRouter extends ApplicationRouter<SerializedUserSession> {
   }
 
   getPath(): string {
-    return '/auth/refresh';
+    return '/auth/refresh/';
   }
 
   middleware() {

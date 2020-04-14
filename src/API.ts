@@ -1,15 +1,14 @@
 import { Router } from 'express';
 import ApplicationAPI from './appdev/ApplicationAPI';
 import bodyParser from 'body-parser';
-import auth from './appdev/Authenticate';
-
+import CreateMatchingRouter from './routers/CreateMatchingRouter';
+import CreateUserRouter from './routers/CreateUserRouter';
 import DeleteUserRouter from './routers/DeleteUserRouter';
 import GetUserRouter from './routers/GetUserRouter';
 import HelloRouter from './routers/HelloRouter';
-import CreateMatchingRouter from './routers/CreateMatchingRouter';
-import UpdateUserRouter from './routers/UpdateUserRouter';
 import InitializeSessionRouter from './routers/InitializeSessionRouter';
 import RefreshSessionRouter from './routers/RefreshSessionRouter';
+import UpdateUserRouter from './routers/UpdateUserRouter';
 
 class API extends ApplicationAPI {
   getPath(): string {
@@ -26,6 +25,7 @@ class API extends ApplicationAPI {
       docs: [],
       v1: [
         CreateMatchingRouter,
+        CreateUserRouter,
         DeleteUserRouter,
         GetUserRouter,
         HelloRouter,

@@ -1,10 +1,8 @@
 import { Request } from 'express';
 import { OAuth2Client, LoginTicket } from 'google-auth-library';
-
-import ApplicationRouter from '../appdev/ApplicationRouter';
-
-import UserSessionRepo from '../repos/UserSessionRepo';
 import { SerializedUserSession } from '../common/types';
+import ApplicationRouter from '../appdev/ApplicationRouter';
+import UserSessionRepo from '../repos/UserSessionRepo';
 
 class InitializeSessionRouter extends ApplicationRouter<SerializedUserSession> {
   constructor() {
@@ -12,7 +10,7 @@ class InitializeSessionRouter extends ApplicationRouter<SerializedUserSession> {
   }
 
   getPath(): string {
-    return '/auth/login';
+    return '/auth/login/';
   }
 
   async content(req: Request): Promise<SerializedUserSession> {

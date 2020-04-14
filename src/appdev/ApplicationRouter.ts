@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { ExpressCallback } from './ApplicationAPI';
-
 import { AppDevResponse } from './AppDevResponse';
 import auth from './Authenticate';
 
