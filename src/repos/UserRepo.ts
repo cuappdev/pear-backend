@@ -1,6 +1,5 @@
 import { getConnectionManager, Repository } from 'typeorm';
 import User from '../entities/User';
-import UserSessionRepo from './UserSessionRepo';
 
 const db = (): Repository<User> =>
   getConnectionManager()
@@ -15,7 +14,7 @@ const createUser = async (
 ): Promise<User> => {
   const possibleUser = await db().findOne({ netID });
   if (possibleUser) {
-    throw Error('User with that netID already exists');
+    throw Error('User with given netID already exists');
   }
   const user = db().create({
     firstName,
@@ -28,37 +27,25 @@ const createUser = async (
   return user;
 };
 
-const deleteUser = async (accessToken: string): Promise<boolean> => {
-  const user = await UserSessionRepo.getUserFromToken(accessToken);
-  if (user) {
-    await db().delete(user);
-    return true;
-  } else throw Error('Could not find user with given access token');
+const deleteUser = async (user: User): Promise<boolean> => {
+  await db().delete(user);
+  return true;
 };
 
 const updateUser = async (
-  accessToken: string,
+  user: User,
   firstName: string,
   lastName: string,
   netID: string
 ): Promise<boolean> => {
-  const user = await UserSessionRepo.getUserFromToken(accessToken);
-  if (user) {
-    user.firstName = firstName ? firstName : user.firstName;
-    user.lastName = lastName ? lastName : user.lastName;
-    user.netID = netID ? netID : user.netID;
-    await db().save(user);
-    return true;
-  } else throw Error('Could not find user with given access token');
+  user.firstName = firstName ? firstName : user.firstName;
+  user.lastName = lastName ? lastName : user.lastName;
+  user.netID = netID ? netID : user.netID;
+  await db().save(user);
+  return true;
 };
 
-const findUser = async (accessToken: string, netID: string): Promise<User> => {
-  const user = await getUserByNetID(netID);
-  if (user) return user;
-  else throw Error('User with given netID not found');
-};
-
-const getUserByNetID = async (netID: string): Promise<User | undefined> => {
+const getUserByNetID = async (netID: string): Promise<User> => {
   const user = await db().findOne({
     where: { netID },
     relations: [
@@ -68,13 +55,15 @@ const getUserByNetID = async (netID: string): Promise<User | undefined> => {
       'matches.schedule.times',
     ],
   });
+  if (!user) {
+    throw Error('User with given netID not found');
+  }
   return user;
 };
 
 export default {
   createUser,
   deleteUser,
-  findUser,
   getUserByNetID,
   updateUser,
 };

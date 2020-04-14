@@ -79,17 +79,18 @@ const createUserAndInitializeSession = async (
 /**
  * Get user from access token
  * @param {string} accessToken - Access token that we want to find the owner
- * @return {User | undefined} User that is associated with the access token
+ * @return {User} User that is associated with the access token
  */
-const getUserFromToken = async (
-  accessToken: string
-): Promise<User | undefined> => {
+const getUserFromToken = async (accessToken: string): Promise<User> => {
   const session = await db()
     .createQueryBuilder('usersessions')
     .leftJoinAndSelect('usersessions.user', 'user')
     .where('usersessions.accessToken = :accessToken', { accessToken })
     .getOne();
-  return session?.user;
+  if (!session) {
+    throw Error('No session found with valid token');
+  }
+  return session.user;
 };
 
 const updateSession = async (

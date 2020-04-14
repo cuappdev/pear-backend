@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import UserRepo from '../repos/UserRepo';
 import ApplicationRouter from '../appdev/ApplicationRouter';
-import auth from '../appdev/Authenticate'
+import auth from '../appdev/Authenticate';
 
 class UpdateUserRouter extends ApplicationRouter<void> {
   constructor() {
@@ -13,8 +13,8 @@ class UpdateUserRouter extends ApplicationRouter<void> {
   }
 
   async content(req: Request): Promise<void> {
-    const { accessToken, firstName, lastName, netID } = req.body;
-    await UserRepo.updateUser(accessToken, firstName, lastName, netID);
+    const { firstName, lastName, netID } = req.body;
+    await UserRepo.updateUser(req.user, firstName, lastName, netID);
   }
 }
 

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import { ExpressCallback } from './ApplicationAPI';
 
 import { AppDevResponse } from './AppDevResponse';
-import auth from './Authenticate'
+import auth from './Authenticate';
 
 /**
  * RequestType - the HTTP methods supported by ApplicationRouter

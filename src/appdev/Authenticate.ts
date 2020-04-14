@@ -12,7 +12,7 @@ function parseToken(req: Request, res: Response): string {
   }
   const bearerToken = header.replace('Bearer ', '').trim();
   if (!bearerToken) {
-    res.send(
+    res.json(
       new AppDevResponse(false, { errors: ['Invalid authorization header'] })
     );
     return '';

@@ -9,6 +9,7 @@ import HelloRouter from './routers/HelloRouter';
 import CreateMatchingRouter from './routers/CreateMatchingRouter';
 import UpdateUserRouter from './routers/UpdateUserRouter';
 import InitializeSessionRouter from './routers/InitializeSessionRouter';
+import RefreshSessionRouter from './routers/RefreshSessionRouter';
 
 class API extends ApplicationAPI {
   getPath(): string {
@@ -30,6 +31,7 @@ class API extends ApplicationAPI {
         HelloRouter,
         UpdateUserRouter,
         InitializeSessionRouter,
+        RefreshSessionRouter,
       ],
     };
   }
