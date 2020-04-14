@@ -12,7 +12,7 @@ import {
 import Matching from './Matching';
 import Club from './Club';
 
-@Entity('users')
+@Entity('user')
 class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
