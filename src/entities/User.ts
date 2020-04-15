@@ -59,6 +59,32 @@ class User {
   )
   matches: Matching[];
 
+
+  /** User's graduation year */
+  @Column({
+    type: 'integer'
+  })
+  graduation_year: number;
+
+  /** User's major */
+  @Column({
+    type: 'varchar'
+  })
+  major: string;
+
+  /** User's hometown year */
+  @Column({
+    type: 'varchar'
+  })
+  hometown: string;
+
+  /** User's pronouns */
+  @Column({
+    type: 'varchar'
+  })
+  pronouns: string;
+
+
   serialize(): SerializedUser {
     const callback = (accum: SubSerializedMatching[], currentVal: Matching) => {
       accum.push(currentVal.subSerialize());
