@@ -1,6 +1,6 @@
+import { AppDevResponse } from './AppDevResponse';
 import { NextFunction, Response, Request } from 'express';
 import UserSessionRepo from '../repos/UserSessionRepo';
-import { AppDevResponse } from './AppDevResponse';
 
 function parseToken(req: Request, res: Response): string {
   const header = req.get('Authorization');

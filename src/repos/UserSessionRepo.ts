@@ -1,7 +1,6 @@
 import { getConnectionManager, Repository, getRepository } from 'typeorm';
 import { LoginTicket } from 'google-auth-library/build/src/auth/loginticket';
 import { SerializedUserSession } from '../common/types';
-
 import AppDevUtils from '../appdev/AppDevUtils';
 import UserRepo from './UserRepo';
 import User from '../entities/User';
@@ -52,8 +51,8 @@ const createUserAndInitializeSession = async (
   }
 
   const googleID = payload.sub;
-  const first = payload.given_name ? payload.given_name : '';
-  const last = payload.family_name ? payload.family_name : '';
+  const first = payload.given_name || '';
+  const last = payload.family_name || '';
 
   if (!payload.email) {
     throw Error('No email associated with Google account');

@@ -7,7 +7,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-
 import { SerializedUserSession } from '../common/types';
 import User from './User';
 
