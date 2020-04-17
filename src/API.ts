@@ -25,7 +25,6 @@ class API extends ApplicationAPI {
       docs: [],
       v1: [
         CreateMatchingRouter,
-        CreateUserRouter,
         DeleteUserRouter,
         GetUserRouter,
         HelloRouter,
