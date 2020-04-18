@@ -3,14 +3,18 @@ import {
   Column,
   Entity,
   ManyToMany,
+  ManyToOne,
 } from 'typeorm';
 import {
   SerializedUser,
   SubSerializedUser,
   SubSerializedMatching,
 } from '../common/types';
-import Matching from './Matching';
 import Club from './Club';
+import CornellMajor from './CornellMajor';
+import Interest from './Interest';
+import Matching from './Matching';
+
 
 @Entity('user')
 class User {
@@ -38,12 +42,32 @@ class User {
   })
   googleID: string;
 
+  /** User's graduation year */
+  @Column({
+    type: 'varchar'
+  })
+  graduation_year: string;
+
+  /** User's hometown year */
+  @Column({
+    type: 'varchar'
+  })
+  hometown: string;
+
+  /** User's interests */
+  @ManyToMany(
+    type => Interest,
+    interest => interest.users
+  )
+  interests: Interest[];
+
   /** User last name */
   @Column({
     type: 'varchar',
     default: '',
   })
   lastName: string;
+
 
   /** Net ID of user */
   @Column({
@@ -59,23 +83,12 @@ class User {
   )
   matches: Matching[];
 
-  /** User's graduation year */
-  @Column({
-    type: 'varchar'
-  })
-  graduation_year: string;
-
   /** User's major */
-  @Column({
-    type: 'varchar'
-  })
-  major: string;
-
-  /** User's hometown year */
-  @Column({
-    type: 'varchar'
-  })
-  hometown: string;
+  @ManyToOne(
+    type => CornellMajor,
+    major => major.users
+  )
+  major: CornellMajor;
 
   /** User's pronouns */
   @Column({

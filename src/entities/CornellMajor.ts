@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { SerializedCornellMajor } from '../common/types';
 import User from './User'
 
@@ -14,11 +14,10 @@ class CornellMajor {
   name: string;
 
   /** Users who identify as members of this club */
-  @ManyToMany(
+  @OneToMany(
     type => User,
-    user => user.clubs
+    user => user.major
   )
-  @JoinTable()
   users: User[];
 
   serialize(): SerializedCornellMajor {
