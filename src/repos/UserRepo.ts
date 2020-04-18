@@ -1,6 +1,7 @@
 import { getConnectionManager, Repository } from 'typeorm';
 import User from '../entities/User';
 import Club from '../entities/Club';
+import CornellMajor from '../entities/CornellMajor';
 
 const userDB = (): Repository<User> =>
   getConnectionManager()
@@ -13,6 +14,11 @@ const clubDB = (): Repository<Club> =>
     .get()
     .getRepository(Club);
 
+const cornellMajorDB = (): Repository<CornellMajor> =>
+  getConnectionManager()
+    .get()
+    .getRepository(CornellMajor);
+
 const createClub = async (
   name: string
 ): Promise<void> => {
@@ -23,6 +29,20 @@ const createClub = async (
       users: []
     })
     await clubDB().save(club);
+  }
+  return;
+}
+
+const createCornellMajor = async (
+  name: string
+): Promise<void> => {
+  const possibleCornellMajor = await cornellMajorDB().findOne({ name });
+  if (!possibleCornellMajor) {
+    const cornellMajor = cornellMajorDB().create({
+      name,
+      users: []
+    })
+    await cornellMajorDB().save(cornellMajor);
   }
   return;
 }
@@ -89,6 +109,7 @@ const getUserByNetID = async (netID: string): Promise<User> => {
 
 export default {
   createClub,
+  createCornellMajor,
   createUser,
   deleteUser,
   getUserByNetID,

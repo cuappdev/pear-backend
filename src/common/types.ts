@@ -41,3 +41,6 @@ export type SerializedTime = number;
 
 // ** Represents a Club */
 export type SerializedClub = string;
+
+// ** Represents a Club */
+export type SerializedCornellMajor = string;

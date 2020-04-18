@@ -59,12 +59,11 @@ class User {
   )
   matches: Matching[];
 
-
   /** User's graduation year */
   @Column({
-    type: 'integer'
+    type: 'varchar'
   })
-  graduation_year: number;
+  graduation_year: string;
 
   /** User's major */
   @Column({

@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { SerializedMatching } from '../common/types';
-import ApplicationRouter from '../appdev/ApplicationRouter';
+import ApplicationRouter from '../utils/ApplicationRouter';
 import MatchingRepo from '../repos/MatchingRepo';
 import UserRepo from '../repos/UserRepo';
 
