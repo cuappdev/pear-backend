@@ -5,4 +5,5 @@ export DB_USERNAME=[db username]
 export DB_HOST=[host]
 export NODE_ENV=[node env]
 export PORT=[port]
+export GOOGLE_CLIENT_ID=[google client id]
 

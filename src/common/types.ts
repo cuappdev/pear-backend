@@ -15,6 +15,14 @@ export interface SubSerializedUser {
   netID: string;
 }
 
+// ** Represents a User session */
+export interface SerializedUserSession {
+  accessToken: string;
+  active: boolean;
+  refreshToken: string;
+  sessionExpiration: string;
+}
+
 // ** Represents a matching */
 export interface SerializedMatching {
   active: boolean;

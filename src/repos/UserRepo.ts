@@ -12,12 +12,9 @@ const createUser = async (
   lastName: string,
   netID: string
 ): Promise<User> => {
-  if (!(firstName && googleID && lastName && netID)) {
-    throw Error('Invalid request body');
-  }
   const possibleUser = await db().findOne({ netID });
   if (possibleUser) {
-    throw Error('User with that netID already exists');
+    throw Error('User with given netID already exists');
   }
   const user = db().create({
     firstName,
@@ -30,19 +27,17 @@ const createUser = async (
   return user;
 };
 
-const deleteUser = async (netID: string): Promise<boolean> => {
-  const user = await getUserByNetID(netID);
+const deleteUser = async (user: User): Promise<boolean> => {
   await db().delete(user);
   return true;
 };
 
 const updateUser = async (
-  currentNetID: string,
+  user: User,
   firstName: string,
   lastName: string,
   netID: string
 ): Promise<boolean> => {
-  const user = await getUserByNetID(currentNetID);
   user.firstName = firstName ? firstName : user.firstName;
   user.lastName = lastName ? lastName : user.lastName;
   user.netID = netID ? netID : user.netID;
@@ -61,7 +56,7 @@ const getUserByNetID = async (netID: string): Promise<User> => {
     ],
   });
   if (!user) {
-    throw Error('User with that netID does not exist');
+    throw Error('User with given netID not found');
   }
   return user;
 };

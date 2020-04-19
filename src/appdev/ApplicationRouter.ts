@@ -1,34 +1,12 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import { ExpressCallback } from './ApplicationAPI';
+import { AppDevResponse } from './AppDevResponse';
+import auth from './Authenticate';
 
 /**
  * RequestType - the HTTP methods supported by ApplicationRouter
  */
 export type RequestType = 'GET' | 'POST' | 'DELETE';
-
-/**
- * ExpressHandlerFunction - the function signature of callbacks for Express
- * Router objects
- */
-export type ExpressCallback = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => any;
-
-/**
- * AppDevResponse - the response from an HTTP request
- *
- * Wraps a `success` field around the response data
- */
-class AppDevResponse<T> {
-  success: boolean;
-  data: T;
-
-  constructor(success: boolean, data: T) {
-    this.success = success;
-    this.data = data;
-  }
-}
 
 /**
  * ApplicationRouter - cleanly create an Express Router object using inheritance
@@ -90,7 +68,7 @@ class ApplicationRouter<T> {
   }
 
   middleware(): ExpressCallback[] {
-    return [];
+    return [auth.ensureAuthenticated];
   }
 
   /**
