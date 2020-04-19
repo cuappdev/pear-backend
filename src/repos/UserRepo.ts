@@ -2,12 +2,12 @@ import { getConnectionManager, Repository } from 'typeorm';
 import User from '../entities/User';
 import Club from '../entities/Club';
 import CornellMajor from '../entities/CornellMajor';
+import Interest from '../entities/Interest';
 
 const userDB = (): Repository<User> =>
   getConnectionManager()
     .get()
     .getRepository(User);
-
 
 const clubDB = (): Repository<Club> =>
   getConnectionManager()
@@ -19,6 +19,11 @@ const cornellMajorDB = (): Repository<CornellMajor> =>
     .get()
     .getRepository(CornellMajor);
 
+const interestDB = (): Repository<Interest> =>
+  getConnectionManager()
+    .get()
+    .getRepository(Interest);
+
 const createClub = async (
   name: string
 ): Promise<void> => {
@@ -27,7 +32,7 @@ const createClub = async (
     const club = clubDB().create({
       name,
       users: []
-    })
+    });
     await clubDB().save(club);
   }
   return;
@@ -43,6 +48,20 @@ const createCornellMajor = async (
       users: []
     })
     await cornellMajorDB().save(cornellMajor);
+  }
+  return;
+}
+
+const createInterest = async (
+  name: string
+): Promise<void> => {
+  const possibleinterest = await interestDB().findOne({ name });
+  if (!possibleinterest) {
+    const interest = interestDB().create({
+      name,
+      users: []
+    });
+    await interestDB().save(interest);
   }
   return;
 }
@@ -109,6 +128,7 @@ const getUserByNetID = async (netID: string): Promise<User> => {
 
 export default {
   createClub,
+  createInterest,
   createCornellMajor,
   createUser,
   deleteUser,

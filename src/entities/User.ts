@@ -68,13 +68,19 @@ class User {
   })
   lastName: string;
 
-
   /** Net ID of user */
   @Column({
     type: 'varchar',
     default: '',
   })
   netID: string;
+
+  /** User's major */
+  @ManyToOne(
+    type => CornellMajor,
+    major => major.users
+  )
+  major: CornellMajor;
 
   /** User's matchings */
   @ManyToMany(
@@ -83,12 +89,10 @@ class User {
   )
   matches: Matching[];
 
-  /** User's major */
-  @ManyToOne(
-    type => CornellMajor,
-    major => major.users
-  )
-  major: CornellMajor;
+  @Column({
+    type: 'varchar'
+  })
+  profilePictureURI: string;
 
   /** User's pronouns */
   @Column({

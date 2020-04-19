@@ -15,10 +15,12 @@ const SERVER_ADDRESS = '0.0.0.0';
 
 DBConnection()
   .then(async (connection: any) => {
-    // Pre-populate the database with times, clubs, and cornell majors
-    setupScraperCron()
+    // Pre-populate the database with times, clubs, interests, and majors
     Constants.VALID_TIMES.forEach(time => MatchingRepo.createTime(time));
-    addClubsToDB()
+    importDataFromFile("PearClubs.txt", UserRepo.createClub)
+    importDataFromFile("PearInterests.txt", UserRepo.createInterest)
+    addCornellMajorsToDB()
+    setupMajorScraperCron()
     app.express.listen(PORT, () => {
       console.log(`App is running on ${SERVER_ADDRESS}:${PORT}...`);
       console.log('Press CTRL-C to stop\n');
@@ -26,28 +28,36 @@ DBConnection()
   })
   .catch((error: any) => console.log(error));
 
-async function addClubsToDB() {
+async function importDataFromFile(filename: string, fn: (data: string) => Promise<void>) {
   const fs = require('fs');
   const readline = require('readline');
-  const fileStream = fs.createReadStream(__dirname + "/../../assets/PearClubs.txt");
+  const fileStream = fs.createReadStream(__dirname + "/../../assets/" + filename);
   const rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity
   });
   for await (const line of rl) {
-    UserRepo.createClub(line);
+    if (line) {
+      fn(line);
+    }
   }
 }
 
-async function setupScraperCron() {
-  // Scrape cornell fields of study and update db weekly
+async function addCornellMajorsToDB() {
+  const majors = await scrapeCornellMajors();
+  if (majors.length) {
+    majors.forEach(major => {
+      UserRepo.createCornellMajor(major);
+    });
+  } else {
+    console.log("Error scraping Cornell's list of majors");
+  }
+}
+
+async function setupMajorScraperCron() {
+  // Scrape cornell list of majors and update db weekly
   cron.schedule('0 0 * * 0', async () => {
-    const majors = await scrapeCornellMajors();
-    if (majors.length) {
-      majors.forEach(major => {
-        UserRepo.createCornellMajor(major)
-      });
-    }
+    addCornellMajorsToDB()
   });
 }
 
