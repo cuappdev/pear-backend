@@ -17,20 +17,32 @@ class UserSession {
   uuid: string = uuidv4();
 
   /** Access token associated with session */
-  @Column('character varying')
-  accessToken = '';
+  @Column({
+    type: 'varchar',
+    default: '',
+  })
+  accessToken: string;
 
   /** Whether the session is active or not */
-  @Column('boolean')
-  active = true;
+  @Column({
+    type: 'boolean',
+    default: true,
+  })
+  active: boolean;
 
   /** Timestamp of when the session expires (Unix time) */
-  @Column('bigint')
-  expiresAt = '-1';
+  @Column({
+    type: 'bigint',
+    default: '-1',
+  })
+  expiresAt: string;
 
   /** Refresh token associated with session */
-  @Column('varchar')
-  refreshToken = '';
+  @Column({
+    type: 'varchar',
+    default: '',
+  })
+  refreshToken: string;
 
   /** User that the session belongs to */
   @OneToOne(type => User)

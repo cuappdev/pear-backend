@@ -29,8 +29,8 @@ class API extends ApplicationAPI {
         GetUserRouter,
         HelloRouter,
         InitializeSessionRouter,
-        UpdateUserRouter,
         RefreshSessionRouter,
+        UpdateUserRouter,
       ],
     };
   }
