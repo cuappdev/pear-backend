@@ -2,7 +2,6 @@ import { Router } from 'express';
 import ApplicationAPI from './appdev/ApplicationAPI';
 import bodyParser from 'body-parser';
 import CreateMatchingRouter from './routers/CreateMatchingRouter';
-import CreateUserRouter from './routers/CreateUserRouter';
 import DeleteUserRouter from './routers/DeleteUserRouter';
 import GetUserRouter from './routers/GetUserRouter';
 import HelloRouter from './routers/HelloRouter';
