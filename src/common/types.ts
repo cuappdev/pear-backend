@@ -46,7 +46,6 @@ export interface SerializedDaySchedule {
 // ** Represents a Time */
 export type SerializedTime = number;
 
-
 // ** Represents a Club */
 export type SerializedClub = string;
 

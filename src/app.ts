@@ -5,7 +5,9 @@ import API from './API';
 import DBConnection from './db/DBConnection';
 import MatchingRepo from './repos/MatchingRepo';
 import scrapeCornellMajors from './utils/WebScraper'
-import UserRepo from './repos/UserRepo';
+import ClubRepo from './repos/ClubRepo';
+import CornellMajorRepo from './repos/CornellMajorRepo';
+import InterestRepo from './repos/InterestRepo';
 
 
 const app = new API();
@@ -17,8 +19,8 @@ DBConnection()
   .then(async (connection: any) => {
     // Pre-populate the database with times, clubs, interests, and majors
     Constants.VALID_TIMES.forEach(time => MatchingRepo.createTime(time));
-    importDataFromFile("PearClubs.txt", UserRepo.createClub)
-    importDataFromFile("PearInterests.txt", UserRepo.createInterest)
+    importDataFromFile("PearClubs.txt", ClubRepo.createClub)
+    importDataFromFile("PearInterests.txt", InterestRepo.createInterest)
     addCornellMajorsToDB()
     setupMajorScraperCron()
     app.express.listen(PORT, () => {
@@ -47,7 +49,7 @@ async function addCornellMajorsToDB() {
   const majors = await scrapeCornellMajors();
   if (majors.length) {
     majors.forEach(major => {
-      UserRepo.createCornellMajor(major);
+      CornellMajorRepo.createCornellMajor(major);
     });
   } else {
     console.log("Error scraping Cornell's list of majors");

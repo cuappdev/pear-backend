@@ -1,7 +1,7 @@
 import { getConnectionManager, Repository, getRepository } from 'typeorm';
 import { LoginTicket } from 'google-auth-library/build/src/auth/loginticket';
 import { SerializedUserSession } from '../common/types';
-import AppDevUtils from '../appdev/AppDevUtils';
+import AppDevUtils from '../utils/AppDevUtils';
 import UserRepo from './UserRepo';
 import User from '../entities/User';
 import UserSession from '../entities/UserSession';
@@ -125,7 +125,7 @@ const verifySession = async (accessToken: string): Promise<boolean> => {
     .getOne();
   return session
     ? session.active &&
-        session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
+    session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
     : false;
 };
 
