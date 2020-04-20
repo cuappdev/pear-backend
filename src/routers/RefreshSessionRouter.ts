@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { SerializedUserSession } from '../common/types';
-import auth from '../appdev/Authenticate';
-import ApplicationRouter from '../appdev/ApplicationRouter';
+import auth from '../utils/Authenticate';
+import ApplicationRouter from '../utils/ApplicationRouter';
 
 class RefreshSessionRouter extends ApplicationRouter<SerializedUserSession> {
   constructor() {
