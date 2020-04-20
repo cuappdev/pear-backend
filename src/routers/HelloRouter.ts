@@ -1,17 +1,17 @@
 import { Request } from 'express';
 import ApplicationRouter from '../utils/ApplicationRouter';
 
-class HelloRouter extends ApplicationRouter<String> {
+class HelloRouter extends ApplicationRouter<string> {
   constructor() {
     super('GET');
   }
 
   getPath(): string {
-    return '/';
+    return '/hello/';
   }
 
-  async content(req: Request): Promise<String> {
-    return "Hello world!";
+  async content(req: Request): Promise<string> {
+    return 'Hello world!';
   }
 }
 
