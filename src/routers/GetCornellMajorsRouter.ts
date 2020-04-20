@@ -1,10 +1,10 @@
 import { Request } from 'express';
-import { SerializedClub } from '../common/types';
+import { SerializedCornellMajor } from '../common/types';
 import ApplicationRouter from '../utils/ApplicationRouter';
-import Club from '../entities/Club'
-import ClubRepo from '../repos/ClubRepo';
+import CornellMajor from '../entities/CornellMajor'
+import CornellMajorRepo from '../repos/CornellMajorRepo';
 
-class GetClubsRouter extends ApplicationRouter<SerializedClub[]> {
+class GetCornellMajorsRouter extends ApplicationRouter<SerializedCornellMajor[]> {
   constructor() {
     super('GET');
   }
@@ -13,14 +13,14 @@ class GetClubsRouter extends ApplicationRouter<SerializedClub[]> {
     return '/majors/';
   }
 
-  async content(req: Request): Promise<SerializedClub[]> {
-    const callback = (accum: SerializedClub[], currentVal: Club) => {
+  async content(req: Request): Promise<SerializedCornellMajor[]> {
+    const callback = (accum: SerializedCornellMajor[], currentVal: CornellMajor) => {
       accum.push(currentVal.serialize());
       return accum;
     };
-    const clubs = await ClubRepo.getClubs();
-    return clubs.reduce(callback, []);
+    const majors = await CornellMajorRepo.getCornellMajors();
+    return majors.reduce(callback, []);
   }
 }
 
-export default new GetClubsRouter().router;
+export default new GetCornellMajorsRouter().router;
