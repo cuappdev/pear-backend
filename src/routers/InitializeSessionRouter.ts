@@ -20,12 +20,26 @@ class InitializeSessionRouter extends ApplicationRouter<SerializedUserSession> {
 
   async content(req: Request): Promise<SerializedUserSession> {
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-    const { clubs, firstName, googleID, graduationYear, hometown, interests, lastName, netID, major,
-      pronouns } = req.body;
-    const clubObjects: Club[] =
-      await Promise.all(clubs.map(async (name: string) => ClubRepo.getClubByName(name)));
-    const interestObjects: Interest[] =
-      await Promise.all(interests.map(async (name: string) => InterestRepo.getInterestByName(name)));
+    const {
+      clubs,
+      firstName,
+      googleID,
+      graduationYear,
+      hometown,
+      interests,
+      lastName,
+      netID,
+      major,
+      pronouns,
+    } = req.body;
+    const clubObjects: Club[] = await Promise.all(
+      clubs.map(async (name: string) => ClubRepo.getClubByName(name))
+    );
+    const interestObjects: Interest[] = await Promise.all(
+      interests.map(async (name: string) =>
+        InterestRepo.getInterestByName(name)
+      )
+    );
     const majorObject = await CornellMajorRepo.getCornellMajorByName(major);
     return client
       .verifyIdToken({
@@ -33,8 +47,16 @@ class InitializeSessionRouter extends ApplicationRouter<SerializedUserSession> {
         audience: process.env.GOOGLE_CLIENT_ID,
       })
       .then((login: LoginTicket) =>
-        UserSessionRepo.createUserAndInitializeSession(clubs, googleID, graduationYear, hometown, interests, major,
-          pronouns))
+        UserSessionRepo.createUserAndInitializeSession(
+          clubs,
+          googleID,
+          graduationYear,
+          hometown,
+          interests,
+          major,
+          pronouns
+        )
+      )
       .catch(e => {
         throw Error(e);
       });

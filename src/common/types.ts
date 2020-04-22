@@ -1,4 +1,3 @@
-
 // ** Represents a User */
 export interface SerializedUser {
   clubs: SerializedClub[];

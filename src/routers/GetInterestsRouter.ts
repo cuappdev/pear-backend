@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { SerializedInterest } from '../common/types';
 import ApplicationRouter from '../utils/ApplicationRouter';
-import Interest from '../entities/Interest'
+import Interest from '../entities/Interest';
 import InterestRepo from '../repos/InterestRepo';
 
 class GetInterestsRouter extends ApplicationRouter<SerializedInterest[]> {

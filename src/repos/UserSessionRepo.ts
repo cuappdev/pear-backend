@@ -71,8 +71,18 @@ const createUserAndInitializeSession = async (
   let user = await UserRepo.getUserByNetID(netID);
 
   if (!user) {
-    user = await UserRepo.createUser(clubs, firstName, googleID, graduationYear, hometown, interests, lastName, netID,
-      major, pronouns);
+    user = await UserRepo.createUser(
+      clubs,
+      firstName,
+      googleID,
+      graduationYear,
+      hometown,
+      interests,
+      lastName,
+      netID,
+      major,
+      pronouns
+    );
   }
 
   const session = await createOrUpdateSession(user, undefined);
@@ -135,7 +145,7 @@ const verifySession = async (accessToken: string): Promise<boolean> => {
     .getOne();
   return session
     ? session.active &&
-    session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
+        session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
     : false;
 };
 

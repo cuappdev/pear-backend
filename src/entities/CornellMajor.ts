@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { SerializedCornellMajor } from '../common/types';
-import User from './User'
+import User from './User';
 
 @Entity('major')
 class CornellMajor {

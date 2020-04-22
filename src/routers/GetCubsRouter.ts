@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { SerializedClub } from '../common/types';
 import ApplicationRouter from '../utils/ApplicationRouter';
-import Club from '../entities/Club'
+import Club from '../entities/Club';
 import ClubRepo from '../repos/ClubRepo';
 
 class GetClubsRouter extends ApplicationRouter<SerializedClub[]> {

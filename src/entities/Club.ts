@@ -1,6 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import { SerializedClub } from '../common/types';
-import User from './User'
+import User from './User';
 
 @Entity('club')
 class Club {

@@ -6,10 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import {
-  SerializedMatching,
-  SubSerializedMatching,
-} from '../common/types';
+import { SerializedMatching, SubSerializedMatching } from '../common/types';
 import DaySchedule from './DaySchedule';
 import User from './User';
 
@@ -41,16 +38,16 @@ class Matching {
   serialize(): SerializedMatching {
     return {
       active: this.active,
-      schedule: this.schedule.map((schedule) => schedule.serialize()),
-      users: this.users.map((user) => user.serialize())
+      schedule: this.schedule.map(schedule => schedule.serialize()),
+      users: this.users.map(user => user.serialize()),
     };
   }
 
   subSerialize(): SubSerializedMatching {
     return {
       active: this.active,
-      schedule: this.schedule.map((schedule) => schedule.serialize()),
-      users: this.users.map((user) => user.subSerialize())
+      schedule: this.schedule.map(schedule => schedule.serialize()),
+      users: this.users.map(user => user.subSerialize()),
     };
   }
 }

@@ -9,7 +9,15 @@ import User from '../entities/User';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const models = [Club, CornellMajor, DaySchedule, Interest, Matching, Time, User];
+const models = [
+  Club,
+  CornellMajor,
+  DaySchedule,
+  Interest,
+  Matching,
+  Time,
+  User,
+];
 
 const connectionOptions: ConnectionOptions = {
   database: process.env.DB_NAME,
