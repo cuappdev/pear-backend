@@ -39,7 +39,7 @@ async function importDataFromFile(filename: string, fn: (data: string) => Promis
     crlfDelay: Infinity
   });
   for await (const line of rl) {
-    if (line) {
+    if (line.trim()) {
       fn(line);
     }
   }

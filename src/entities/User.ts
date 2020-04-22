@@ -8,7 +8,6 @@ import {
 import {
   SerializedUser,
   SubSerializedUser,
-  SubSerializedMatching,
 } from '../common/types';
 import Club from './Club';
 import CornellMajor from './CornellMajor';
@@ -16,7 +15,7 @@ import Interest from './Interest';
 import Matching from './Matching';
 
 
-@Entity('user')
+@Entity('pear_user')
 class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -46,7 +45,7 @@ class User {
   @Column({
     type: 'varchar'
   })
-  graduation_year: string;
+  graduationYear: string;
 
   /** User's hometown year */
   @Column({
@@ -90,9 +89,10 @@ class User {
   matches: Matching[];
 
   @Column({
-    type: 'varchar'
+    type: 'varchar',
+    nullable: true
   })
-  profilePictureURI: string;
+  profilePictureURL: string | null;
 
   /** User's pronouns */
   @Column({
@@ -102,16 +102,19 @@ class User {
 
 
   serialize(): SerializedUser {
-    const callback = (accum: SubSerializedMatching[], currentVal: Matching) => {
-      accum.push(currentVal.subSerialize());
-      return accum;
-    };
     return {
+      clubs: this.clubs.map((club) => { return club.serialize() }),
       firstName: this.firstName,
       googleID: this.googleID,
+      graduationYear: this.graduationYear,
+      hometown: this.hometown,
+      interests: this.interests.map((interest) => { return interest.serialize() }),
       lastName: this.lastName,
       netID: this.netID,
-      matches: this.matches.reduce(callback, []),
+      major: this.major.serialize(),
+      matches: this.matches.map((match) => { return match.subSerialize() }),
+      profilePictureURL: this.profilePictureURL,
+      pronouns: this.pronouns
     };
   }
 

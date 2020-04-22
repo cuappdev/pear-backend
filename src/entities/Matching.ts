@@ -8,10 +8,7 @@ import {
 } from 'typeorm';
 import {
   SerializedMatching,
-  SerializedDaySchedule,
-  SerializedUser,
   SubSerializedMatching,
-  SubSerializedUser,
 } from '../common/types';
 import DaySchedule from './DaySchedule';
 import User from './User';
@@ -42,40 +39,18 @@ class Matching {
   users: User[];
 
   serialize(): SerializedMatching {
-    const callbackSchedule = (
-      accum: SerializedDaySchedule[],
-      currentVal: DaySchedule
-    ) => {
-      accum.push(currentVal.serialize());
-      return accum;
-    };
-    const callbackUser = (accum: SerializedUser[], currentVal: User) => {
-      accum.push(currentVal.serialize());
-      return accum;
-    };
     return {
       active: this.active,
-      schedule: this.schedule.reduce(callbackSchedule, []),
-      users: this.users.reduce(callbackUser, []),
+      schedule: this.schedule.map((schedule) => { return schedule.serialize() }),
+      users: this.users.map((user) => { return user.serialize() })
     };
   }
 
   subSerialize(): SubSerializedMatching {
-    const callbackSchedule = (
-      accum: SerializedDaySchedule[],
-      currentVal: DaySchedule
-    ) => {
-      accum.push(currentVal.serialize());
-      return accum;
-    };
-    const callbackUser = (accum: SubSerializedUser[], currentVal: User) => {
-      accum.push(currentVal.subSerialize());
-      return accum;
-    };
     return {
       active: this.active,
-      schedule: this.schedule.reduce(callbackSchedule, []),
-      users: this.users.reduce(callbackUser, []),
+      schedule: this.schedule.map((schedule) => { return schedule.serialize() }),
+      users: this.users.map((user) => { return user.subSerialize() })
     };
   }
 }

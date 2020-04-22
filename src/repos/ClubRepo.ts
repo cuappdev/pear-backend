@@ -21,6 +21,16 @@ const createClub = async (
   return;
 }
 
+const getClubByName = async (
+  name: string
+): Promise<Club> => {
+  const club = await db().findOne({ where: { name } });
+  if (!club) {
+    throw Error('Club with that name not found');
+  }
+  return club;
+}
+
 const getClubs = async (
 ): Promise<Club[]> => {
   return db().find();
@@ -28,5 +38,6 @@ const getClubs = async (
 
 export default {
   createClub,
+  getClubByName,
   getClubs
 };

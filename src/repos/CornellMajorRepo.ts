@@ -21,6 +21,16 @@ const createCornellMajor = async (
   return;
 }
 
+const getCornellMajorByName = async (
+  name: string
+): Promise<CornellMajor> => {
+  const major = await db().findOne({ where: { name } });
+  if (!major) {
+    throw Error('CornellMajor with that name not found');
+  }
+  return major;
+}
+
 const getCornellMajors = async (
 ): Promise<CornellMajor[]> => {
   return db().find();
@@ -29,5 +39,6 @@ const getCornellMajors = async (
 
 export default {
   createCornellMajor,
+  getCornellMajorByName,
   getCornellMajors
 };
