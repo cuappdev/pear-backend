@@ -2,7 +2,6 @@ import { Router } from 'express';
 import ApplicationAPI from './utils/ApplicationAPI';
 import bodyParser from 'body-parser';
 import CreateMatchingRouter from './routers/CreateMatchingRouter';
-import CreateUserRouter from './routers/CreateUserRouter';
 import DeleteUserRouter from './routers/DeleteUserRouter';
 import GetClubsRouter from './routers/GetCubsRouter';
 import GetCornellMajorsRouter from './routers/GetCornellMajorsRouter';
@@ -28,7 +27,6 @@ class API extends ApplicationAPI {
       docs: [],
       v1: [
         CreateMatchingRouter,
-        CreateUserRouter,
         DeleteUserRouter,
         GetUserRouter,
         GetClubsRouter,
