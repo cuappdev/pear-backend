@@ -103,16 +103,16 @@ class User {
 
   serialize(): SerializedUser {
     return {
-      clubs: this.clubs.map((club) => { return club.serialize() }),
+      clubs: this.clubs.map((club) => club.serialize()),
       firstName: this.firstName,
       googleID: this.googleID,
       graduationYear: this.graduationYear,
       hometown: this.hometown,
-      interests: this.interests.map((interest) => { return interest.serialize() }),
+      interests: this.interests.map((interest) => interest.serialize()),
       lastName: this.lastName,
       netID: this.netID,
       major: this.major.serialize(),
-      matches: this.matches.map((match) => { return match.subSerialize() }),
+      matches: this.matches.map((match) => match.subSerialize()),
       profilePictureURL: this.profilePictureURL,
       pronouns: this.pronouns
     };

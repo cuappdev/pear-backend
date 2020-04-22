@@ -41,16 +41,16 @@ class Matching {
   serialize(): SerializedMatching {
     return {
       active: this.active,
-      schedule: this.schedule.map((schedule) => { return schedule.serialize() }),
-      users: this.users.map((user) => { return user.serialize() })
+      schedule: this.schedule.map((schedule) => schedule.serialize()),
+      users: this.users.map((user) => user.serialize())
     };
   }
 
   subSerialize(): SubSerializedMatching {
     return {
       active: this.active,
-      schedule: this.schedule.map((schedule) => { return schedule.serialize() }),
-      users: this.users.map((user) => { return user.subSerialize() })
+      schedule: this.schedule.map((schedule) => schedule.serialize()),
+      users: this.users.map((user) => user.subSerialize())
     };
   }
 }

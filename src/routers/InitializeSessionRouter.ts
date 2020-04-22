@@ -23,9 +23,9 @@ class InitializeSessionRouter extends ApplicationRouter<SerializedUserSession> {
     const { clubs, firstName, googleID, graduationYear, hometown, interests, lastName, netID, major,
       pronouns } = req.body;
     const clubObjects: Club[] =
-      await Promise.all(clubs.map(async (name: string) => { return await ClubRepo.getClubByName(name) }));
+      await Promise.all(clubs.map(async (name: string) => ClubRepo.getClubByName(name)));
     const interestObjects: Interest[] =
-      await Promise.all(interests.map(async (name: string) => { return await InterestRepo.getInterestByName(name) }));
+      await Promise.all(interests.map(async (name: string) => InterestRepo.getInterestByName(name)));
     const majorObject = await CornellMajorRepo.getCornellMajorByName(major);
     return client
       .verifyIdToken({
