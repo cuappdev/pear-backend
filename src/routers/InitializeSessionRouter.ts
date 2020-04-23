@@ -22,13 +22,10 @@ class InitializeSessionRouter extends ApplicationRouter<SerializedUserSession> {
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
     const {
       clubs,
-      firstName,
-      googleID,
+      idToken,
       graduationYear,
       hometown,
       interests,
-      lastName,
-      netID,
       major,
       pronouns,
     } = req.body;
@@ -43,17 +40,17 @@ class InitializeSessionRouter extends ApplicationRouter<SerializedUserSession> {
     const majorObject = await CornellMajorRepo.getCornellMajorByName(major);
     return client
       .verifyIdToken({
-        idToken: req.body.idToken,
+        idToken: idToken,
         audience: process.env.GOOGLE_CLIENT_ID,
       })
       .then((login: LoginTicket) =>
         UserSessionRepo.createUserAndInitializeSession(
-          clubs,
-          googleID,
+          clubObjects,
           graduationYear,
           hometown,
-          interests,
-          major,
+          interestObjects,
+          login,
+          majorObject,
           pronouns
         )
       )

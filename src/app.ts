@@ -1,13 +1,13 @@
 import 'reflect-metadata';
-import Constants from './common/constants';
-import cron from 'node-cron';
 import API from './API';
+import ClubRepo from './repos/ClubRepo';
+import Constants from './common/constants';
+import CornellMajorRepo from './repos/CornellMajorRepo';
+import cron from 'node-cron';
 import DBConnection from './db/DBConnection';
+import InterestRepo from './repos/InterestRepo';
 import MatchingRepo from './repos/MatchingRepo';
 import scrapeCornellMajors from './utils/WebScraper';
-import ClubRepo from './repos/ClubRepo';
-import CornellMajorRepo from './repos/CornellMajorRepo';
-import InterestRepo from './repos/InterestRepo';
 
 const app = new API();
 const server = app.getServer(false);
