@@ -40,7 +40,7 @@ class InitializeSessionRouter extends ApplicationRouter<SerializedUserSession> {
     const majorObject = await CornellMajorRepo.getCornellMajorByName(major);
     return client
       .verifyIdToken({
-        idToken: idToken,
+        idToken,
         audience: process.env.GOOGLE_CLIENT_ID,
       })
       .then((login: LoginTicket) =>

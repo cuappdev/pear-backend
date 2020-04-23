@@ -1,9 +1,9 @@
 import {
   Column,
   Entity,
-  PrimaryGeneratedColumn,
-  ManyToMany,
   JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { SerializedClub } from '../common/types';
 import User from './User';
