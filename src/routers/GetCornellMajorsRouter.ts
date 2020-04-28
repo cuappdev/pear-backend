@@ -1,7 +1,6 @@
 import { Request } from 'express';
 import { SerializedCornellMajor } from '../common/types';
 import ApplicationRouter from '../utils/ApplicationRouter';
-import CornellMajor from '../entities/CornellMajor';
 import CornellMajorRepo from '../repos/CornellMajorRepo';
 
 class GetCornellMajorsRouter extends ApplicationRouter<
@@ -16,15 +15,8 @@ class GetCornellMajorsRouter extends ApplicationRouter<
   }
 
   async content(req: Request): Promise<SerializedCornellMajor[]> {
-    const callback = (
-      accum: SerializedCornellMajor[],
-      currentVal: CornellMajor
-    ) => {
-      accum.push(currentVal.serialize());
-      return accum;
-    };
     const majors = await CornellMajorRepo.getCornellMajors();
-    return majors.reduce(callback, []);
+    return majors.map(majorObject => majorObject.serialize());
   }
 }
 

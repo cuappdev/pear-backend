@@ -15,6 +15,7 @@ class Matching {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  /** Whether the matching is active or not */
   @Column({
     type: 'bool',
   })

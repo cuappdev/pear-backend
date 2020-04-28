@@ -75,6 +75,7 @@ const createMatching = async (
   await matchingDB().save(matching);
   for await (const user of users) {
     user.matches.forEach(matching => {
+      // Set past matches to false
       matching.active = false;
     });
     user.matches.push(matching);

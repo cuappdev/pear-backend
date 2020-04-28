@@ -43,7 +43,7 @@ class User {
   })
   graduationYear: string;
 
-  /** User's hometown year */
+  /** User's hometown */
   @Column({
     type: 'varchar',
   })
@@ -117,8 +117,12 @@ class User {
     return {
       firstName: this.firstName,
       googleID: this.googleID,
+      graduationYear: this.graduationYear,
+      hometown: this.hometown,
       lastName: this.lastName,
       netID: this.netID,
+      profilePictureURL: this.profilePictureURL,
+      pronouns: this.pronouns,
     };
   }
 }

@@ -1,7 +1,6 @@
 import { Request } from 'express';
 import { SerializedClub } from '../common/types';
 import ApplicationRouter from '../utils/ApplicationRouter';
-import Club from '../entities/Club';
 import ClubRepo from '../repos/ClubRepo';
 
 class GetClubsRouter extends ApplicationRouter<SerializedClub[]> {
@@ -14,12 +13,8 @@ class GetClubsRouter extends ApplicationRouter<SerializedClub[]> {
   }
 
   async content(req: Request): Promise<SerializedClub[]> {
-    const callback = (accum: SerializedClub[], currentVal: Club) => {
-      accum.push(currentVal.serialize());
-      return accum;
-    };
     const clubs = await ClubRepo.getClubs();
-    return clubs.reduce(callback, []);
+    return clubs.map(clubObject => clubObject.serialize());
   }
 }
 

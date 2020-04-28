@@ -1,5 +1,6 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
+import LogUtils from './LogUtils';
 
 const scrapeCornellMajors = async () => {
   const url = 'https://www.cornell.edu/academics/fields.cfm';
@@ -18,7 +19,7 @@ const scrapeCornellMajors = async () => {
         }
       });
     })
-    .catch(console.error);
+    .catch(err => LogUtils.logErr(err, 'server', 'Application error'));
   return majors;
 };
 

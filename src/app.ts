@@ -55,8 +55,6 @@ async function addCornellMajorsToDB() {
     majors.forEach(major => {
       CornellMajorRepo.createCornellMajor(major);
     });
-  } else {
-    console.log("Error scraping Cornell's list of majors");
   }
 }
 
