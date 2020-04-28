@@ -20,7 +20,12 @@
   },
   "homepage": "https://github.com/cuappdev/pear-backend#readme",
   "dependencies": {
+    "@types/cheerio": "^0.22.17",
+    "@types/node-cron": "^2.0.3",
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
+    "node-cron": "^2.0.3",
     "google-auth-library": "^5.9.2",
     "pg": "^7.18.1",
     "typeorm": "^0.2.22",

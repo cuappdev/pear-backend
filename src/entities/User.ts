@@ -3,20 +3,25 @@ import {
   Column,
   Entity,
   ManyToMany,
-  JoinTable,
+  ManyToOne,
 } from 'typeorm';
-import {
-  SerializedUser,
-  SubSerializedUser,
-  SubSerializedMatching,
-  SerializedMatching,
-} from '../common/types';
+import { SerializedUser, SubSerializedUser } from '../common/types';
+import Club from './Club';
+import CornellMajor from './CornellMajor';
+import Interest from './Interest';
 import Matching from './Matching';
 
-@Entity('users')
+@Entity('pear_user')
 class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  /** User's clubs */
+  @ManyToMany(
+    type => Club,
+    club => club.users
+  )
+  clubs: Club[];
 
   /** User first name */
   @Column({
@@ -32,6 +37,25 @@ class User {
   })
   googleID: string;
 
+  /** User's graduation year */
+  @Column({
+    type: 'varchar',
+  })
+  graduationYear: string;
+
+  /** User's hometown */
+  @Column({
+    type: 'varchar',
+  })
+  hometown: string;
+
+  /** User's interests */
+  @ManyToMany(
+    type => Interest,
+    interest => interest.users
+  )
+  interests: Interest[];
+
   /** User last name */
   @Column({
     type: 'varchar',
@@ -46,23 +70,46 @@ class User {
   })
   netID: string;
 
+  /** User's major */
+  @ManyToOne(
+    type => CornellMajor,
+    major => major.users
+  )
+  major: CornellMajor;
+
+  /** User's matchings */
   @ManyToMany(
     type => Matching,
     matching => matching.users
   )
   matches: Matching[];
 
+  @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  profilePictureURL: string | null;
+
+  /** User's pronouns */
+  @Column({
+    type: 'varchar',
+  })
+  pronouns: string;
+
   serialize(): SerializedUser {
-    const callback = (accum: SubSerializedMatching[], currentVal: Matching) => {
-      accum.push(currentVal.subSerialize());
-      return accum;
-    };
     return {
+      clubs: this.clubs.map(club => club.serialize()),
       firstName: this.firstName,
       googleID: this.googleID,
+      graduationYear: this.graduationYear,
+      hometown: this.hometown,
+      interests: this.interests.map(interest => interest.serialize()),
       lastName: this.lastName,
       netID: this.netID,
-      matches: this.matches.reduce(callback, []),
+      major: this.major.serialize(),
+      matches: this.matches.map(match => match.subSerialize()),
+      profilePictureURL: this.profilePictureURL,
+      pronouns: this.pronouns,
     };
   }
 
@@ -70,8 +117,12 @@ class User {
     return {
       firstName: this.firstName,
       googleID: this.googleID,
+      graduationYear: this.graduationYear,
+      hometown: this.hometown,
       lastName: this.lastName,
       netID: this.netID,
+      profilePictureURL: this.profilePictureURL,
+      pronouns: this.pronouns,
     };
   }
 }

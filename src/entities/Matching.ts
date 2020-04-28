@@ -6,13 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import {
-  SerializedMatching,
-  SerializedDaySchedule,
-  SerializedUser,
-  SubSerializedMatching,
-  SubSerializedUser,
-} from '../common/types';
+import { SerializedMatching, SubSerializedMatching } from '../common/types';
 import DaySchedule from './DaySchedule';
 import User from './User';
 
@@ -21,6 +15,7 @@ class Matching {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  /** Whether the matching is active or not */
   @Column({
     type: 'bool',
   })
@@ -42,40 +37,18 @@ class Matching {
   users: User[];
 
   serialize(): SerializedMatching {
-    const callbackSchedule = (
-      accum: SerializedDaySchedule[],
-      currentVal: DaySchedule
-    ) => {
-      accum.push(currentVal.serialize());
-      return accum;
-    };
-    const callbackUser = (accum: SerializedUser[], currentVal: User) => {
-      accum.push(currentVal.serialize());
-      return accum;
-    };
     return {
       active: this.active,
-      schedule: this.schedule.reduce(callbackSchedule, []),
-      users: this.users.reduce(callbackUser, []),
+      schedule: this.schedule.map(schedule => schedule.serialize()),
+      users: this.users.map(user => user.serialize()),
     };
   }
 
   subSerialize(): SubSerializedMatching {
-    const callbackSchedule = (
-      accum: SerializedDaySchedule[],
-      currentVal: DaySchedule
-    ) => {
-      accum.push(currentVal.serialize());
-      return accum;
-    };
-    const callbackUser = (accum: SubSerializedUser[], currentVal: User) => {
-      accum.push(currentVal.subSerialize());
-      return accum;
-    };
     return {
       active: this.active,
-      schedule: this.schedule.reduce(callbackSchedule, []),
-      users: this.users.reduce(callbackUser, []),
+      schedule: this.schedule.map(schedule => schedule.serialize()),
+      users: this.users.map(user => user.subSerialize()),
     };
   }
 }

@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import ApplicationRouter from '../appdev/ApplicationRouter';
+import ApplicationRouter from '../utils/ApplicationRouter';
 
 class HelloRouter extends ApplicationRouter<string> {
   constructor() {
