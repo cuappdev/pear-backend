@@ -1,5 +1,6 @@
 import { Request } from 'express';
 import ApplicationRouter from '../utils/ApplicationRouter';
+import Authenticate from '../utils/Authenticate';
 import UserRepo from '../repos/UserRepo';
 
 class UpdateUserRouter extends ApplicationRouter<void> {
@@ -8,7 +9,11 @@ class UpdateUserRouter extends ApplicationRouter<void> {
   }
 
   getPath(): string {
-    return '/user/update/';
+    return '/update/';
+  }
+ 
+  middleware() {
+    return [Authenticate.ensureAuthenticated];
   }
 
   async content(req: Request): Promise<void> {

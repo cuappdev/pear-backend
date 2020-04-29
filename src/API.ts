@@ -22,21 +22,29 @@ class API extends ApplicationAPI {
     return [bodyParser.json()];
   }
 
+  version(): string {
+    return 'v1';
+  }
+
   routerGroups(): { [index: string]: Router[] } {
     return {
+      auth: [
+        HelloRouter,
+        InitializeSessionRouter
+      ],
       docs: [],
-      v1: [
+      refresh: [
+        RefreshSessionRouter
+      ],
+      user: [
         CreateMatchingRouter,
         DeleteUserRouter,
         GetUserRouter,
         GetClubsRouter,
         GetCornellMajorsRouter,
         GetInterestsRouter,
-        HelloRouter,
-        InitializeSessionRouter,
-        RefreshSessionRouter,
         UpdateUserRouter,
-      ],
+      ]
     };
   }
 }

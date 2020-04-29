@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import { SerializedUser } from '../common/types';
 import ApplicationRouter from '../utils/ApplicationRouter';
+import Authenticate from '../utils/Authenticate';
 import UserRepo from '../repos/UserRepo';
 
 class GetUserRouter extends ApplicationRouter<SerializedUser> {
@@ -9,7 +10,11 @@ class GetUserRouter extends ApplicationRouter<SerializedUser> {
   }
 
   getPath(): string {
-    return '/user/';
+    return '/';
+  }
+   
+  middleware() {
+    return [Authenticate.ensureAuthenticated];
   }
 
   async content(req: Request): Promise<SerializedUser> {

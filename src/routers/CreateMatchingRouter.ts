@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import { SerializedMatching } from '../common/types';
 import ApplicationRouter from '../utils/ApplicationRouter';
+import Authenticate from '../utils/Authenticate';
 import MatchingRepo from '../repos/MatchingRepo';
 import UserRepo from '../repos/UserRepo';
 
@@ -11,6 +12,10 @@ class CreateMatchingRouter extends ApplicationRouter<SerializedMatching> {
 
   getPath(): string {
     return '/matching/';
+  }
+
+  middleware() {
+    return [Authenticate.ensureAuthenticated];
   }
 
   async content(req: Request): Promise<SerializedMatching> {

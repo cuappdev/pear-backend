@@ -43,15 +43,16 @@ class ApplicationAPI {
   init() {
     const middleware = this.middleware();
     const routerGroups = this.routerGroups();
+    const version = this.version() + '/';
 
     for (let i = 0; i < middleware.length; i++) {
       this.express.use(middleware[i]);
     }
 
-    Object.keys(routerGroups).forEach(version => {
-      const routers = routerGroups[version];
+    Object.keys(routerGroups).forEach(group => {
+      const routers = routerGroups[group];
       routers.forEach(router => {
-        this.express.use(this.getPath() + version, router);
+        this.express.use(this.getPath() + version + group, router);
       });
     });
   }
@@ -69,6 +70,13 @@ class ApplicationAPI {
    */
   middleware(): ExpressCallback[] {
     return [];
+  }
+
+  /**
+   * Subclasses must override this with the API's version number.
+   */
+  version(): string {
+    return "v0";
   }
 
   /**
