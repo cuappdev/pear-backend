@@ -12,10 +12,6 @@ class RefreshSessionRouter extends ApplicationRouter<SerializedUserSession> {
     return '/auth/refresh/';
   }
 
-  middleware() {
-    return [auth.updateSession];
-  }
-
   async content(req: Request): Promise<SerializedUserSession> {
     return req.session;
   }

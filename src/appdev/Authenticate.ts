@@ -31,7 +31,7 @@ async function ensureAuthenticated(
 ) {
   const bearerToken = parseToken(req, res);
 
-  if (bearerToken === '') return next(true);
+  if (bearerToken === '') return;
 
   if (!(await UserSessionRepo.verifySession(bearerToken))) {
     return res
@@ -47,7 +47,7 @@ async function ensureAuthenticated(
 async function updateSession(req: Request, res: Response, next: NextFunction) {
   const bearerToken = parseToken(req, res);
 
-  if (bearerToken === '') return next(true);
+  if (bearerToken === '') return;
 
   const session = await UserSessionRepo.updateSession(bearerToken);
   if (!session) {
