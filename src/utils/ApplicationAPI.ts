@@ -43,16 +43,19 @@ class ApplicationAPI {
   init() {
     const middleware = this.middleware();
     const routerGroups = this.routerGroups();
-    const version = this.version() + '/';
+    const versions = this.versions();
 
     for (let i = 0; i < middleware.length; i++) {
       this.express.use(middleware[i]);
     }
 
-    Object.keys(routerGroups).forEach(group => {
-      const routers = routerGroups[group];
-      routers.forEach(router => {
-        this.express.use(this.getPath() + version + group, router);
+    Object.keys(versions).forEach(version => {
+      version = version + '/';
+      Object.keys(routerGroups).forEach(group => {
+        const routers = routerGroups[group];
+        routers.forEach(router => {
+          this.express.use(this.getPath() + version + group, router);
+        });
       });
     });
   }
@@ -73,14 +76,15 @@ class ApplicationAPI {
   }
 
   /**
-   * Subclasses must override this with the API's version number.
+   * Subclasses must override this with the API's version number and
+   * corresponding routers.
    */
-  version(): string {
-    return "v0";
+  versions(): {[index: string] : { [index: string]: Router[] }} {
+    return {v0: {}};
   }
 
   /**
-   * Subclasses must override this to supply middleware for the API.
+   * Subclasses must override this to supply routes for the API's current version.
    */
   routerGroups(): { [index: string]: Router[] } {
     return {};

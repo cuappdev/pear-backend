@@ -22,8 +22,8 @@ class API extends ApplicationAPI {
     return [bodyParser.json()];
   }
 
-  version(): string {
-    return 'v1';
+  versions() {
+    return { v1 : this.routerGroups() };
   }
 
   routerGroups(): { [index: string]: Router[] } {
