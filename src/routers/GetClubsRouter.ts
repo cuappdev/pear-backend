@@ -1,20 +1,14 @@
 import { Request } from 'express';
 import { SerializedClub } from '../common/types';
-import ApplicationRouter from '../utils/ApplicationRouter';
-import Authenticate from '../utils/Authenticate';
+import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import ClubRepo from '../repos/ClubRepo';
-
-class GetClubsRouter extends ApplicationRouter<SerializedClub[]> {
+class GetClubsRouter extends AuthenticatedAppplicationRouter<SerializedClub[]> {
   constructor() {
     super('GET');
   }
 
   getPath(): string {
     return '/clubs/';
-  }
-    
-  middleware() {
-    return [Authenticate.ensureAuthenticated];
   }
 
   async content(req: Request): Promise<SerializedClub[]> {
