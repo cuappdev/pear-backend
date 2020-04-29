@@ -1,21 +1,32 @@
-// ** Represents a User */
+//** Represents a User */
 export interface SerializedUser {
+  clubs: SerializedClub[];
   firstName: string;
   googleID: string;
+  graduationYear: string;
+  hometown: string;
+  interests: SerializedInterest[];
   lastName: string;
   netID: string;
+  major: SerializedCornellMajor;
   matches: SubSerializedMatching[];
+  profilePictureURL: string | null;
+  pronouns: string;
 }
 
-// ** Represents a User without matches shown */
+//** Represents a User without clubs, interests, majors, or matches shown */
 export interface SubSerializedUser {
   firstName: string;
   googleID: string;
+  graduationYear: string;
+  hometown: string;
   lastName: string;
   netID: string;
+  profilePictureURL: string | null;
+  pronouns: string;
 }
 
-// ** Represents a User session */
+//** Represents a User session */
 export interface SerializedUserSession {
   accessToken: string;
   active: boolean;
@@ -23,25 +34,34 @@ export interface SerializedUserSession {
   sessionExpiration: string;
 }
 
-// ** Represents a matching */
+//** Represents a matching */
 export interface SerializedMatching {
   active: boolean;
   schedule: SerializedDaySchedule[];
   users: SerializedUser[];
 }
 
-// ** Represents a matching with a SubSerialized User */
+//** Represents a matching with a SubSerialized User */
 export interface SubSerializedMatching {
   active: boolean;
   schedule: SerializedDaySchedule[];
   users: SubSerializedUser[];
 }
 
-// ** Represents a DaySchedule */
+//** Represents a DaySchedule */
 export interface SerializedDaySchedule {
   day: string;
   times: number[];
 }
 
-// ** Represents a Time */
+//** Represents a Time */
 export type SerializedTime = number;
+
+//** Represents a Club */
+export type SerializedClub = string;
+
+//** Represents a Cornell Major */
+export type SerializedCornellMajor = string;
+
+//** Represents an Interest */
+export type SerializedInterest = string;

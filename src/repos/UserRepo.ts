@@ -1,4 +1,7 @@
 import { getConnectionManager, Repository } from 'typeorm';
+import Club from '../entities/Club';
+import CornellMajor from '../entities/CornellMajor';
+import Interest from '../entities/Interest';
 import User from '../entities/User';
 
 const db = (): Repository<User> =>
@@ -7,21 +10,34 @@ const db = (): Repository<User> =>
     .getRepository(User);
 
 const createUser = async (
+  clubs: Club[],
   firstName: string,
   googleID: string,
+  graduationYear: string,
+  hometown: string,
+  interests: Interest[],
   lastName: string,
-  netID: string
+  netID: string,
+  major: CornellMajor,
+  pronouns: string
 ): Promise<User> => {
   const possibleUser = await db().findOne({ netID });
   if (possibleUser) {
     throw Error('User with given netID already exists');
   }
   const user = db().create({
+    clubs,
     firstName,
     googleID,
+    graduationYear,
+    hometown,
+    interests,
     lastName,
     netID,
+    major,
     matches: [],
+    profilePictureURL: null,
+    pronouns,
   });
   await db().save(user);
   return user;
@@ -53,6 +69,9 @@ const getUserByNetID = async (netID: string): Promise<User> => {
       'matches.users',
       'matches.schedule',
       'matches.schedule.times',
+      'clubs',
+      'interests',
+      'major',
     ],
   });
   if (!user) {

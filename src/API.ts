@@ -1,8 +1,11 @@
 import { Router } from 'express';
-import ApplicationAPI from './appdev/ApplicationAPI';
+import ApplicationAPI from './utils/ApplicationAPI';
 import bodyParser from 'body-parser';
 import CreateMatchingRouter from './routers/CreateMatchingRouter';
 import DeleteUserRouter from './routers/DeleteUserRouter';
+import GetClubsRouter from './routers/GetCubsRouter';
+import GetCornellMajorsRouter from './routers/GetCornellMajorsRouter';
+import GetInterestsRouter from './routers/GetInterestsRouter';
 import GetUserRouter from './routers/GetUserRouter';
 import HelloRouter from './routers/HelloRouter';
 import InitializeSessionRouter from './routers/InitializeSessionRouter';
@@ -26,6 +29,9 @@ class API extends ApplicationAPI {
         CreateMatchingRouter,
         DeleteUserRouter,
         GetUserRouter,
+        GetClubsRouter,
+        GetCornellMajorsRouter,
+        GetInterestsRouter,
         HelloRouter,
         InitializeSessionRouter,
         RefreshSessionRouter,
