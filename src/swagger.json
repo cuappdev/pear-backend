@@ -1,0 +1,43 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "Welcome to the pear-backend API docs!",
+      "version": "1.0.0",
+      "title": "pear-backend"
+    },
+    "host": "pear-backend.cornellappdev.com",
+    "basePath": "/api/v1",
+    "tags": [
+      {
+        "name": "Users",
+        "description": "Operations on pear users"
+      },
+      {
+        "name": "Authentication",
+        "description": "Operations to authenticate users"
+      }
+    ],
+    "schemes": [
+      "https"
+    ],
+    "paths": {
+      "security": [
+        {
+          "Bearer": []
+        }
+      ]
+    },
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "ID Token",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "definitions": {
+    },
+    "externalDocs": {
+      "description": "Find out more about pear-backend",
+      "url": "https://github.com/cuappdev/pear-backend"
+    }
+}
