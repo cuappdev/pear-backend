@@ -68,7 +68,7 @@ class ApplicationRouter<T> {
   }
 
   middleware(): ExpressCallback[] {
-    return [auth.ensureAuthenticated];
+    return [];
   }
 
   /**
