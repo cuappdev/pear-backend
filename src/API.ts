@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import CreateMatchingRouter from './routers/CreateMatchingRouter';
 import DeleteUserRouter from './routers/DeleteUserRouter';
 import DocsRouter from './routers/DocsRouter';
-import GetClubsRouter from './routers/GetCubsRouter';
+import GetClubsRouter from './routers/GetClubsRouter';
 import GetCornellMajorsRouter from './routers/GetCornellMajorsRouter';
 import GetInterestsRouter from './routers/GetInterestsRouter';
 import GetUserRouter from './routers/GetUserRouter';
