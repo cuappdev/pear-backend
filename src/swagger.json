@@ -1,185 +1,474 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "description": "Welcome to the pear-backend API docs!",
-      "version": "1.0.0",
-      "title": "pear-backend"
+  "swagger": "2.0",
+  "info": {
+    "description": "Welcome to the pear-backend API docs!",
+    "version": "1.0.0",
+    "title": "pear-backend"
+  },
+  "host": "pear-backend.cornellappdev.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Operations on Pear users. These routes require authorization."
     },
-    "host": "pear-backend.cornellappdev.com",
-    "basePath": "/api/v1",
-    "tags": [
-      {
-        "name": "Users",
-        "description": "Operations on pear users"
-      },
-      {
-        "name": "Authentication",
-        "description": "Operations to authenticate users"
-      }
-    ],
-    "schemes": [
-      "https"
-    ],
-    "paths": {
-      "security": [
-        {
-          "Bearer": []
-        }
-      ]
+    {
+      "name": "Authentication",
+      "description": "Operations to authenticate users."
     },
-    "securityDefinitions": {
-      "Bearer": {
-        "type": "ID Token",
-        "name": "Authorization",
-        "in": "header"
-      }
-    },
-    "definitions": {
-      "User": {
-        "type": "object",
-        "properties": {
-          "clubs": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Club"
-            }
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "googleID": {
-            "type": "string"
-          },
-          "graduationYear": {
-            "type": "string"
-          },
-          "hometown": {
-            "type": "string"
-          },
-          "interests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Interest"
-            }
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "netID": {
-            "type": "string"
-          },
-          "major": {
-            "$ref": "#/definitions/CornellMajor"
-          },
-          "matches": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Matching"
-            }
-          },
-          "profilePictureURL": {
-            "type": "string | undefined"
-          },
-          "pronouns": {
-            "type": "string"
-          }
-        }
-      },
-      "UserSession": {
-        "type": "object",
-        "properties": {
-          "accessToken": {
-            "type": "string"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "refreshToken": {
-            "type": "string"
-          },
-          "sessionExpiration": {
-            "type": "string"
-          }
-        }
-      },
-      "Matching": {
-        "type": "object",
-        "properties": {
-          "active": {
-            "type": "boolean"
-          },
-          "schedule": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/DaySchedule"
-            }
-          },
-          "users": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/SubUser"
-            }
-          }
-        }
-      },
-      "DaySchedule": {
-        "type": "object",
-        "properties": {
-          "day": {
-            "type": "string"
-          },
-          "times": {
-            "type": "array",
-            "items": {
-              "type": "number"
-            }   
-          }
-        }
-      },
-      "SubUser": {
-        "type": "object",
-        "properties": {
-          "firstName": {
-            "type": "string"
-          },
-          "googleID": {
-            "type": "string"
-          },
-          "graduationYear": {
-            "type": "string"
-          },
-          "hometown": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "netID": {
-            "type": "string"
-          },
-          "profilePictureURL": {
-            "type": "string | undefined"
-          },
-          "pronouns": {
-            "type": "string"
-          }
-        }
-      },
-      "Time": {
-        "type": "number"
-      },
-      "Club": {
-        "type": "string"
-      },
-      "CornellMajor": {
-        "type": "string"
-      },
-      "Interest": {
-        "type": "string"
-      }
-    },
-    "externalDocs": {
-      "description": "Find out more about pear-backend",
-      "url": "https://github.com/cuappdev/pear-backend"
+    {
+      "name": "General",
+      "description": "Operations to interact with Pear. These routes do not require authorization."
     }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/user/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets information about the user.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "{success: true, data: [User]}"
+          },
+          "401": {
+            "description": "{success: false, errors: [string] }"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete the user",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "{success: true, data: []}"
+          },
+          "401": {
+            "description": "{success: false, errors: [string] }"
+          }
+        }
+      }
+    },
+    "/user/clubs/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets the clubs of the user",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "{success: true, data: [Club]}"
+          },
+          "401": {
+            "description": "{success: false, errors: [string] }"
+          }
+        }
+      }
+    },
+    "/user/matching/": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets the matchings of a user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "netIDs",
+                "schedule"
+              ],
+              "properties": {
+                "netIDs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "schedule": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/DaySchedule"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{success: true, data: Matching}"
+          },
+          "401": {
+            "description": "{success: false, { errors: [string] }}"
+          }
+        }
+      }
+    },
+    "/user/majors/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets the major of the user",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "{success: true, data: CornellMajor}"
+          },
+          "401": {
+            "description": "{success: false, errors: [string] }"
+          }
+        }
+      }
+    },
+    "/user/interests/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets the major of the user",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "{success: true, data: [Interest]}"
+          },
+          "401": {
+            "description": "{success: false, errors: [string] }"
+          }
+        }
+      }
+    },
+    "/user/update/": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Updates the user with the given parameters",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "firstName",
+                "lastName",
+                "netID"
+              ],
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "netID": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{success: true, data: []]}"
+          },
+          "401": {
+            "description": "{success: false, errors: [string] }"
+          }
+        }
+      }
+    },
+    "/auth/login/": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Authenticates an ID token from Google and creates a user for that Google account if one does not already exist. Returns a session for the user.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "clubs",
+                "idToken",
+                "graduationYear",
+                "hometown",
+                "interests",
+                "major",
+                "pronouns"
+              ],
+              "properties": {
+                "clubs": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Club"
+                  }
+                },
+                "idToken": {
+                  "type": "string"
+                },
+                "graduationYear": {
+                  "type": "string"
+                },
+                "hometown": {
+                  "type": "string"
+                },
+                "interests": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Interest"
+                  }
+                },
+                "major": {
+                  "type": "string"
+                },
+                "pronouns": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{success: true, data: UserSession}"
+          },
+          "401": {
+            "description": "{success: false, errors: [string] }"
+          }
+        }
+      }
+    },
+    "/refresh/": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Authenticates the refresh token and returns a new user session.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "{success: true, data: UserSession}"
+          },
+          "401": {
+            "description": "{success: false, errors: [string] }"
+          }
+        }
+      }
+    },
+    "/auth/hello/": {
+      "get": {
+        "tags": [
+          "General"
+        ],
+        "summary": "Sanity check to see if the application is running.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "{success: true, data: \"Hello world!\" }"
+          },
+          "401": {
+            "description": "{success: false, errors: [string] }"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "clubs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Club"
+          }
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "googleID": {
+          "type": "string"
+        },
+        "graduationYear": {
+          "type": "string"
+        },
+        "hometown": {
+          "type": "string"
+        },
+        "interests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Interest"
+          }
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "netID": {
+          "type": "string"
+        },
+        "major": {
+          "$ref": "#/definitions/CornellMajor"
+        },
+        "matches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Matching"
+          }
+        },
+        "profilePictureURL": {
+          "type": "string"
+        },
+        "pronouns": {
+          "type": "string"
+        }
+      }
+    },
+    "UserSession": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "refreshToken": {
+          "type": "string"
+        },
+        "sessionExpiration": {
+          "type": "string"
+        }
+      }
+    },
+    "Matching": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "schedule": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DaySchedule"
+          }
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubUser"
+          }
+        }
+      }
+    },
+    "DaySchedule": {
+      "type": "object",
+      "properties": {
+        "day": {
+          "type": "string"
+        },
+        "times": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "SubUser": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "googleID": {
+          "type": "string"
+        },
+        "graduationYear": {
+          "type": "string"
+        },
+        "hometown": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "netID": {
+          "type": "string"
+        },
+        "profilePictureURL": {
+          "type": "string"
+        },
+        "pronouns": {
+          "type": "string"
+        }
+      }
+    },
+    "Time": {
+      "type": "number"
+    },
+    "Club": {
+      "type": "string"
+    },
+    "CornellMajor": {
+      "type": "string"
+    },
+    "Interest": {
+      "type": "string"
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about pear-backend",
+    "url": "https://github.com/cuappdev/pear-backend"
+  }
 }
