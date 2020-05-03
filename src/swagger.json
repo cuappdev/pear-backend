@@ -151,7 +151,7 @@
         "tags": [
           "Users"
         ],
-        "summary": "Gets the major of the user",
+        "summary": "Gets the interests of the user",
         "produces": [
           "application/json"
         ],
