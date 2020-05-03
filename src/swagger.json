@@ -35,6 +35,148 @@
       }
     },
     "definitions": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "clubs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Club"
+            }
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "googleID": {
+            "type": "string"
+          },
+          "graduationYear": {
+            "type": "string"
+          },
+          "hometown": {
+            "type": "string"
+          },
+          "interests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Interest"
+            }
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "netID": {
+            "type": "string"
+          },
+          "major": {
+            "$ref": "#/definitions/CornellMajor"
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Matching"
+            }
+          },
+          "profilePictureURL": {
+            "type": "string | undefined"
+          },
+          "pronouns": {
+            "type": "string"
+          }
+        }
+      },
+      "UserSession": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "sessionExpiration": {
+            "type": "string"
+          }
+        }
+      },
+      "Matching": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "schedule": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DaySchedule"
+            }
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/SubUser"
+            }
+          }
+        }
+      },
+      "DaySchedule": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string"
+          },
+          "times": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }   
+          }
+        }
+      },
+      "SubUser": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "googleID": {
+            "type": "string"
+          },
+          "graduationYear": {
+            "type": "string"
+          },
+          "hometown": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "netID": {
+            "type": "string"
+          },
+          "profilePictureURL": {
+            "type": "string | undefined"
+          },
+          "pronouns": {
+            "type": "string"
+          }
+        }
+      },
+      "Time": {
+        "type": "number"
+      },
+      "Club": {
+        "type": "string"
+      },
+      "CornellMajor": {
+        "type": "string"
+      },
+      "Interest": {
+        "type": "string"
+      }
     },
     "externalDocs": {
       "description": "Find out more about pear-backend",
