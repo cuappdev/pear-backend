@@ -1,9 +1,8 @@
 import { Request } from 'express';
 import { SerializedClub } from '../common/types';
-import ApplicationRouter from '../utils/ApplicationRouter';
+import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import ClubRepo from '../repos/ClubRepo';
-
-class GetClubsRouter extends ApplicationRouter<SerializedClub[]> {
+class GetClubsRouter extends AuthenticatedAppplicationRouter<SerializedClub[]> {
   constructor() {
     super('GET');
   }

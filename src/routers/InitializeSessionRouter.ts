@@ -15,7 +15,7 @@ class InitializeSessionRouter extends ApplicationRouter<SerializedUserSession> {
   }
 
   getPath(): string {
-    return '/auth/login/';
+    return '/login/';
   }
 
   async content(req: Request): Promise<SerializedUserSession> {

@@ -1,9 +1,9 @@
 import { Request } from 'express';
 import { SerializedCornellMajor } from '../common/types';
-import ApplicationRouter from '../utils/ApplicationRouter';
+import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import CornellMajorRepo from '../repos/CornellMajorRepo';
 
-class GetCornellMajorsRouter extends ApplicationRouter<
+class GetCornellMajorsRouter extends AuthenticatedAppplicationRouter<
   SerializedCornellMajor[]
 > {
   constructor() {

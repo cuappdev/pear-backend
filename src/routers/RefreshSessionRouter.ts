@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { SerializedUserSession } from '../common/types';
-import auth from '../utils/Authenticate';
 import ApplicationRouter from '../utils/ApplicationRouter';
+import Authenticate from '../utils/Authenticate';
 
 class RefreshSessionRouter extends ApplicationRouter<SerializedUserSession> {
   constructor() {
@@ -9,11 +9,11 @@ class RefreshSessionRouter extends ApplicationRouter<SerializedUserSession> {
   }
 
   getPath(): string {
-    return '/auth/refresh/';
+    return '/';
   }
 
   middleware() {
-    return [auth.updateSession];
+    return [Authenticate.updateSession];
   }
 
   async content(req: Request): Promise<SerializedUserSession> {

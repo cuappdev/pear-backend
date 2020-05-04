@@ -1,14 +1,14 @@
 import { Request } from 'express';
-import ApplicationRouter from '../utils/ApplicationRouter';
 import UserRepo from '../repos/UserRepo';
+import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
 
-class UpdateUserRouter extends ApplicationRouter<void> {
+class UpdateUserRouter extends AuthenticatedAppplicationRouter<void> {
   constructor() {
     super('POST');
   }
 
   getPath(): string {
-    return '/user/update/';
+    return '/update/';
   }
 
   async content(req: Request): Promise<void> {

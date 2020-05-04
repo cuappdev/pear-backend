@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { ExpressCallback } from './ApplicationAPI';
 import { AppDevResponse } from './AppDevResponse';
-import auth from './Authenticate';
 
 /**
  * RequestType - the HTTP methods supported by ApplicationRouter
@@ -68,7 +67,7 @@ class ApplicationRouter<T> {
   }
 
   middleware(): ExpressCallback[] {
-    return [auth.ensureAuthenticated];
+    return [];
   }
 
   /**

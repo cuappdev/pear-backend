@@ -1,14 +1,14 @@
 import { Request } from 'express';
-import ApplicationRouter from '../utils/ApplicationRouter';
+import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import UserRepo from '../repos/UserRepo';
 
-class DeleteUserRouter extends ApplicationRouter<void> {
+class DeleteUserRouter extends AuthenticatedAppplicationRouter<void> {
   constructor() {
     super('DELETE');
   }
 
   getPath(): string {
-    return '/user/';
+    return '/';
   }
 
   async content(req: Request): Promise<void> {

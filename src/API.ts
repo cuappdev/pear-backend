@@ -3,7 +3,7 @@ import ApplicationAPI from './utils/ApplicationAPI';
 import bodyParser from 'body-parser';
 import CreateMatchingRouter from './routers/CreateMatchingRouter';
 import DeleteUserRouter from './routers/DeleteUserRouter';
-import GetClubsRouter from './routers/GetCubsRouter';
+import GetClubsRouter from './routers/GetClubsRouter';
 import GetCornellMajorsRouter from './routers/GetCornellMajorsRouter';
 import GetInterestsRouter from './routers/GetInterestsRouter';
 import GetUserRouter from './routers/GetUserRouter';
@@ -22,21 +22,29 @@ class API extends ApplicationAPI {
     return [bodyParser.json()];
   }
 
+  versions() {
+    return { v1 : this.routerGroups() };
+  }
+
   routerGroups(): { [index: string]: Router[] } {
     return {
+      auth: [
+        HelloRouter,
+        InitializeSessionRouter
+      ],
       docs: [],
-      v1: [
+      refresh: [
+        RefreshSessionRouter
+      ],
+      user: [
         CreateMatchingRouter,
         DeleteUserRouter,
         GetUserRouter,
         GetClubsRouter,
         GetCornellMajorsRouter,
         GetInterestsRouter,
-        HelloRouter,
-        InitializeSessionRouter,
-        RefreshSessionRouter,
         UpdateUserRouter,
-      ],
+      ]
     };
   }
 }

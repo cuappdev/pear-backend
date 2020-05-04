@@ -5,16 +5,20 @@ import UserSessionRepo from '../repos/UserSessionRepo';
 function parseToken(req: Request, res: Response): string {
   const header = req.get('Authorization');
   if (!header) {
-    res.json(
-      new AppDevResponse(false, { errors: ['Authorization header missing'] })
-    );
+    res
+      .status(401)
+      .json(
+        new AppDevResponse(false, { errors: ['Authorization header missing'] })
+      );
     return '';
   }
   const bearerToken = header.replace('Bearer ', '').trim();
   if (!bearerToken) {
-    res.json(
-      new AppDevResponse(false, { errors: ['Invalid authorization header'] })
-    );
+    res
+      .status(401)
+      .json(
+        new AppDevResponse(false, { errors: ['Invalid authorization header'] })
+      );
     return '';
   }
   return bearerToken;
@@ -27,13 +31,13 @@ async function ensureAuthenticated(
 ) {
   const bearerToken = parseToken(req, res);
 
-  if (bearerToken === '') return next(true);
+  if (bearerToken === '') return;
 
   if (!(await UserSessionRepo.verifySession(bearerToken))) {
-    res
+    return res
       .status(401)
       .json(new AppDevResponse(false, { errors: ['Invalid access token'] }));
-    return next(true);
+    
   }
   const user = await UserSessionRepo.getUserFromToken(bearerToken);
   req.user = user;
@@ -43,14 +47,13 @@ async function ensureAuthenticated(
 async function updateSession(req: Request, res: Response, next: NextFunction) {
   const bearerToken = parseToken(req, res);
 
-  if (bearerToken === '') return next(true);
+  if (bearerToken === '') return;
 
   const session = await UserSessionRepo.updateSession(bearerToken);
   if (!session) {
-    res
+    return res
       .status(401)
-      .json(new AppDevResponse(false, { errors: ['Invalid refresh token'] }));
-    return next(true);
+      .json(new AppDevResponse(false, { errors: ['Invalid refresh token'] })); 
   }
   req.session = session;
   return next();
