@@ -85,7 +85,7 @@
         "tags": [
           "Users"
         ],
-        "summary": "Gets the matchings of a user",
+        "summary": "Creates the matchings of users",
         "produces": [
           "application/json"
         ],

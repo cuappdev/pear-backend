@@ -2,7 +2,6 @@ import { Request } from 'express';
 import ApplicationRouter from '../utils/ApplicationRouter';
 import * as swaggerUI from 'swagger-ui-express';
 import * as swaggerDocument from '../swagger.json';
-import { ExpressCallback } from '../utils/ApplicationAPI';
 
 class DocsRouter extends ApplicationRouter<any> {
   constructor() {
