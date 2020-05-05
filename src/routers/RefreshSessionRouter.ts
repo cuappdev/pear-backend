@@ -5,7 +5,7 @@ import Authenticate from '../utils/Authenticate';
 
 class RefreshSessionRouter extends ApplicationRouter<SerializedUserSession> {
   constructor() {
-    super('POST');
+    super('GET');
   }
 
   getPath(): string {

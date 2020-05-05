@@ -66,7 +66,7 @@ class ApplicationRouter<T> {
     throw new Error('You must implement getPath() with a valid path!');
   }
 
-  middleware(): ExpressCallback[] {
+  middleware(): any[] {
     return [];
   }
 
