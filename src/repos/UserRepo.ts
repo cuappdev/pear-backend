@@ -49,7 +49,7 @@ const updateUser = async (
     throw Error('At least one user field is required');
   }
   for (const key of userFieldKeys) {
-    if (!Object.keys(user).includes(key)) {
+    if (!Object.keys(user).includes(key) || key === "googleID" || key === "netID") {
       throw Error('Invalid user field provided: ' + key);
     }
   }
