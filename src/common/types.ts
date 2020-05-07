@@ -5,7 +5,7 @@ import CornellMajor from '../entities/CornellMajor';
 //** Represents a User */
 export interface SerializedUser {
   clubs: SerializedClub[];
-  firstName: string | null;
+  firstName: string;
   googleID: string;
   graduationYear: string | null;
   hometown: string | null;

@@ -50,7 +50,7 @@ const updateUser = async (
   }
   for (const key of userFieldKeys) {
     if (!Object.keys(user).includes(key)) {
-      throw Error('Invalid user fields provided: ' + key);
+      throw Error('Invalid user field provided: ' + key);
     }
   }
   db().merge(user, userFields);
