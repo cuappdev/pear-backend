@@ -216,40 +216,10 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "clubs",
-                  "idToken",
-                  "graduationYear",
-                  "hometown",
-                  "interests",
-                  "major",
-                  "pronouns"
+                  "idToken"
                 ],
                 "properties": {
-                  "clubs": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Club"
-                    }
-                  },
                   "idToken": {
-                    "type": "string"
-                  },
-                  "graduationYear": {
-                    "type": "string"
-                  },
-                  "hometown": {
-                    "type": "string"
-                  },
-                  "interests": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Interest"
-                    }
-                  },
-                  "major": {
-                    "type": "string"
-                  },
-                  "pronouns": {
                     "type": "string"
                   }
                 }

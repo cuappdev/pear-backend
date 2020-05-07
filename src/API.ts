@@ -29,8 +29,9 @@ class API extends ApplicationAPI {
 
   routerGroups(): { [index: string]: Router[] } {
     return {
-      auth: [HelloRouter, InitializeSessionRouter],
+      auth: [InitializeSessionRouter],
       docs: [DocsRouter],
+      general: [HelloRouter],
       refresh: [RefreshSessionRouter],
       user: [
         CreateMatchingRouter,
