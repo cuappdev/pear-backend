@@ -13,12 +13,10 @@ class DocsRouter extends ApplicationRouter<any> {
   }
 
   middleware() {
-    return [swaggerUI.serve, swaggerUI.setup(swaggerDocument)]
+    return [swaggerUI.serve, swaggerUI.setup(swaggerDocument)];
   }
 
-  async content(req: Request): Promise<Object> {
-    return 0;
-  }
+  async content(req: Request): Promise<void> {}
 }
 
 export default new DocsRouter().router;

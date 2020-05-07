@@ -1,12 +1,10 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
     "description": "Welcome to the pear-backend API docs!",
     "version": "1.0.0",
     "title": "pear-backend"
   },
-  "host": "pear-backend.cornellappdev.com",
-  "basePath": "/api/v1",
   "tags": [
     {
       "name": "Users",
@@ -21,9 +19,6 @@
       "description": "Operations to interact with Pear. These routes do not require authorization."
     }
   ],
-  "schemes": [
-    "https"
-  ],
   "paths": {
     "/user/": {
       "get": {
@@ -31,9 +26,6 @@
           "Users"
         ],
         "summary": "Gets information about the user.",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "{success: true, data: [User]}"
@@ -48,9 +40,6 @@
           "Users"
         ],
         "summary": "Delete the user",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "{success: true, data: []}"
@@ -67,9 +56,6 @@
           "Users"
         ],
         "summary": "Gets the clubs of the user",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "{success: true, data: [Club]}"
@@ -86,37 +72,34 @@
           "Users"
         ],
         "summary": "Creates the matchings of users",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "required": [
-                "netIDs",
-                "schedule"
-              ],
-              "properties": {
-                "netIDs": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "schedule": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/DaySchedule"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "netIDs",
+                  "schedule"
+                ],
+                "properties": {
+                  "netIDs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "schedule": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DaySchedule"
+                    }
                   }
                 }
               }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "{success: true, data: Matching}"
@@ -133,9 +116,6 @@
           "Users"
         ],
         "summary": "Gets the major of the user",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "{success: true, data: CornellMajor}"
@@ -152,9 +132,6 @@
           "Users"
         ],
         "summary": "Gets the interests of the user",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "{success: true, data: [Interest]}"
@@ -171,38 +148,55 @@
           "Users"
         ],
         "summary": "Updates the user with the given parameters",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "required": [
-                "firstName",
-                "lastName",
-                "netID"
-              ],
-              "properties": {
-                "firstName": {
-                  "type": "string"
-                },
-                "lastName": {
-                  "type": "string"
-                },
-                "netID": {
-                  "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "clubs",
+                  "graduationYear",
+                  "hometown",
+                  "interest",
+                  "major",
+                  "profilePictureURL",
+                  "pronouns"
+                ],
+                "properties": {
+                  "clubs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "graduationYear": {
+                    "type": "string"
+                  },
+                  "hometown": {
+                    "type": "string"
+                  },
+                  "interest": {
+                    "type": "string"
+                  },
+                  "major": {
+                    "type": "string"
+                  },
+                  "profilePictureURL": {
+                    "type": "string"
+                  },
+                  "pronouns": {
+                    "type": "string"
+                  }
                 }
               }
             }
-          }
-        ],
+          },
+          "description": "Any combination of valid user fields can be sent as the post body",
+          "required": true
+        },
         "responses": {
           "200": {
-            "description": "{success: true, data: []]}"
+            "description": "{success: true}"
           },
           "401": {
             "description": "{success: false, errors: [string] }"
@@ -216,57 +210,54 @@
           "Authentication"
         ],
         "summary": "Authenticates an ID token from Google and creates a user for that Google account if one does not already exist. Returns a session for the user.",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "required": [
-                "clubs",
-                "idToken",
-                "graduationYear",
-                "hometown",
-                "interests",
-                "major",
-                "pronouns"
-              ],
-              "properties": {
-                "clubs": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Club"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "clubs",
+                  "idToken",
+                  "graduationYear",
+                  "hometown",
+                  "interests",
+                  "major",
+                  "pronouns"
+                ],
+                "properties": {
+                  "clubs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Club"
+                    }
+                  },
+                  "idToken": {
+                    "type": "string"
+                  },
+                  "graduationYear": {
+                    "type": "string"
+                  },
+                  "hometown": {
+                    "type": "string"
+                  },
+                  "interests": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Interest"
+                    }
+                  },
+                  "major": {
+                    "type": "string"
+                  },
+                  "pronouns": {
+                    "type": "string"
                   }
-                },
-                "idToken": {
-                  "type": "string"
-                },
-                "graduationYear": {
-                  "type": "string"
-                },
-                "hometown": {
-                  "type": "string"
-                },
-                "interests": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Interest"
-                  }
-                },
-                "major": {
-                  "type": "string"
-                },
-                "pronouns": {
-                  "type": "string"
                 }
               }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "{success: true, data: UserSession}"
@@ -283,9 +274,6 @@
           "Authentication"
         ],
         "summary": "Authenticates the refresh token and returns a new user session.",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "{success: true, data: UserSession}"
@@ -302,9 +290,6 @@
           "General"
         ],
         "summary": "Sanity check to see if the application is running.",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "{success: true, data: \"Hello world!\" }"
@@ -316,159 +301,175 @@
       }
     }
   },
-  "securityDefinitions": {
-    "Bearer": {
-      "type": "apiKey",
-      "name": "Authorization",
-      "in": "header"
-    }
-  },
-  "definitions": {
-    "User": {
-      "type": "object",
-      "properties": {
-        "clubs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Club"
-          }
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "googleID": {
-          "type": "string"
-        },
-        "graduationYear": {
-          "type": "string"
-        },
-        "hometown": {
-          "type": "string"
-        },
-        "interests": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Interest"
-          }
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "netID": {
-          "type": "string"
-        },
-        "major": {
-          "$ref": "#/definitions/CornellMajor"
-        },
-        "matches": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Matching"
-          }
-        },
-        "profilePictureURL": {
-          "type": "string"
-        },
-        "pronouns": {
-          "type": "string"
-        }
-      }
-    },
-    "UserSession": {
-      "type": "object",
-      "properties": {
-        "accessToken": {
-          "type": "string"
-        },
-        "active": {
-          "type": "boolean"
-        },
-        "refreshToken": {
-          "type": "string"
-        },
-        "sessionExpiration": {
-          "type": "string"
-        }
-      }
-    },
-    "Matching": {
-      "type": "object",
-      "properties": {
-        "active": {
-          "type": "boolean"
-        },
-        "schedule": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DaySchedule"
-          }
-        },
-        "users": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SubUser"
-          }
-        }
-      }
-    },
-    "DaySchedule": {
-      "type": "object",
-      "properties": {
-        "day": {
-          "type": "string"
-        },
-        "times": {
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        }
-      }
-    },
-    "SubUser": {
-      "type": "object",
-      "properties": {
-        "firstName": {
-          "type": "string"
-        },
-        "googleID": {
-          "type": "string"
-        },
-        "graduationYear": {
-          "type": "string"
-        },
-        "hometown": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "netID": {
-          "type": "string"
-        },
-        "profilePictureURL": {
-          "type": "string"
-        },
-        "pronouns": {
-          "type": "string"
-        }
-      }
-    },
-    "Time": {
-      "type": "number"
-    },
-    "Club": {
-      "type": "string"
-    },
-    "CornellMajor": {
-      "type": "string"
-    },
-    "Interest": {
-      "type": "string"
-    }
-  },
   "externalDocs": {
     "description": "Find out more about pear-backend",
     "url": "https://github.com/cuappdev/pear-backend"
+  },
+  "servers": [
+    {
+      "url": "https://pear-backend.cornellappdev.com/api/v1"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "clubs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Club"
+            }
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "googleID": {
+            "type": "string"
+          },
+          "graduationYear": {
+            "type": "string",
+            "nullable": true
+          },
+          "hometown": {
+            "type": "string",
+            "nullable": true
+          },
+          "interests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Interest"
+            }
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "netID": {
+            "type": "string"
+          },
+          "major": {
+            "$ref": "#/components/schemas/CornellMajor"
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Matching"
+            }
+          },
+          "profilePictureURL": {
+            "type": "string",
+            "nullable": true
+          },
+          "pronouns": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UserSession": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "sessionExpiration": {
+            "type": "string"
+          }
+        }
+      },
+      "Matching": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "schedule": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DaySchedule"
+            }
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubUser"
+            }
+          }
+        }
+      },
+      "DaySchedule": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string"
+          },
+          "times": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        }
+      },
+      "SubUser": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "googleID": {
+            "type": "string"
+          },
+          "graduationYear": {
+            "type": "string",
+            "nullable": true
+          },
+          "hometown": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "netID": {
+            "type": "string"
+          },
+          "profilePictureURL": {
+            "type": "string",
+            "nullable": true
+          },
+          "pronouns": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Time": {
+        "type": "number"
+      },
+      "Club": {
+        "type": "string"
+      },
+      "CornellMajor": {
+        "type": "string",
+        "nullable": true
+      },
+      "Interest": {
+        "type": "string"
+      }
+    }
   }
 }

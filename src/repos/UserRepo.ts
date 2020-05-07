@@ -11,19 +11,19 @@ const initalizeUser = async (
   firstName: string,
   googleID: string,
   lastName: string,
-  netID: string,
+  netID: string
 ): Promise<User> => {
   const possibleUser = await db().findOne({ netID });
   if (possibleUser) {
     throw Error('User with given netID already exists');
   }
   const user = db().create({
-    clubs: null,
+    clubs: [],
     firstName,
     googleID,
     graduationYear: null,
     hometown: null,
-    interests: null,
+    interests: [],
     lastName,
     netID,
     major: null,
@@ -40,13 +40,21 @@ const deleteUser = async (user: User): Promise<boolean> => {
   return true;
 };
 
-const updateUser = async function (
+const updateUser = async (
   user: User,
   userFields: UserUpdateFields
-): Promise<boolean> {
-  const tempUser = await getUserByNetID("netID1")
-  db().merge(tempUser, userFields)
-  await db().save(tempUser)
+): Promise<boolean> => {
+  const userFieldKeys = Object.keys(userFields);
+  if (userFieldKeys.length < 1) {
+    throw Error('At least one user field is required');
+  }
+  for (const key of userFieldKeys) {
+    if (!Object.keys(user).includes(key)) {
+      throw Error('Invalid user fields provided: ' + key);
+    }
+  }
+  db().merge(user, userFields);
+  await db().save(user);
   return true;
 };
 

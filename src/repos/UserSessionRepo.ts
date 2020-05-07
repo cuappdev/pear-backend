@@ -2,9 +2,6 @@ import { getConnectionManager, Repository, getRepository } from 'typeorm';
 import { LoginTicket } from 'google-auth-library/build/src/auth/loginticket';
 import { SerializedUserSession } from '../common/types';
 import AppDevUtils from '../utils/AppDevUtils';
-import Club from '../entities/Club';
-import CornellMajor from '../entities/CornellMajor';
-import Interest from '../entities/Interest';
 import UserRepo from './UserRepo';
 import User from '../entities/User';
 import UserSession from '../entities/UserSession';
@@ -45,7 +42,7 @@ const createOrUpdateSession = async (
  * @return {SerializedUserSession} Contains session information for user
  */
 const createUserAndInitializeSession = async (
-  login: LoginTicket,
+  login: LoginTicket
 ): Promise<SerializedUserSession> => {
   const payload = login.getPayload();
 
@@ -65,12 +62,7 @@ const createUserAndInitializeSession = async (
   let user = await UserRepo.getUserByNetID(netID);
 
   if (!user) {
-    user = await UserRepo.initalizeUser(
-      firstName,
-      googleID,
-      lastName,
-      netID,
-    );
+    user = await UserRepo.initalizeUser(firstName, googleID, lastName, netID);
   }
 
   const session = await createOrUpdateSession(user, undefined);
@@ -133,7 +125,7 @@ const verifySession = async (accessToken: string): Promise<boolean> => {
     .getOne();
   return session
     ? session.active &&
-    session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
+        session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
     : false;
 };
 

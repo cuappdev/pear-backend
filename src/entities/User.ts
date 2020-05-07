@@ -19,10 +19,9 @@ class User {
   /** User's clubs */
   @ManyToMany(
     type => Club,
-    club => club.users,
-    { nullable: true }
+    club => club.users
   )
-  clubs: Club[] | null;
+  clubs: Club[];
 
   /** User first name */
   @Column({
@@ -39,24 +38,23 @@ class User {
   /** User's graduation year */
   @Column({
     type: 'varchar',
-    nullable: true
+    nullable: true,
   })
   graduationYear: string | null;
 
   /** User's hometown */
   @Column({
     type: 'varchar',
-    nullable: true
+    nullable: true,
   })
   hometown: string | null;
 
   /** User's interests */
   @ManyToMany(
     type => Interest,
-    interest => interest.users,
-    { nullable: true }
+    interest => interest.users
   )
-  interests: Interest[] | null;
+  interests: Interest[];
 
   /** User last name */
   @Column({
@@ -94,18 +92,18 @@ class User {
   /** User's pronouns */
   @Column({
     type: 'varchar',
-    nullable: true
+    nullable: true,
   })
   pronouns: string | null;
 
   serialize(): SerializedUser {
     return {
-      clubs: this.clubs ? this.clubs.map(club => club.serialize()) : null,
+      clubs: this.clubs.map(club => club.serialize()),
       firstName: this.firstName,
       googleID: this.googleID,
       graduationYear: this.graduationYear,
       hometown: this.hometown,
-      interests: this.interests ? this.interests.map(interest => interest.serialize()) : null,
+      interests: this.interests.map(interest => interest.serialize()),
       lastName: this.lastName,
       netID: this.netID,
       major: this.major ? this.major.serialize() : null,

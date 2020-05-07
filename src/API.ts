@@ -24,21 +24,14 @@ class API extends ApplicationAPI {
   }
 
   versions() {
-    return { v1 : this.routerGroups() };
+    return { v1: this.routerGroups() };
   }
 
   routerGroups(): { [index: string]: Router[] } {
     return {
-      auth: [
-        HelloRouter,
-        InitializeSessionRouter
-      ],
-      docs: [
-        DocsRouter
-      ],
-      refresh: [
-        RefreshSessionRouter
-      ],
+      auth: [HelloRouter, InitializeSessionRouter],
+      docs: [DocsRouter],
+      refresh: [RefreshSessionRouter],
       user: [
         CreateMatchingRouter,
         DeleteUserRouter,
@@ -47,7 +40,7 @@ class API extends ApplicationAPI {
         GetCornellMajorsRouter,
         GetInterestsRouter,
         UpdateUserRouter,
-      ]
+      ],
     };
   }
 }

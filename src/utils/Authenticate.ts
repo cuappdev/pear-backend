@@ -37,7 +37,6 @@ async function ensureAuthenticated(
     return res
       .status(401)
       .json(new AppDevResponse(false, { errors: ['Invalid access token'] }));
-    
   }
   const user = await UserSessionRepo.getUserFromToken(bearerToken);
   req.user = user;
@@ -53,7 +52,7 @@ async function updateSession(req: Request, res: Response, next: NextFunction) {
   if (!session) {
     return res
       .status(401)
-      .json(new AppDevResponse(false, { errors: ['Invalid refresh token'] })); 
+      .json(new AppDevResponse(false, { errors: ['Invalid refresh token'] }));
   }
   req.session = session;
   return next();

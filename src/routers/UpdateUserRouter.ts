@@ -16,12 +16,11 @@ class UpdateUserRouter extends AuthenticatedAppplicationRouter<void> {
 
   async content(req: Request): Promise<void> {
     const userFields = req.body;
-    for (const field of userFields) {
-
-    }
     if (userFields.clubs) {
       userFields.clubs = await Promise.all(
-        userFields.clubs.map(async (name: string) => ClubRepo.getClubByName(name))
+        userFields.clubs.map(async (name: string) =>
+          ClubRepo.getClubByName(name)
+        )
       );
     }
     if (userFields.interests) {
@@ -32,7 +31,9 @@ class UpdateUserRouter extends AuthenticatedAppplicationRouter<void> {
       );
     }
     if (userFields.major) {
-      userFields.major = await CornellMajorRepo.getCornellMajorByName(userFields.major);
+      userFields.major = await CornellMajorRepo.getCornellMajorByName(
+        userFields.major
+      );
     }
     await UserRepo.updateUser(req.user, userFields);
   }

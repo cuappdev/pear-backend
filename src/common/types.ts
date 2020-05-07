@@ -1,15 +1,15 @@
-import Club from "../entities/Club";
-import Interest from "../entities/Interest";
-import CornellMajor from "../entities/CornellMajor";
+import Club from '../entities/Club';
+import Interest from '../entities/Interest';
+import CornellMajor from '../entities/CornellMajor';
 
 //** Represents a User */
 export interface SerializedUser {
-  clubs: SerializedClub[] | null;
+  clubs: SerializedClub[];
   firstName: string | null;
   googleID: string;
   graduationYear: string | null;
   hometown: string | null;
-  interests: SerializedInterest[] | null;
+  interests: SerializedInterest[];
   lastName: string;
   netID: string;
   major: SerializedCornellMajor | null;
@@ -71,15 +71,15 @@ export type SerializedCornellMajor = string;
 export type SerializedInterest = string;
 
 export interface UserUpdateFields {
-  clubs?: Club[],
-  firstName?: string,
-  googleID?: string,
-  graduationYear?: string,
-  hometown?: string,
-  interests?: Interest[],
-  lastName?: string,
-  netID?: string,
-  major?: CornellMajor,
-  profilePictureURL?: string
-  pronouns?: string
+  clubs?: Club[];
+  firstName?: string;
+  googleID?: string;
+  graduationYear?: string;
+  hometown?: string;
+  interests?: Interest[];
+  lastName?: string;
+  netID?: string;
+  major?: CornellMajor;
+  profilePictureURL?: string;
+  pronouns?: string;
 }

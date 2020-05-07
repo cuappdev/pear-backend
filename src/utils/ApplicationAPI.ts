@@ -79,8 +79,8 @@ class ApplicationAPI {
    * Subclasses must override this with the API's version number and
    * corresponding routers.
    */
-  versions(): {[index: string] : { [index: string]: Router[] }} {
-    return {v0: {}};
+  versions(): { [index: string]: { [index: string]: Router[] } } {
+    return { v0: {} };
   }
 
   /**
