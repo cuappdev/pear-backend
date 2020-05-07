@@ -31,7 +31,7 @@
             "description": "{success: true, data: [User]}"
           },
           "401": {
-            "description": "{success: false, errors: [string] }"
+            "description": "{success: false, data: {errors: [string]}}"
           }
         }
       },
@@ -45,7 +45,7 @@
             "description": "{success: true, data: []}"
           },
           "401": {
-            "description": "{success: false, errors: [string] }"
+            "description": "{success: false, data: {errors: [string]}}"
           }
         }
       }
@@ -61,7 +61,7 @@
             "description": "{success: true, data: [Club]}"
           },
           "401": {
-            "description": "{success: false, errors: [string] }"
+            "description": "{success: false, data: {errors: [string]}}"
           }
         }
       }
@@ -105,7 +105,7 @@
             "description": "{success: true, data: Matching}"
           },
           "401": {
-            "description": "{success: false, { errors: [string] }}"
+            "description": "{success: false, data: {errors: [string]}}"
           }
         }
       }
@@ -121,7 +121,7 @@
             "description": "{success: true, data: CornellMajor}"
           },
           "401": {
-            "description": "{success: false, errors: [string] }"
+            "description": "{success: false, data: {errors: [string]}}"
           }
         }
       }
@@ -137,7 +137,7 @@
             "description": "{success: true, data: [Interest]}"
           },
           "401": {
-            "description": "{success: false, errors: [string] }"
+            "description": "{success: false, data: {errors: [string]}}"
           }
         }
       }
@@ -199,7 +199,7 @@
             "description": "{success: true}"
           },
           "401": {
-            "description": "{success: false, errors: [string] }"
+            "description": "{success: false, data: {errors: [string]}}"
           }
         }
       }
@@ -233,7 +233,7 @@
             "description": "{success: true, data: UserSession}"
           },
           "401": {
-            "description": "{success: false, errors: [string] }"
+            "description": "{success: false, data: {errors: [string]}}"
           }
         }
       }
@@ -249,7 +249,7 @@
             "description": "{success: true, data: UserSession}"
           },
           "401": {
-            "description": "{success: false, errors: [string] }"
+            "description": "{success: false, data: {errors: [string]}}"
           }
         }
       }
@@ -265,7 +265,7 @@
             "description": "{success: true, data: \"Hello world!\" }"
           },
           "401": {
-            "description": "{success: false, errors: [string] }"
+            "description": "{success: false, data: {errors: [string]}}"
           }
         }
       }

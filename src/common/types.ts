@@ -73,12 +73,10 @@ export type SerializedInterest = string;
 export interface UserUpdateFields {
   clubs?: Club[];
   firstName?: string;
-  googleID?: string;
   graduationYear?: string;
   hometown?: string;
   interests?: Interest[];
   lastName?: string;
-  netID?: string;
   major?: CornellMajor;
   profilePictureURL?: string;
   pronouns?: string;
