@@ -6,4 +6,4 @@ Pear Backend requires a `.envrc` file which is outlined in `.envrctemplate`. Add
 
 Pear Backend has a linter which can be used with `npm run check` to view issues, and `npm run fix` to auto-fix some of those issues.
 
-Documentation on routes and usage is [here](https://pear-backend.cornellappdev.com/api/v1/docs/).
+Documentation on routes and usage is [here](http://pear-backend.cornellappdev.com/api/v1/docs/).

@@ -45,13 +45,7 @@ const createOrUpdateSession = async (
  * @return {SerializedUserSession} Contains session information for user
  */
 const createUserAndInitializeSession = async (
-  clubs: Club[],
-  graduationYear: string,
-  hometown: string,
-  interests: Interest[],
   login: LoginTicket,
-  major: CornellMajor,
-  pronouns: string
 ): Promise<SerializedUserSession> => {
   const payload = login.getPayload();
 
@@ -71,17 +65,11 @@ const createUserAndInitializeSession = async (
   let user = await UserRepo.getUserByNetID(netID);
 
   if (!user) {
-    user = await UserRepo.createUser(
-      clubs,
+    user = await UserRepo.initalizeUser(
       firstName,
       googleID,
-      graduationYear,
-      hometown,
-      interests,
       lastName,
       netID,
-      major,
-      pronouns
     );
   }
 
@@ -145,7 +133,7 @@ const verifySession = async (accessToken: string): Promise<boolean> => {
     .getOne();
   return session
     ? session.active &&
-        session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
+    session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
     : false;
 };
 

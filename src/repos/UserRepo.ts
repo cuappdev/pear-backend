@@ -1,7 +1,5 @@
 import { getConnectionManager, Repository } from 'typeorm';
-import Club from '../entities/Club';
-import CornellMajor from '../entities/CornellMajor';
-import Interest from '../entities/Interest';
+import { UserUpdateFields } from '../common/types';
 import User from '../entities/User';
 
 const db = (): Repository<User> =>
@@ -9,35 +7,29 @@ const db = (): Repository<User> =>
     .get()
     .getRepository(User);
 
-const createUser = async (
-  clubs: Club[],
+const initalizeUser = async (
   firstName: string,
   googleID: string,
-  graduationYear: string,
-  hometown: string,
-  interests: Interest[],
   lastName: string,
   netID: string,
-  major: CornellMajor,
-  pronouns: string
 ): Promise<User> => {
   const possibleUser = await db().findOne({ netID });
   if (possibleUser) {
     throw Error('User with given netID already exists');
   }
   const user = db().create({
-    clubs,
+    clubs: null,
     firstName,
     googleID,
-    graduationYear,
-    hometown,
-    interests,
+    graduationYear: null,
+    hometown: null,
+    interests: null,
     lastName,
     netID,
-    major,
+    major: null,
     matches: [],
     profilePictureURL: null,
-    pronouns,
+    pronouns: null,
   });
   await db().save(user);
   return user;
@@ -48,16 +40,13 @@ const deleteUser = async (user: User): Promise<boolean> => {
   return true;
 };
 
-const updateUser = async (
+const updateUser = async function (
   user: User,
-  firstName: string,
-  lastName: string,
-  netID: string
-): Promise<boolean> => {
-  user.firstName = firstName ? firstName : user.firstName;
-  user.lastName = lastName ? lastName : user.lastName;
-  user.netID = netID ? netID : user.netID;
-  await db().save(user);
+  userFields: UserUpdateFields
+): Promise<boolean> {
+  const tempUser = await getUserByNetID("netID1")
+  db().merge(tempUser, userFields)
+  await db().save(tempUser)
   return true;
 };
 
@@ -81,7 +70,7 @@ const getUserByNetID = async (netID: string): Promise<User> => {
 };
 
 export default {
-  createUser,
+  initalizeUser,
   deleteUser,
   getUserByNetID,
   updateUser,

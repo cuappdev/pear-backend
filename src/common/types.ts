@@ -1,29 +1,33 @@
+import Club from "../entities/Club";
+import Interest from "../entities/Interest";
+import CornellMajor from "../entities/CornellMajor";
+
 //** Represents a User */
 export interface SerializedUser {
-  clubs: SerializedClub[];
-  firstName: string;
+  clubs: SerializedClub[] | null;
+  firstName: string | null;
   googleID: string;
-  graduationYear: string;
-  hometown: string;
-  interests: SerializedInterest[];
+  graduationYear: string | null;
+  hometown: string | null;
+  interests: SerializedInterest[] | null;
   lastName: string;
   netID: string;
-  major: SerializedCornellMajor;
+  major: SerializedCornellMajor | null;
   matches: SubSerializedMatching[];
   profilePictureURL: string | null;
-  pronouns: string;
+  pronouns: string | null;
 }
 
 //** Represents a User without clubs, interests, majors, or matches shown */
 export interface SubSerializedUser {
   firstName: string;
   googleID: string;
-  graduationYear: string;
-  hometown: string;
+  graduationYear: string | null;
+  hometown: string | null;
   lastName: string;
   netID: string;
   profilePictureURL: string | null;
-  pronouns: string;
+  pronouns: string | null;
 }
 
 //** Represents a User session */
@@ -65,3 +69,17 @@ export type SerializedCornellMajor = string;
 
 //** Represents an Interest */
 export type SerializedInterest = string;
+
+export interface UserUpdateFields {
+  clubs?: Club[],
+  firstName?: string,
+  googleID?: string,
+  graduationYear?: string,
+  hometown?: string,
+  interests?: Interest[],
+  lastName?: string,
+  netID?: string,
+  major?: CornellMajor,
+  profilePictureURL?: string
+  pronouns?: string
+}

@@ -4,7 +4,7 @@ import Authenticate from "./Authenticate";
 
 class AuthenticatedAppplicationRouter<T> extends ApplicationRouter<T> {
     middleware(): ExpressCallback[] {
-        return [Authenticate.ensureAuthenticated];
+        return []//[Authenticate.ensureAuthenticated];
     }
 }
 

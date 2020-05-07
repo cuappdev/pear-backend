@@ -19,63 +19,64 @@ class User {
   /** User's clubs */
   @ManyToMany(
     type => Club,
-    club => club.users
+    club => club.users,
+    { nullable: true }
   )
-  clubs: Club[];
+  clubs: Club[] | null;
 
   /** User first name */
   @Column({
     type: 'varchar',
-    default: '',
   })
   firstName: string;
 
   /** Google ID of user */
   @Column({
     type: 'varchar',
-    default: '',
   })
   googleID: string;
 
   /** User's graduation year */
   @Column({
     type: 'varchar',
+    nullable: true
   })
-  graduationYear: string;
+  graduationYear: string | null;
 
   /** User's hometown */
   @Column({
     type: 'varchar',
+    nullable: true
   })
-  hometown: string;
+  hometown: string | null;
 
   /** User's interests */
   @ManyToMany(
     type => Interest,
-    interest => interest.users
+    interest => interest.users,
+    { nullable: true }
   )
-  interests: Interest[];
+  interests: Interest[] | null;
 
   /** User last name */
   @Column({
     type: 'varchar',
-    default: '',
   })
   lastName: string;
 
   /** Net ID of user */
   @Column({
     type: 'varchar',
-    default: '',
   })
   netID: string;
 
   /** User's major */
   @ManyToOne(
     type => CornellMajor,
-    major => major.users
+    major => major.users,
+    { nullable: true }
   )
-  major: CornellMajor;
+  major: CornellMajor | null;
 
   /** User's matchings */
   @ManyToMany(
@@ -93,20 +94,21 @@ class User {
   /** User's pronouns */
   @Column({
     type: 'varchar',
+    nullable: true
   })
-  pronouns: string;
+  pronouns: string | null;
 
   serialize(): SerializedUser {
     return {
-      clubs: this.clubs.map(club => club.serialize()),
+      clubs: this.clubs ? this.clubs.map(club => club.serialize()) : null,
       firstName: this.firstName,
       googleID: this.googleID,
       graduationYear: this.graduationYear,
       hometown: this.hometown,
-      interests: this.interests.map(interest => interest.serialize()),
+      interests: this.interests ? this.interests.map(interest => interest.serialize()) : null,
       lastName: this.lastName,
       netID: this.netID,
-      major: this.major.serialize(),
+      major: this.major ? this.major.serialize() : null,
       matches: this.matches.map(match => match.subSerialize()),
       profilePictureURL: this.profilePictureURL,
       pronouns: this.pronouns,
