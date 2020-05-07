@@ -26,28 +26,28 @@ class User {
   /** User first name */
   @Column({
     type: 'varchar',
-    default: '',
   })
   firstName: string;
 
   /** Google ID of user */
   @Column({
     type: 'varchar',
-    default: '',
   })
   googleID: string;
 
   /** User's graduation year */
   @Column({
     type: 'varchar',
+    nullable: true,
   })
-  graduationYear: string;
+  graduationYear: string | null;
 
   /** User's hometown */
   @Column({
     type: 'varchar',
+    nullable: true,
   })
-  hometown: string;
+  hometown: string | null;
 
   /** User's interests */
   @ManyToMany(
@@ -59,23 +59,22 @@ class User {
   /** User last name */
   @Column({
     type: 'varchar',
-    default: '',
   })
   lastName: string;
 
   /** Net ID of user */
   @Column({
     type: 'varchar',
-    default: '',
   })
   netID: string;
 
   /** User's major */
   @ManyToOne(
     type => CornellMajor,
-    major => major.users
+    major => major.users,
+    { nullable: true }
   )
-  major: CornellMajor;
+  major: CornellMajor | null;
 
   /** User's matchings */
   @ManyToMany(
@@ -93,8 +92,9 @@ class User {
   /** User's pronouns */
   @Column({
     type: 'varchar',
+    nullable: true,
   })
-  pronouns: string;
+  pronouns: string | null;
 
   serialize(): SerializedUser {
     return {
@@ -106,7 +106,7 @@ class User {
       interests: this.interests.map(interest => interest.serialize()),
       lastName: this.lastName,
       netID: this.netID,
-      major: this.major.serialize(),
+      major: this.major ? this.major.serialize() : null,
       matches: this.matches.map(match => match.subSerialize()),
       profilePictureURL: this.profilePictureURL,
       pronouns: this.pronouns,

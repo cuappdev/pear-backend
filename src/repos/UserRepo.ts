@@ -1,7 +1,5 @@
 import { getConnectionManager, Repository } from 'typeorm';
-import Club from '../entities/Club';
-import CornellMajor from '../entities/CornellMajor';
-import Interest from '../entities/Interest';
+import { UserUpdateFields } from '../common/types';
 import User from '../entities/User';
 
 const db = (): Repository<User> =>
@@ -9,35 +7,29 @@ const db = (): Repository<User> =>
     .get()
     .getRepository(User);
 
-const createUser = async (
-  clubs: Club[],
+const initalizeUser = async (
   firstName: string,
   googleID: string,
-  graduationYear: string,
-  hometown: string,
-  interests: Interest[],
   lastName: string,
-  netID: string,
-  major: CornellMajor,
-  pronouns: string
+  netID: string
 ): Promise<User> => {
   const possibleUser = await db().findOne({ netID });
   if (possibleUser) {
     throw Error('User with given netID already exists');
   }
   const user = db().create({
-    clubs,
+    clubs: [],
     firstName,
     googleID,
-    graduationYear,
-    hometown,
-    interests,
+    graduationYear: null,
+    hometown: null,
+    interests: [],
     lastName,
     netID,
-    major,
+    major: null,
     matches: [],
     profilePictureURL: null,
-    pronouns,
+    pronouns: null,
   });
   await db().save(user);
   return user;
@@ -50,13 +42,22 @@ const deleteUser = async (user: User): Promise<boolean> => {
 
 const updateUser = async (
   user: User,
-  firstName: string,
-  lastName: string,
-  netID: string
+  userFields: UserUpdateFields
 ): Promise<boolean> => {
-  user.firstName = firstName ? firstName : user.firstName;
-  user.lastName = lastName ? lastName : user.lastName;
-  user.netID = netID ? netID : user.netID;
+  const userFieldKeys = Object.keys(userFields);
+  if (userFieldKeys.length < 1) {
+    throw Error('At least one user field is required');
+  }
+  for (const key of userFieldKeys) {
+    if (
+      !Object.keys(user).includes(key) ||
+      key === 'googleID' ||
+      key === 'netID'
+    ) {
+      throw Error('Invalid user field provided: ' + key);
+    }
+  }
+  db().merge(user, userFields);
   await db().save(user);
   return true;
 };
@@ -81,7 +82,7 @@ const getUserByNetID = async (netID: string): Promise<User> => {
 };
 
 export default {
-  createUser,
+  initalizeUser,
   deleteUser,
   getUserByNetID,
   updateUser,

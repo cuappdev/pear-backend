@@ -3,7 +3,9 @@ import { SerializedMatching } from '../common/types';
 import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import MatchingRepo from '../repos/MatchingRepo';
 import UserRepo from '../repos/UserRepo';
-class CreateMatchingRouter extends AuthenticatedAppplicationRouter<SerializedMatching> {
+class CreateMatchingRouter extends AuthenticatedAppplicationRouter<
+  SerializedMatching
+> {
   constructor() {
     super('POST');
   }
