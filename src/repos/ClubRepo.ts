@@ -18,11 +18,8 @@ const createClub = async (name: string): Promise<void> => {
   return;
 };
 
-const getClubByName = async (name: string): Promise<Club> => {
+const getClubByName = async (name: string): Promise<Club | undefined> => {
   const club = await db().findOne({ where: { name } });
-  if (!club) {
-    throw Error('Club with that name not found');
-  }
   return club;
 };
 

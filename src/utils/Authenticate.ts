@@ -39,6 +39,7 @@ async function ensureAuthenticated(
       .json(new AppDevResponse(false, { errors: ['Invalid access token'] }));
   }
   const user = await UserSessionRepo.getUserFromToken(bearerToken);
+  if (!user) throw Error('No user found with valid access token');
   req.user = user;
   return next();
 }

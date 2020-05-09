@@ -44,25 +44,12 @@ const updateUser = async (
   user: User,
   userFields: UserUpdateFields
 ): Promise<boolean> => {
-  const userFieldKeys = Object.keys(userFields);
-  if (userFieldKeys.length < 1) {
-    throw Error('At least one user field is required');
-  }
-  for (const key of userFieldKeys) {
-    if (
-      !Object.keys(user).includes(key) ||
-      key === 'googleID' ||
-      key === 'netID'
-    ) {
-      throw Error('Invalid user field provided: ' + key);
-    }
-  }
   db().merge(user, userFields);
   await db().save(user);
   return true;
 };
 
-const getUserByNetID = async (netID: string): Promise<User> => {
+const getUserByNetID = async (netID: string): Promise<User | undefined> => {
   const user = await db().findOne({
     where: { netID },
     relations: [
@@ -75,9 +62,6 @@ const getUserByNetID = async (netID: string): Promise<User> => {
       'major',
     ],
   });
-  if (!user) {
-    throw Error('User with given netID not found');
-  }
   return user;
 };
 

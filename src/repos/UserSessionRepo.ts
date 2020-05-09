@@ -1,4 +1,4 @@
-import { getConnectionManager, Repository, getRepository } from 'typeorm';
+import { getConnectionManager, Repository } from 'typeorm';
 import { LoginTicket } from 'google-auth-library/build/src/auth/loginticket';
 import { SerializedUserSession } from '../common/types';
 import AppDevUtils from '../utils/AppDevUtils';
@@ -7,9 +7,7 @@ import User from '../entities/User';
 import UserSession from '../entities/UserSession';
 
 const db = (): Repository<UserSession> =>
-  getConnectionManager()
-    .get()
-    .getRepository(UserSession);
+  getConnectionManager().get().getRepository(UserSession);
 
 /**
  * Create or update session for a user
@@ -78,18 +76,15 @@ const createUserAndInitializeSession = async (
 /**
  * Get user from access token
  * @param {string} accessToken - Access token that we want to find the owner
- * @return {User} User that is associated with the access token
+ * @return {User | undefined} User that is associated with the access token. Undefined if not found.
  */
-const getUserFromToken = async (accessToken: string): Promise<User> => {
+const getUserFromToken = async (accessToken: string): Promise<User | undefined> => {
   const session = await db()
     .createQueryBuilder('usersessions')
     .leftJoinAndSelect('usersessions.user', 'user')
     .where('usersessions.accessToken = :accessToken', { accessToken })
     .getOne();
-  if (!session) {
-    throw Error('No session found with valid token');
-  }
-  return session.user;
+  return session?.user;
 };
 
 const updateSession = async (
