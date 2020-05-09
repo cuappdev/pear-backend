@@ -62,7 +62,7 @@ const updateUser = async (
   return true;
 };
 
-const getUserByNetID = async (netID: string): Promise<User> => {
+const getUserByNetID = async (netID: string): Promise<User | undefined> => {
   const user = await db().findOne({
     where: { netID },
     relations: [
@@ -75,9 +75,6 @@ const getUserByNetID = async (netID: string): Promise<User> => {
       'major',
     ],
   });
-  if (!user) {
-    throw Error('User with given netID not found');
-  }
   return user;
 };
 
