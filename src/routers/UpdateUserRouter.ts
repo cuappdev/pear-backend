@@ -4,6 +4,7 @@ import CornellMajorRepo from '../repos/CornellMajorRepo';
 import InterestRepo from '../repos/InterestRepo';
 import UserRepo from '../repos/UserRepo';
 import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
+import Interest from '../entities/Interest';
 
 class UpdateUserRouter extends AuthenticatedAppplicationRouter<void> {
   constructor() {
@@ -18,23 +19,47 @@ class UpdateUserRouter extends AuthenticatedAppplicationRouter<void> {
     const userFields = req.body;
     if (userFields.clubs) {
       userFields.clubs = await Promise.all(
-        userFields.clubs.map(async (name: string) =>
-          ClubRepo.getClubByName(name)
+        userFields.clubs.map(async (name: string) => {
+            const club = ClubRepo.getClubByName(name);
+            if (!club) throw Error('CornellMajor with that name not found');
+            return club;
+          }
         )
       );
     }
     if (userFields.interests) {
       userFields.interests = await Promise.all(
-        userFields.interests.map(async (name: string) =>
-          InterestRepo.getInterestByName(name)
+        userFields.interests.map(async (name: string) => {
+            const interest = InterestRepo.getInterestByName(name);
+            if (!interest) throw Error('Interest with that name not found');
+            return interest;
+          }
         )
       );
     }
     if (userFields.major) {
-      userFields.major = await CornellMajorRepo.getCornellMajorByName(
+      const major = await CornellMajorRepo.getCornellMajorByName(
         userFields.major
       );
+      if (!major) throw Error('CornellMajor with that name not found');
+      userFields.major = major;
     }
+    const userFieldKeys = Object.keys(userFields);
+
+    if (userFieldKeys.length < 1) {
+      throw Error('At least one user field is required');
+    }
+
+    for (const key of userFieldKeys) {
+      if (
+        !Object.keys(req.user).includes(key) ||
+        key === 'googleID' ||
+        key === 'netID'
+      ) {
+        throw Error('Invalid user field provided: ' + key);
+      }
+    }
+    
     await UserRepo.updateUser(req.user, userFields);
   }
 }

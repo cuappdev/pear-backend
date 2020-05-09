@@ -54,7 +54,7 @@ class ApplicationRouter<T> {
         this.router.delete(path, this.response());
         break;
       default:
-        throw new Error('HTTP method not specified!');
+        throw Error('HTTP method not specified!');
     }
   }
 
@@ -63,7 +63,7 @@ class ApplicationRouter<T> {
    * be an AppDev-formatted URL
    */
   getPath(): string {
-    throw new Error('You must implement getPath() with a valid path!');
+    throw Error('You must implement getPath() with a valid path!');
   }
 
   middleware(): any[] {
@@ -75,7 +75,7 @@ class ApplicationRouter<T> {
    * for the given request.
    */
   async content(req: Request): Promise<T> {
-    throw new Error('You must implement content()!');
+    throw Error('You must implement content()!');
   }
 
   /**

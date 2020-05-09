@@ -18,11 +18,8 @@ const createCornellMajor = async (name: string): Promise<void> => {
   return;
 };
 
-const getCornellMajorByName = async (name: string): Promise<CornellMajor> => {
+const getCornellMajorByName = async (name: string): Promise<CornellMajor | undefined> => {
   const major = await db().findOne({ where: { name } });
-  if (!major) {
-    throw Error('CornellMajor with that name not found');
-  }
   return major;
 };
 

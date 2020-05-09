@@ -44,19 +44,6 @@ const updateUser = async (
   user: User,
   userFields: UserUpdateFields
 ): Promise<boolean> => {
-  const userFieldKeys = Object.keys(userFields);
-  if (userFieldKeys.length < 1) {
-    throw Error('At least one user field is required');
-  }
-  for (const key of userFieldKeys) {
-    if (
-      !Object.keys(user).includes(key) ||
-      key === 'googleID' ||
-      key === 'netID'
-    ) {
-      throw Error('Invalid user field provided: ' + key);
-    }
-  }
   db().merge(user, userFields);
   await db().save(user);
   return true;
