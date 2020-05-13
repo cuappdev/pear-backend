@@ -23,6 +23,13 @@ class User {
   )
   clubs: Club[];
 
+  /** User's facebook profile link */
+  @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  facebook: string | null;
+
   /** User first name */
   @Column({
     type: 'varchar',
@@ -48,6 +55,13 @@ class User {
     nullable: true,
   })
   hometown: string | null;
+
+  /** User's instagram username */
+  @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  instagram: string | null;
 
   /** User's interests */
   @ManyToMany(
@@ -99,10 +113,12 @@ class User {
   serialize(): SerializedUser {
     return {
       clubs: this.clubs.map(club => club.serialize()),
+      facebook: this.facebook,
       firstName: this.firstName,
       googleID: this.googleID,
       graduationYear: this.graduationYear,
       hometown: this.hometown,
+      instagram: this.instagram,
       interests: this.interests.map(interest => interest.serialize()),
       lastName: this.lastName,
       netID: this.netID,
@@ -115,10 +131,12 @@ class User {
 
   subSerialize(): SubSerializedUser {
     return {
+      facebook: this.facebook,
       firstName: this.firstName,
       googleID: this.googleID,
       graduationYear: this.graduationYear,
       hometown: this.hometown,
+      instagram: this.instagram,
       lastName: this.lastName,
       netID: this.netID,
       profilePictureURL: this.profilePictureURL,

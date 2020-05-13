@@ -20,9 +20,11 @@ const initalizeUser = async (
   const user = db().create({
     clubs: [],
     firstName,
+    facebook: null,
     googleID,
     graduationYear: null,
     hometown: null,
+    instagram: null,
     interests: [],
     lastName,
     netID,

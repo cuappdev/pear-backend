@@ -5,10 +5,12 @@ import CornellMajor from '../entities/CornellMajor';
 //** Represents a User */
 export interface SerializedUser {
   clubs: SerializedClub[];
+  facebook: string | null;
   firstName: string;
   googleID: string;
   graduationYear: string | null;
   hometown: string | null;
+  instagram: string | null;
   interests: SerializedInterest[];
   lastName: string;
   netID: string;
@@ -20,10 +22,12 @@ export interface SerializedUser {
 
 //** Represents a User without clubs, interests, majors, or matches shown */
 export interface SubSerializedUser {
+  facebook: string | null;
   firstName: string;
   googleID: string;
   graduationYear: string | null;
   hometown: string | null;
+  instagram: string | null;
   lastName: string;
   netID: string;
   profilePictureURL: string | null;
@@ -72,10 +76,12 @@ export type SerializedInterest = string;
 
 export interface UserUpdateFields {
   clubs?: Club[];
+  facebook?: string;
   firstName?: string;
   graduationYear?: string;
   hometown?: string;
   interests?: Interest[];
+  instagram?: string;
   lastName?: string;
   major?: CornellMajor;
   profilePictureURL?: string;

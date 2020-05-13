@@ -17,24 +17,36 @@ class UpdateUserRouter extends AuthenticatedAppplicationRouter<void> {
 
   async content(req: Request): Promise<void> {
     const userFields = req.body;
+    const userFieldKeys = Object.keys(userFields);
+    const userObjectKeys = Object.keys(req.user);
+    if (userFieldKeys.length < 1) {
+      throw Error('At least one user field is required');
+    }
+    for (const key of userFieldKeys) {
+      if (
+        !userObjectKeys.includes(key) ||
+        key === 'googleID' ||
+        key === 'netID'
+      ) {
+        throw Error('Invalid user field provided: ' + key);
+      }
+    }
     if (userFields.clubs) {
       userFields.clubs = await Promise.all(
         userFields.clubs.map(async (name: string) => {
-            const club = ClubRepo.getClubByName(name);
-            if (!club) throw Error('CornellMajor with that name not found');
-            return club;
-          }
-        )
+          const club = ClubRepo.getClubByName(name);
+          if (!club) throw Error('CornellMajor with that name not found');
+          return club;
+        })
       );
     }
     if (userFields.interests) {
       userFields.interests = await Promise.all(
         userFields.interests.map(async (name: string) => {
-            const interest = InterestRepo.getInterestByName(name);
-            if (!interest) throw Error('Interest with that name not found');
-            return interest;
-          }
-        )
+          const interest = InterestRepo.getInterestByName(name);
+          if (!interest) throw Error('Interest with that name not found');
+          return interest;
+        })
       );
     }
     if (userFields.major) {
@@ -44,22 +56,6 @@ class UpdateUserRouter extends AuthenticatedAppplicationRouter<void> {
       if (!major) throw Error('CornellMajor with that name not found');
       userFields.major = major;
     }
-    const userFieldKeys = Object.keys(userFields);
-
-    if (userFieldKeys.length < 1) {
-      throw Error('At least one user field is required');
-    }
-
-    for (const key of userFieldKeys) {
-      if (
-        !Object.keys(req.user).includes(key) ||
-        key === 'googleID' ||
-        key === 'netID'
-      ) {
-        throw Error('Invalid user field provided: ' + key);
-      }
-    }
-    
     await UserRepo.updateUser(req.user, userFields);
   }
 }
