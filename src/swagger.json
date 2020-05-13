@@ -254,7 +254,7 @@
         }
       }
     },
-    "/auth/hello/": {
+    "/general/hello/": {
       "get": {
         "tags": [
           "General"
@@ -298,6 +298,10 @@
               "$ref": "#/components/schemas/Club"
             }
           },
+          "facebook": {
+            "type": "string",
+            "nullable": true
+          },
           "firstName": {
             "type": "string"
           },
@@ -309,6 +313,10 @@
             "nullable": true
           },
           "hometown": {
+            "type": "string",
+            "nullable": true
+          },
+          "instagram": {
             "type": "string",
             "nullable": true
           },
@@ -397,6 +405,10 @@
       "SubUser": {
         "type": "object",
         "properties": {
+          "facebook": {
+            "type": "string",
+            "nullable": true
+          },
           "firstName": {
             "type": "string"
           },
@@ -408,6 +420,10 @@
             "nullable": true
           },
           "hometown": {
+            "type": "string",
+            "nullable": true
+          },
+          "instagram": {
             "type": "string",
             "nullable": true
           },
