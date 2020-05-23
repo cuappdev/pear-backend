@@ -18,7 +18,9 @@ const createInterest = async (name: string): Promise<void> => {
   return;
 };
 
-const getInterestByName = async (name: string): Promise<Interest | undefined> => {
+const getInterestByName = async (
+  name: string
+): Promise<Interest | undefined> => {
   const interest = await db().findOne({ where: { name } });
   return interest;
 };

@@ -18,7 +18,9 @@ const createCornellMajor = async (name: string): Promise<void> => {
   return;
 };
 
-const getCornellMajorByName = async (name: string): Promise<CornellMajor | undefined> => {
+const getCornellMajorByName = async (
+  name: string
+): Promise<CornellMajor | undefined> => {
   const major = await db().findOne({ where: { name } });
   return major;
 };

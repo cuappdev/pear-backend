@@ -28,7 +28,11 @@ class CreateMatchingRouter extends AuthenticatedAppplicationRouter<
       for (const time of ds.times) {
         if (!Constants.VALID_TIMES.includes(time)) {
           throw Error(
-            'Invalid time ' + time + ' is not in [' + Constants.VALID_TIMES + ']'
+            'Invalid time ' +
+              time +
+              ' is not in [' +
+              Constants.VALID_TIMES +
+              ']'
           );
         }
       }
