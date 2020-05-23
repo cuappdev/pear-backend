@@ -21,8 +21,8 @@ const createOrUpdateSession = async (
 ): Promise<UserSession> => {
   let session = await db()
     .createQueryBuilder('usersessions')
-    .innerJoin('usersessions.user', 'user', 'user.uuid = :userID')
-    .setParameters({ userID: user.id })
+    .innerJoin('usersessions.user', 'user', 'user.netID = :userNetID')
+    .setParameters({ userNetID: user.netID })
     .getOne();
   if (session) {
     session.update(accessToken);
