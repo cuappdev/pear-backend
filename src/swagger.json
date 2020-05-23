@@ -254,7 +254,7 @@
         }
       }
     },
-    "/auth/hello/": {
+    "/general/hello/": {
       "get": {
         "tags": [
           "General"
