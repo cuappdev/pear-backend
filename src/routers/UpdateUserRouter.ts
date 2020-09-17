@@ -4,7 +4,6 @@ import CornellMajorRepo from '../repos/CornellMajorRepo';
 import InterestRepo from '../repos/InterestRepo';
 import UserRepo from '../repos/UserRepo';
 import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
-import Interest from '../entities/Interest';
 
 class UpdateUserRouter extends AuthenticatedAppplicationRouter<void> {
   constructor() {
@@ -50,27 +49,11 @@ class UpdateUserRouter extends AuthenticatedAppplicationRouter<void> {
       );
     }
     if (userFields.major) {
-      const major = await CornellMajorRepo.getCornellMajorByName(
-        userFields.major
-      );
+      const major = await CornellMajorRepo.getCornellMajorByName(userFields.major);
       if (!major) throw Error('CornellMajor with that name not found');
       userFields.major = major;
     }
 
-    if (userFieldKeys.length < 1) {
-      throw Error('At least one user field is required');
-    }
-
-    for (const key of userFieldKeys) {
-      if (
-        !Object.keys(req.user).includes(key) ||
-        key === 'googleID' ||
-        key === 'netID'
-      ) {
-        throw Error('Invalid user field provided: ' + key);
-      }
-    }
-    
     await UserRepo.updateUser(req.user, userFields);
   }
 }
