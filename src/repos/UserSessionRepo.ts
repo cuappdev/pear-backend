@@ -7,7 +7,9 @@ import User from '../entities/User';
 import UserSession from '../entities/UserSession';
 
 const db = (): Repository<UserSession> =>
-  getConnectionManager().get().getRepository(UserSession);
+  getConnectionManager()
+    .get()
+    .getRepository(UserSession);
 
 /**
  * Create or update session for a user

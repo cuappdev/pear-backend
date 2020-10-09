@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import User from '../entities/User';
 import CornellMajorRepo from '../repos/CornellMajorRepo';
 import UserRepo from '../repos/UserRepo';
 import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
@@ -26,18 +27,19 @@ class UpdateDemographicsRouter extends AuthenticatedAppplicationRouter<void> {
     /* sanitize fields */
     for (const key in body) {
       if (!validFields.includes(key) || key === 'googleID' || key === 'netID') {
-        throw Error(`Invalid field <${key}> identified in request body.`);
+        throw Error(`Invalid field '${key}' identified in request body.`);
       }
     }
 
     const { graduationYear, major } = body;
     if (graduationYear) {
-      if (isNaN(graduationYear)) throw Error('graduationYear must be a valid string containing a year!');
+      if (isNaN(graduationYear))
+        throw Error('graduationYear must be a valid string containing a year.');
     }
 
     if (major) {
       const majorEntity = await CornellMajorRepo.getCornellMajorByName(major);
-      if (!majorEntity) throw Error(`Major <${major}> doesn't exist!`);
+      if (!majorEntity) throw Error(`Major '${major}' doesn't exist.`);
       body.major = majorEntity;
     }
 

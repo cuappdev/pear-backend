@@ -13,6 +13,7 @@ import InitializeSessionRouter from './routers/InitializeSessionRouter';
 import RefreshSessionRouter from './routers/RefreshSessionRouter';
 import UpdateDemographicsRouter from './routers/UpdateDemographicsRouter';
 import InitializeDevSessionRouter from './routers/InitializeDevSessionRouter';
+import UpdateInterestsRouter from './routers/UpdateInterestsRouter';
 
 class API extends ApplicationAPI {
   getPath(): string {
@@ -43,6 +44,7 @@ class API extends ApplicationAPI {
         GetCornellMajorsRouter,
         GetInterestsRouter,
         UpdateDemographicsRouter,
+        UpdateInterestsRouter,
       ],
     };
   }
