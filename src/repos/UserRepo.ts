@@ -17,7 +17,7 @@ const db = (): Repository<User> =>
 const createDummyUser = async (id: string): Promise<User> => {
   try {
     const dummyUser = User.dummy(id);
-    let user = await getUserByNetID(dummyUser.netID);
+    const user = await getUserByNetID(dummyUser.netID);
     if (!user) return await db().save(User.dummy(id));
     return user;
   }
@@ -61,7 +61,7 @@ const updateUser = async (
 };
 
 const getUserByNetID = async (netID: string): Promise<User | undefined> => {
-  const user = await db().findOne({ netID: netID })
+  const user = await db().findOne({ netID })
   return user;
 };
 

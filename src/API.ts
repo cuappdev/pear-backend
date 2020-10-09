@@ -11,7 +11,7 @@ import GetUserRouter from './routers/GetUserRouter';
 import HelloRouter from './routers/HelloRouter';
 import InitializeSessionRouter from './routers/InitializeSessionRouter';
 import RefreshSessionRouter from './routers/RefreshSessionRouter';
-import UpdateUserRouter from './routers/UpdateUserRouter';
+import UpdateDemographicsRouter from './routers/UpdateDemographicsRouter';
 import InitializeDevSessionRouter from './routers/InitializeDevSessionRouter';
 
 class API extends ApplicationAPI {
@@ -42,7 +42,7 @@ class API extends ApplicationAPI {
         GetClubsRouter,
         GetCornellMajorsRouter,
         GetInterestsRouter,
-        UpdateUserRouter,
+        UpdateDemographicsRouter,
       ],
     };
   }
