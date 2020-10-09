@@ -30,7 +30,7 @@ class User {
   lastName: string;
 
   /** Net ID of user */
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', unique: true })
   netID: string;
 
   /** User's pronouns */
@@ -42,7 +42,7 @@ class User {
   graduationYear: string | null;
 
   /** User's major */
-  @ManyToOne(type => CornellMajor, major => major.users, { nullable: true })
+  @ManyToOne(type => CornellMajor, major => major.users, { nullable: true, onDelete: "CASCADE" })
   major: CornellMajor | null;
 
   /** User's hometown */
@@ -50,11 +50,11 @@ class User {
   hometown: string | null;
 
   /** User's clubs */
-  @ManyToMany(type => Club, club => club.users)
+  @ManyToMany(type => Club, club => club.users, { onDelete: "CASCADE" })
   clubs: Club[];
 
   /** User's interests */
-  @ManyToMany(type => Interest, interest => interest.users)
+  @ManyToMany(type => Interest, interest => interest.users, { onDelete: "CASCADE" })
   interests: Interest[];
 
   /** User's facebook profile link */

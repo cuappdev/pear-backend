@@ -16,9 +16,12 @@ const db = (): Repository<User> =>
 */
 const createDummyUser = async (id: string): Promise<User> => {
   try {
-    return await db().save(User.dummy(id));
-  } catch (e) {
-    console.log(e);
+    const dummyUser = User.dummy(id);
+    let user = await getUserByNetID(dummyUser.netID);
+    if (!user) return await db().save(User.dummy(id));
+    return user;
+  }
+  catch (e) {
     throw LogUtils.logErr(e, { id }, 'Problem creating user');
   }
 };
