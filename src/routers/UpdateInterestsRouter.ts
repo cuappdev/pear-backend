@@ -28,8 +28,9 @@ class UpdateInterestsRouter extends AuthenticatedAppplicationRouter<void> {
         const interest = await InterestRepo.getInterestByName(name);
 
         if (interest) collection.push(interest);
-        else
+        else {
           LogUtils.logErr(`Interest '${name}' doesn't exist in the database.`);
+        }
 
         return collection;
       },

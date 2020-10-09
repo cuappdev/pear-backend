@@ -32,9 +32,8 @@ class UpdateDemographicsRouter extends AuthenticatedAppplicationRouter<void> {
     }
 
     const { graduationYear, major } = body;
-    if (graduationYear) {
-      if (isNaN(graduationYear))
-        throw Error('graduationYear must be a valid string containing a year.');
+    if (graduationYear && isNaN(graduationYear)) {
+      throw Error('graduationYear must be a valid string containing a year.');
     }
 
     if (major) {
