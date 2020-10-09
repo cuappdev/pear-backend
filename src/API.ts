@@ -9,11 +9,12 @@ import GetCornellMajorsRouter from './routers/GetCornellMajorsRouter';
 import GetInterestsRouter from './routers/GetInterestsRouter';
 import GetUserRouter from './routers/GetUserRouter';
 import HelloRouter from './routers/HelloRouter';
+import InitializeDevSessionRouter from './routers/InitializeDevSessionRouter';
 import InitializeSessionRouter from './routers/InitializeSessionRouter';
 import RefreshSessionRouter from './routers/RefreshSessionRouter';
 import UpdateDemographicsRouter from './routers/UpdateDemographicsRouter';
-import InitializeDevSessionRouter from './routers/InitializeDevSessionRouter';
 import UpdateInterestsRouter from './routers/UpdateInterestsRouter';
+import UpdateOrganizationsRouter from './routers/UpdateOrganizationsRouter';
 
 class API extends ApplicationAPI {
   getPath(): string {
@@ -45,6 +46,7 @@ class API extends ApplicationAPI {
         GetInterestsRouter,
         UpdateDemographicsRouter,
         UpdateInterestsRouter,
+        UpdateOrganizationsRouter,
       ],
     };
   }
