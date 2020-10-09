@@ -21,8 +21,8 @@ const createOrUpdateSession = async (
 ): Promise<UserSession> => {
   let session = await db()
     .createQueryBuilder('usersessions')
-    .innerJoin('usersessions.user', 'user', 'user.netID = :userNetID')
-    .setParameters({ userNetID: user.netID })
+    .innerJoin('usersessions.user', 'user', 'user.uuid = :userID')
+    .setParameters({ userID: user.uuid })
     .getOne();
   if (session) {
     session.update(accessToken);
@@ -60,7 +60,7 @@ const createUserAndInitializeSession = async (
   let user = await UserRepo.getUserByNetID(netID);
 
   if (!user) {
-    user = await UserRepo.initalizeUser(firstName, googleID, lastName, netID);
+    user = await UserRepo.initializeUser(firstName, googleID, lastName, netID);
   }
 
   const session = await createOrUpdateSession(user, undefined);
@@ -122,7 +122,7 @@ const verifySession = async (accessToken: string): Promise<boolean> => {
     .getOne();
   return session
     ? session.active &&
-        session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
+    session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
     : false;
 };
 

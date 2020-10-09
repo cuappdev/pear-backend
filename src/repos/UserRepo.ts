@@ -1,13 +1,29 @@
 import { getConnectionManager, Repository } from 'typeorm';
 import { UserUpdateFields } from '../common/types';
 import User from '../entities/User';
+import LogUtils from '../utils/LogUtils';
 
 const db = (): Repository<User> =>
   getConnectionManager()
     .get()
     .getRepository(User);
 
-const initalizeUser = async (
+/**
+* Creates a dummy user and saves it to the db (Testing purposes)
+* @function
+* @param {string} id - Google id to create user with
+* @return {User} New dummy user
+*/
+const createDummyUser = async (id: string): Promise<User> => {
+  try {
+    return await db().save(User.dummy(id));
+  } catch (e) {
+    console.log(e);
+    throw LogUtils.logErr(e, { id }, 'Problem creating user');
+  }
+};
+
+const initializeUser = async (
   firstName: string,
   googleID: string,
   lastName: string,
@@ -18,20 +34,10 @@ const initalizeUser = async (
     throw Error('User with given netID already exists');
   }
   const user = db().create({
-    clubs: [],
-    firstName,
-    facebook: null,
     googleID,
-    graduationYear: null,
-    hometown: null,
-    instagram: null,
-    interests: [],
+    firstName,
     lastName,
     netID,
-    major: null,
-    matches: [],
-    profilePictureURL: null,
-    pronouns: null,
   });
   await db().save(user);
   return user;
@@ -52,23 +58,13 @@ const updateUser = async (
 };
 
 const getUserByNetID = async (netID: string): Promise<User | undefined> => {
-  const user = await db().findOne({
-    where: { netID },
-    relations: [
-      'matches',
-      'matches.users',
-      'matches.schedule',
-      'matches.schedule.times',
-      'clubs',
-      'interests',
-      'major',
-    ],
-  });
+  const user = await db().findOne({ netID: netID })
   return user;
 };
 
 export default {
-  initalizeUser,
+  createDummyUser,
+  initializeUser,
   deleteUser,
   getUserByNetID,
   updateUser,

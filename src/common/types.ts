@@ -4,34 +4,35 @@ import CornellMajor from '../entities/CornellMajor';
 
 //** Represents a User */
 export interface SerializedUser {
-  clubs: SerializedClub[];
-  facebook: string | null;
-  firstName: string;
   googleID: string;
-  graduationYear: string | null;
-  hometown: string | null;
-  instagram: string | null;
-  interests: SerializedInterest[];
+  firstName: string;
   lastName: string;
   netID: string;
-  major: SerializedCornellMajor | null;
-  matches: SubSerializedMatching[];
-  profilePictureURL: string | null;
   pronouns: string | null;
+  graduationYear: string | null;
+  major: SerializedCornellMajor | null;
+  hometown: string | null;
+  clubs: SerializedClub[];
+  interests: SerializedInterest[];
+  facebook: string | null;
+  instagram: string | null;
+  profilePictureURL: string | null;
+  matches: SubSerializedMatching[];
 }
 
 //** Represents a User without clubs, interests, majors, or matches shown */
 export interface SubSerializedUser {
-  facebook: string | null;
-  firstName: string;
   googleID: string;
-  graduationYear: string | null;
-  hometown: string | null;
-  instagram: string | null;
+  firstName: string;
   lastName: string;
   netID: string;
-  profilePictureURL: string | null;
   pronouns: string | null;
+  graduationYear: string | null;
+  major: SerializedCornellMajor | null;
+  hometown: string | null;
+  facebook: string | null;
+  instagram: string | null;
+  profilePictureURL: string | null;
 }
 
 //** Represents a User session */
@@ -75,15 +76,15 @@ export type SerializedCornellMajor = string;
 export type SerializedInterest = string;
 
 export interface UserUpdateFields {
-  clubs?: Club[];
-  facebook?: string;
   firstName?: string;
-  graduationYear?: string;
-  hometown?: string;
-  interests?: Interest[];
-  instagram?: string;
   lastName?: string;
-  major?: CornellMajor;
-  profilePictureURL?: string;
   pronouns?: string;
+  graduationYear?: string;
+  major?: CornellMajor;
+  hometown?: string;
+  clubs?: Club[];
+  interests?: Interest[];
+  facebook?: string;
+  instagram?: string;
+  profilePictureURL?: string;
 }
