@@ -30,7 +30,8 @@ class API extends ApplicationAPI {
 
   routerGroups(): { [index: string]: Router[] } {
     return {
-      auth: [InitializeSessionRouter, InitializeDevSessionRouter],
+      auth: [InitializeSessionRouter],
+      dev: [InitializeDevSessionRouter],
       docs: [DocsRouter],
       general: [HelloRouter],
       refresh: [RefreshSessionRouter],
