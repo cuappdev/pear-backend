@@ -67,9 +67,14 @@ const getUserByNetID = async (netID: string): Promise<User | undefined> => {
   return user;
 };
 
+const getUsers = async (): Promise<User[]> => {
+  return db().find();
+};
+
 export default {
   initalizeUser,
   deleteUser,
-  getUserByNetID,
   updateUser,
+  getUserByNetID,
+  getUsers,
 };

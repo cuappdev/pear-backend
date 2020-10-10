@@ -8,6 +8,7 @@ import GetClubsRouter from './routers/GetClubsRouter';
 import GetCornellMajorsRouter from './routers/GetCornellMajorsRouter';
 import GetInterestsRouter from './routers/GetInterestsRouter';
 import GetUserRouter from './routers/GetUserRouter';
+import GetUsersRouter from './routers/GetUsersRouter';
 import HelloRouter from './routers/HelloRouter';
 import InitializeSessionRouter from './routers/InitializeSessionRouter';
 import RefreshSessionRouter from './routers/RefreshSessionRouter';
@@ -37,6 +38,7 @@ class API extends ApplicationAPI {
         CreateMatchingRouter,
         DeleteUserRouter,
         GetUserRouter,
+        GetUsersRouter,
         GetClubsRouter,
         GetCornellMajorsRouter,
         GetInterestsRouter,
