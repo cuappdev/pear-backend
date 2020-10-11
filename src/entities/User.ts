@@ -81,10 +81,7 @@ class User {
   profilePictureURL: string | null;
 
   /** User's matchings */
-  @ManyToMany(
-    type => Matching,
-    matching => matching.users
-  )
+  @ManyToMany(type => Matching, matching => matching.users)
   matches: Matching[];
 
   /**

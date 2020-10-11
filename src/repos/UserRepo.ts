@@ -60,18 +60,7 @@ const updateUser = async (
 };
 
 const getUserByNetID = async (netID: string): Promise<User | undefined> => {
-  const user = await db().findOne({
-    where: { netID },
-    relations: [
-      'matches',
-      'matches.users',
-      'matches.schedule',
-      'matches.schedule.times',
-      'clubs',
-      'interests',
-      'major',
-    ],
-  });
+  const user = await db().findOne({ netID: netID })
   return user;
 };
 
