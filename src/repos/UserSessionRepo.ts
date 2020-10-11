@@ -7,7 +7,9 @@ import User from '../entities/User';
 import UserSession from '../entities/UserSession';
 
 const db = (): Repository<UserSession> =>
-  getConnectionManager().get().getRepository(UserSession);
+  getConnectionManager()
+    .get()
+    .getRepository(UserSession);
 
 /**
  * Create or update session for a user
@@ -122,7 +124,7 @@ const verifySession = async (accessToken: string): Promise<boolean> => {
     .getOne();
   return session
     ? session.active &&
-    session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
+        session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
     : false;
 };
 

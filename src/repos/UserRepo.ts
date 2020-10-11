@@ -9,19 +9,18 @@ const db = (): Repository<User> =>
     .getRepository(User);
 
 /**
-* Creates a dummy user and saves it to the db (Testing purposes)
-* @function
-* @param {string} id - Google id to create user with
-* @return {User} New dummy user
-*/
+ * Creates a dummy user and saves it to the db (Testing purposes)
+ * @function
+ * @param {string} id - Google id to create user with
+ * @return {User} New dummy user
+ */
 const createDummyUser = async (id: string): Promise<User> => {
   try {
     const dummyUser = User.dummy(id);
-    let user = await getUserByNetID(dummyUser.netID);
+    const user = await getUserByNetID(dummyUser.netID);
     if (!user) return await db().save(User.dummy(id));
     return user;
-  }
-  catch (e) {
+  } catch (e) {
     throw LogUtils.logErr(e, { id }, 'Problem creating user');
   }
 };
@@ -61,7 +60,18 @@ const updateUser = async (
 };
 
 const getUserByNetID = async (netID: string): Promise<User | undefined> => {
-  const user = await db().findOne({ netID: netID })
+  const user = await db().findOne({
+    where: { netID },
+    relations: [
+      'matches',
+      'matches.users',
+      'matches.schedule',
+      'matches.schedule.times',
+      'clubs',
+      'interests',
+      'major',
+    ],
+  });
   return user;
 };
 
