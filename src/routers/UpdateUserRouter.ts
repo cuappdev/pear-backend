@@ -17,7 +17,7 @@ class UpdateUserRouter extends AuthenticatedAppplicationRouter<void> {
   async content(req: Request): Promise<void> {
     const userFields = req.body;
     const userFieldKeys = Object.keys(userFields);
-    const userObjectKeys = Object.keys(req.user);
+    const userObjectKeys = Object.keys(req.user.serialize());
     if (userFieldKeys.length < 1) {
       throw Error('At least one user field is required');
     }
@@ -33,8 +33,8 @@ class UpdateUserRouter extends AuthenticatedAppplicationRouter<void> {
     if (userFields.clubs) {
       userFields.clubs = await Promise.all(
         userFields.clubs.map(async (name: string) => {
-          const club = ClubRepo.getClubByName(name);
-          if (!club) throw Error('CornellMajor with that name not found');
+          const club = await ClubRepo.getClubByName(name);
+          if (!club) throw Error('Club with that name not found');
           return club;
         })
       );
@@ -42,7 +42,7 @@ class UpdateUserRouter extends AuthenticatedAppplicationRouter<void> {
     if (userFields.interests) {
       userFields.interests = await Promise.all(
         userFields.interests.map(async (name: string) => {
-          const interest = InterestRepo.getInterestByName(name);
+          const interest = await InterestRepo.getInterestByName(name);
           if (!interest) throw Error('Interest with that name not found');
           return interest;
         })

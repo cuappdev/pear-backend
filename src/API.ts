@@ -12,6 +12,7 @@ import HelloRouter from './routers/HelloRouter';
 import InitializeSessionRouter from './routers/InitializeSessionRouter';
 import RefreshSessionRouter from './routers/RefreshSessionRouter';
 import UpdateUserRouter from './routers/UpdateUserRouter';
+import InitializeDevSessionRouter from './routers/InitializeDevSessionRouter';
 
 class API extends ApplicationAPI {
   getPath(): string {
@@ -30,6 +31,7 @@ class API extends ApplicationAPI {
   routerGroups(): { [index: string]: Router[] } {
     return {
       auth: [InitializeSessionRouter],
+      dev: [InitializeDevSessionRouter],
       docs: [DocsRouter],
       general: [HelloRouter],
       refresh: [RefreshSessionRouter],

@@ -26,7 +26,10 @@ const VALID_TIMES = [
   20.5,
 ];
 
+const UNDECLARED_MAJOR = 'Undeclared';
+
 export default {
   VALID_DAYS,
   VALID_TIMES,
+  UNDECLARED_MAJOR,
 };

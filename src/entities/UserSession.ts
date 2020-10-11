@@ -45,7 +45,7 @@ class UserSession {
   refreshToken: string;
 
   /** User that the session belongs to */
-  @OneToOne(type => User)
+  @OneToOne(type => User, { onDelete: "CASCADE" })
   @JoinColumn()
   user: User;
 
