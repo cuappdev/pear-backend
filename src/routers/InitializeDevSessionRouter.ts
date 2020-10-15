@@ -22,7 +22,8 @@ class InitializeDevSessionRouter extends ApplicationRouter<SerializedUserSession
     }
 
     try {
-      const user = await UserRepo.createDummyUser('googleId');
+      const { firstName, googleID, lastName, netID } = req.query
+      const user = await UserRepo.createDummyUser(firstName, googleID, lastName, netID);
       const session = await UserSessionRepo.createOrUpdateSession(
         user,
         undefined

@@ -11,17 +11,25 @@ const db = (): Repository<User> =>
 /**
  * Creates a dummy user and saves it to the db (Testing purposes)
  * @function
- * @param {string} id - Google id to create user with
- * @return {User} New dummy user
+ * @param {string} firstName - first name used to create new user
+ * @param {string} googleID - google ID used to create new user
+ * @param {string} lastName - last name used to create new user
+ * @param {string} netID - netID used to create new user
+ * @return {User} a new user with given args or default Chuck Norris (cnorris) with id googleId
  */
-const createDummyUser = async (id: string): Promise<User> => {
+const createDummyUser = async (
+  firstName: string = 'Chuck',
+  googleID: string = 'googleId',
+  lastName: string = 'Norris',
+  netID: string = 'cnorris'
+): Promise<User> => {
   try {
-    const dummyUser = User.dummy(id);
-    const user = await getUserByNetID(dummyUser.netID);
-    if (!user) return await db().save(User.dummy(id));
+    const dummyUser = User.dummy(firstName, googleID, lastName, netID);
+    const user = await getUserByNetID(netID);
+    if (!user) return await db().save(dummyUser);
     return user;
   } catch (e) {
-    throw LogUtils.logErr(e, { id }, 'Problem creating user');
+    throw LogUtils.logErr(e, { firstName, googleID, lastName, netID }, 'Problem creating user');
   }
 };
 
