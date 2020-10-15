@@ -14,7 +14,7 @@ class SearchUsersRouter extends AuthenticatedAppplicationRouter<SerializedUser[]
   }
 
   async content(req: Request): Promise<SerializedUser[]> {
-    const { query } = req.query
+    const { query } = req.query;
     if (!query) throw Error("No search query provided");
 
     const users = await UserRepo.getUsers();
@@ -24,9 +24,9 @@ class SearchUsersRouter extends AuthenticatedAppplicationRouter<SerializedUser[]
         "lastName",
         "netID"
       ]
-    }
-    const fuse = new Fuse(users.map(userObject => userObject.serialize()), options)
-    return fuse.search(query).map(fuseResult => fuseResult.item)
+    };
+    const fuse = new Fuse(users.map(userObject => userObject.serialize()), options);
+    return fuse.search(query).map(fuseResult => fuseResult.item);
   }
 }
 
