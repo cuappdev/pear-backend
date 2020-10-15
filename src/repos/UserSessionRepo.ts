@@ -7,7 +7,9 @@ import User from '../entities/User';
 import UserSession from '../entities/UserSession';
 
 const db = (): Repository<UserSession> =>
-  getConnectionManager().get().getRepository(UserSession);
+  getConnectionManager()
+    .get()
+    .getRepository(UserSession);
 
 /**
  * Create or update session for a user
@@ -21,8 +23,8 @@ const createOrUpdateSession = async (
 ): Promise<UserSession> => {
   let session = await db()
     .createQueryBuilder('usersessions')
-    .innerJoin('usersessions.user', 'user', 'user.netID = :userNetID')
-    .setParameters({ userNetID: user.netID })
+    .innerJoin('usersessions.user', 'user', 'user.uuid = :userID')
+    .setParameters({ userID: user.uuid })
     .getOne();
   if (session) {
     session.update(accessToken);
@@ -60,7 +62,7 @@ const createUserAndInitializeSession = async (
   let user = await UserRepo.getUserByNetID(netID);
 
   if (!user) {
-    user = await UserRepo.initalizeUser(firstName, googleID, lastName, netID);
+    user = await UserRepo.initializeUser(firstName, googleID, lastName, netID);
   }
 
   const session = await createOrUpdateSession(user, undefined);

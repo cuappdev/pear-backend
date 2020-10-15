@@ -10,9 +10,12 @@ import GetInterestsRouter from './routers/GetInterestsRouter';
 import GetUserRouter from './routers/GetUserRouter';
 import GetUsersRouter from './routers/GetUsersRouter';
 import HelloRouter from './routers/HelloRouter';
+import InitializeDevSessionRouter from './routers/InitializeDevSessionRouter';
 import InitializeSessionRouter from './routers/InitializeSessionRouter';
 import RefreshSessionRouter from './routers/RefreshSessionRouter';
-import UpdateUserRouter from './routers/UpdateUserRouter';
+import UpdateDemographicsRouter from './routers/UpdateDemographicsRouter';
+import UpdateInterestsRouter from './routers/UpdateInterestsRouter';
+import UpdateOrganizationsRouter from './routers/UpdateOrganizationsRouter';
 
 class API extends ApplicationAPI {
   getPath(): string {
@@ -31,6 +34,7 @@ class API extends ApplicationAPI {
   routerGroups(): { [index: string]: Router[] } {
     return {
       auth: [InitializeSessionRouter],
+      dev: [InitializeDevSessionRouter],
       docs: [DocsRouter],
       general: [HelloRouter],
       refresh: [RefreshSessionRouter],
@@ -42,7 +46,9 @@ class API extends ApplicationAPI {
         GetClubsRouter,
         GetCornellMajorsRouter,
         GetInterestsRouter,
-        UpdateUserRouter,
+        UpdateDemographicsRouter,
+        UpdateInterestsRouter,
+        UpdateOrganizationsRouter,
       ],
     };
   }
