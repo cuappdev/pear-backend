@@ -90,15 +90,23 @@ class User {
   /**
    * Method to create a dummy user. (For testing purposes)
    * @function
-   * @param {string} id - google id used to create new user
-   * @return {User} a new user with supplied google id
+   * @param {string} firstName - first name used to create new user
+   * @param {string} googleID - google ID used to create new user
+   * @param {string} lastName - last name used to create new user
+   * @param {string} netID - netID used to create new user
+   * @return {User} a new user with supplied arguments
    */
-  static dummy(id: string): User {
+  static dummy(
+    firstName: string,
+    googleID: string,
+    lastName: string,
+    netID: string
+  ): User {
     const user = new User();
-    user.googleID = id;
-    user.firstName = 'Chuck';
-    user.lastName = 'Norris';
-    user.netID = 'cnorris';
+    user.firstName = firstName;
+    user.googleID = googleID;
+    user.lastName = lastName;
+    user.netID = netID;
     return user;
   }
 

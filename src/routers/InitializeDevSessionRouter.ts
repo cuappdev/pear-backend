@@ -17,12 +17,13 @@ class InitializeDevSessionRouter extends ApplicationRouter<SerializedUserSession
   async content(req: Request): Promise<SerializedUserSession> {
     if (process.env.NODE_ENV !== 'development') {
       throw LogUtils.logErr(
-        'Must be on development environment to acces this endpoint.'
+        'Must be on development environment to access this endpoint.'
       );
     }
 
     try {
-      const user = await UserRepo.createDummyUser('googleId');
+      const { firstName, googleID, lastName, netID } = req.body;
+      const user = await UserRepo.createDummyUser(firstName, googleID, lastName, netID);
       const session = await UserSessionRepo.createOrUpdateSession(
         user,
         undefined
