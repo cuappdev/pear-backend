@@ -3,7 +3,6 @@ import { SerializedUser } from '../common/types';
 import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import UserRepo from '../repos/UserRepo';
 import Fuse from 'fuse.js';
-type FuseResult<T> = Fuse.FuseResult<T>;
 
 class SearchUsersRouter extends AuthenticatedAppplicationRouter<SerializedUser[]> {
   constructor() {
