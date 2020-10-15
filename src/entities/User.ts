@@ -91,7 +91,7 @@ class User {
    * Method to create a dummy user. (For testing purposes)
    * @function
    * @param {string} firstName - first name used to create new user
-   * @param {string} googleId - google ID used to create new user
+   * @param {string} googleID - google ID used to create new user
    * @param {string} lastName - last name used to create new user
    * @param {string} netID - netID used to create new user
    * @return {User} a new user with supplied arguments

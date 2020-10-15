@@ -17,7 +17,7 @@ class InitializeDevSessionRouter extends ApplicationRouter<SerializedUserSession
   async content(req: Request): Promise<SerializedUserSession> {
     if (process.env.NODE_ENV !== 'development') {
       throw LogUtils.logErr(
-        'Must be on development environment to acces this endpoint.'
+        'Must be on development environment to access this endpoint.'
       );
     }
 
