@@ -98,13 +98,13 @@ class User {
    */
   static dummy(
     firstName: string,
-    googleId: string,
+    googleID: string,
     lastName: string,
     netID: string
   ): User {
     const user = new User();
     user.firstName = firstName;
-    user.googleID = googleId;
+    user.googleID = googleID;
     user.lastName = lastName;
     user.netID = netID;
     return user;
