@@ -1,9 +1,10 @@
-import 'reflect-metadata';
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable global-require */
+import cron from 'node-cron';
 import API from './API';
 import ClubRepo from './repos/ClubRepo';
 import Constants from './common/constants';
 import CornellMajorRepo from './repos/CornellMajorRepo';
-import cron from 'node-cron';
 import DBConnection from './db/DBConnection';
 import InterestRepo from './repos/InterestRepo';
 import MatchingRepo from './repos/MatchingRepo';
@@ -17,7 +18,7 @@ const SERVER_ADDRESS = '0.0.0.0';
 DBConnection()
   .then(async (connection: any) => {
     // Pre-populate the database with times, clubs, interests, and majors
-    Constants.VALID_TIMES.forEach(time => MatchingRepo.createTime(time));
+    Constants.VALID_TIMES.forEach((time) => MatchingRepo.createTime(time));
     importDataFromFile('PearClubs.txt', ClubRepo.createClub);
     importDataFromFile('PearInterests.txt', InterestRepo.createInterest);
     addCornellMajorsToDB();
@@ -29,15 +30,10 @@ DBConnection()
   })
   .catch((error: any) => console.log(error));
 
-async function importDataFromFile(
-  filename: string,
-  fn: (data: string) => Promise<void>
-) {
+async function importDataFromFile(filename: string, fn: (data: string) => Promise<void>) {
   const fs = require('fs');
   const readline = require('readline');
-  const fileStream = fs.createReadStream(
-    __dirname + '/../../assets/' + filename
-  );
+  const fileStream = fs.createReadStream(`${__dirname}/../../assets/${filename}`);
   const rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity,
@@ -52,7 +48,7 @@ async function importDataFromFile(
 async function addCornellMajorsToDB() {
   const majors = await scrapeCornellMajors();
   if (majors.length) {
-    majors.forEach(major => {
+    majors.forEach((major) => {
       CornellMajorRepo.createCornellMajor(major);
     });
   }

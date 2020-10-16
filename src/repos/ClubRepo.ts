@@ -1,10 +1,7 @@
 import { getConnectionManager, Repository } from 'typeorm';
 import Club from '../entities/Club';
 
-const db = (): Repository<Club> =>
-  getConnectionManager()
-    .get()
-    .getRepository(Club);
+const db = (): Repository<Club> => getConnectionManager().get().getRepository(Club);
 
 const createClub = async (name: string): Promise<void> => {
   const possibleClub = await db().findOne({ name });
@@ -15,7 +12,6 @@ const createClub = async (name: string): Promise<void> => {
     });
     await db().save(club);
   }
-  return;
 };
 
 const getClubByName = async (name: string): Promise<Club | undefined> => {

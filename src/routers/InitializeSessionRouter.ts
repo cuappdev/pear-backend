@@ -21,10 +21,8 @@ class InitializeSessionRouter extends ApplicationRouter<SerializedUserSession> {
         idToken,
         audience: process.env.GOOGLE_CLIENT_ID,
       })
-      .then((login: LoginTicket) =>
-        UserSessionRepo.createUserAndInitializeSession(login)
-      )
-      .catch(e => {
+      .then((login: LoginTicket) => UserSessionRepo.createUserAndInitializeSession(login))
+      .catch((e) => {
         throw Error(e);
       });
   }

@@ -3,9 +3,7 @@ import { SerializedCornellMajor } from '../common/types';
 import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import CornellMajorRepo from '../repos/CornellMajorRepo';
 
-class GetCornellMajorsRouter extends AuthenticatedAppplicationRouter<
-  SerializedCornellMajor[]
-> {
+class GetCornellMajorsRouter extends AuthenticatedAppplicationRouter<SerializedCornellMajor[]> {
   constructor() {
     super('GET');
   }
@@ -16,7 +14,7 @@ class GetCornellMajorsRouter extends AuthenticatedAppplicationRouter<
 
   async content(req: Request): Promise<SerializedCornellMajor[]> {
     const majors = await CornellMajorRepo.getCornellMajors();
-    return majors.map(majorObject => majorObject.serialize());
+    return majors.map((major) => major.serialize());
   }
 }
 

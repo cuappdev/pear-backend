@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { ExpressCallback } from './ApplicationAPI';
 import { AppDevResponse } from './AppDevResponse';
 
 /**
@@ -16,6 +15,7 @@ export type RequestType = 'GET' | 'POST' | 'DELETE';
  */
 class ApplicationRouter<T> {
   router: any;
+
   requestType: RequestType;
 
   /**
@@ -38,7 +38,7 @@ class ApplicationRouter<T> {
     const middleware = this.middleware();
 
     // Attach middleware to router
-    middleware.forEach(mw => {
+    middleware.forEach((mw) => {
       this.router.use(mw);
     });
 

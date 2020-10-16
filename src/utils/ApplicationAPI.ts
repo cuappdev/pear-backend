@@ -1,21 +1,11 @@
-import express, {
-  Application,
-  NextFunction,
-  Request,
-  Response,
-  Router,
-} from 'express';
+import express, { Application, NextFunction, Request, Response, Router } from 'express';
 import http from 'http';
 
 /**
  * ExpressHandlerFunction - the function signature of callbacks for Express
  * Router objects
  */
-export type ExpressCallback = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => any;
+export type ExpressCallback = (req: Request, res: Response, next: NextFunction) => any;
 
 /**
  * ApplicationAPI - create an Express Application object from a series of middleware
@@ -49,11 +39,11 @@ class ApplicationAPI {
       this.express.use(middleware[i]);
     }
 
-    Object.keys(versions).forEach(version => {
-      version = version + '/';
-      Object.keys(routerGroups).forEach(group => {
+    Object.keys(versions).forEach((version) => {
+      version += '/';
+      Object.keys(routerGroups).forEach((group) => {
         const routers = routerGroups[group];
-        routers.forEach(router => {
+        routers.forEach((router) => {
           this.express.use(this.getPath() + version + group, router);
         });
       });
@@ -99,10 +89,7 @@ class ApplicationAPI {
       console.log(err);
     };
 
-    const onListening = (): void => {
-      verbose && console.log('Listening');
-    };
-
+    const onListening = (): void => verbose && console.log('Listening');
     server.on('error', onError);
     server.on('listening', onListening);
     return server;

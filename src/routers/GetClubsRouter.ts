@@ -14,7 +14,7 @@ class GetClubsRouter extends AuthenticatedAppplicationRouter<SerializedClub[]> {
 
   async content(req: Request): Promise<SerializedClub[]> {
     const clubs = await ClubRepo.getClubs();
-    return clubs.map(clubObject => clubObject.serialize());
+    return clubs.map((club) => club.serialize());
   }
 }
 

@@ -1,10 +1,7 @@
 import { getConnectionManager, Repository } from 'typeorm';
 import Interest from '../entities/Interest';
 
-const db = (): Repository<Interest> =>
-  getConnectionManager()
-    .get()
-    .getRepository(Interest);
+const db = (): Repository<Interest> => getConnectionManager().get().getRepository(Interest);
 
 const createInterest = async (name: string): Promise<void> => {
   const possibleInterest = await db().findOne({ name });
@@ -15,12 +12,9 @@ const createInterest = async (name: string): Promise<void> => {
     });
     await db().save(interest);
   }
-  return;
 };
 
-const getInterestByName = async (
-  name: string
-): Promise<Interest | undefined> => {
+const getInterestByName = async (name: string): Promise<Interest | undefined> => {
   const interest = await db().findOne({ where: { name } });
   return interest;
 };

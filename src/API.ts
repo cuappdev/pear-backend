@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import ApplicationAPI from './utils/ApplicationAPI';
 import bodyParser from 'body-parser';
+import ApplicationAPI from './utils/ApplicationAPI';
 import CreateMatchingRouter from './routers/CreateMatchingRouter';
 import DeleteUserRouter from './routers/DeleteUserRouter';
 import DocsRouter from './routers/DocsRouter';
@@ -25,7 +25,6 @@ class API extends ApplicationAPI {
   }
 
   middleware(): any[] {
-    // tslint:disable-next-line: deprecation
     return [bodyParser.json()];
   }
 

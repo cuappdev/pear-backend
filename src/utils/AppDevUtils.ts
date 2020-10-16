@@ -1,14 +1,14 @@
 // General utility functions / Objects helpful in a TS setting across
 // all AppDev projects
 
-import { URL } from "url";
+import { URL } from 'url';
 
 /**
  * Check if a string is an AppDev-formatted URL. An AppDev formatted URL is
  * either just a '/', or begins and ends with a `/`, and must have some
  * characters in between.
  */
-const tryCheckAppDevURL = (path: string) => {
+const tryCheckAppDevURL = (path: string): void => {
   if (path !== '/' && path.length < 2) {
     throw Error('Invalid path');
   } else if (path[0] !== '/') {
@@ -24,8 +24,7 @@ const tryCheckAppDevURL = (path: string) => {
  * @param {string} email - Email to extract netid from
  * @return {string} netID from email
  */
-const netIDFromEmail = (email: string): string =>
-  email.substring(0, email.indexOf('@'));
+const netIDFromEmail = (email: string): string => email.substring(0, email.indexOf('@'));
 
 /**
  * Generates random alphanumeric string
@@ -47,9 +46,10 @@ const randomCode = (length: number): string =>
  *
  * @example validateURL("google") => false
  * @example validateURL("https://google.com") => true
-*/
+ */
 const validateURL = (url: string): boolean => {
   try {
+    // eslint-disable-next-line no-new
     new URL(url);
     return true;
   } catch (err) {

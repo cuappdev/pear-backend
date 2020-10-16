@@ -14,10 +14,7 @@ class CornellMajor {
   name: string;
 
   /** Users who identify as members of this club */
-  @OneToMany(
-    type => User,
-    user => user.major
-  )
+  @OneToMany((type) => User, (user) => user.major)
   users: User[];
 
   serialize(): SerializedCornellMajor {

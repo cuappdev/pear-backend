@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { SerializedDaySchedule, SerializedTime } from '../common/types';
 import Matching from './Matching';
 import Time from './Time';
@@ -22,14 +15,11 @@ class DaySchedule {
   day: string;
 
   /** The matching this day-schedule belongs to */
-  @ManyToOne(
-    type => Matching,
-    matching => matching.schedule
-  )
+  @ManyToOne((type) => Matching, (matching) => matching.schedule)
   matching: Matching;
 
   /** The available times for this day-schedule */
-  @ManyToMany(type => Time)
+  @ManyToMany((type) => Time)
   @JoinTable()
   times: Time[];
 

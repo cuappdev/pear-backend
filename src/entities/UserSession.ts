@@ -1,11 +1,5 @@
 import crypto from 'crypto';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { SerializedUserSession } from '../common/types';
 import User from './User';
@@ -45,15 +39,11 @@ class UserSession {
   refreshToken: string;
 
   /** User that the session belongs to */
-  @OneToOne(type => User, { onDelete: 'CASCADE' })
+  @OneToOne((type) => User, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
 
-  static fromUser(
-    user: User,
-    accessToken?: string,
-    refreshToken?: string
-  ): UserSession {
+  static fromUser(user: User, accessToken?: string, refreshToken?: string): UserSession {
     const session = new UserSession();
     session.user = user;
     session.update(accessToken, refreshToken);
@@ -65,9 +55,7 @@ class UserSession {
     this.refreshToken = refreshToken || crypto.randomBytes(64).toString('hex');
 
     // Session length is 1 day
-    this.expiresAt = String(
-      Math.floor(new Date().getTime() / 1000) + 60 * 60 * 24
-    );
+    this.expiresAt = String(Math.floor(new Date().getTime() / 1000) + 60 * 60 * 24);
     this.activate();
     return this;
   }

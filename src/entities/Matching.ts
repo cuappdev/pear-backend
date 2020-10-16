@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { SerializedMatching, SubSerializedMatching } from '../common/types';
 import DaySchedule from './DaySchedule';
 import User from './User';
@@ -22,33 +15,27 @@ class Matching {
   active: boolean;
 
   /** List of days and times for this matching */
-  @OneToMany(
-    type => DaySchedule,
-    schedule => schedule.matching
-  )
+  @OneToMany((type) => DaySchedule, (schedule) => schedule.matching)
   schedule: DaySchedule[];
 
   /** Users in this matching */
-  @ManyToMany(
-    type => User,
-    user => user.matches
-  )
+  @ManyToMany((type) => User, (user) => user.matches)
   @JoinTable()
   users: User[];
 
   serialize(): SerializedMatching {
     return {
       active: this.active,
-      schedule: this.schedule.map(schedule => schedule.serialize()),
-      users: this.users.map(user => user.serialize()),
+      schedule: this.schedule.map((schedule) => schedule.serialize()),
+      users: this.users.map((user) => user.serialize()),
     };
   }
 
   subSerialize(): SubSerializedMatching {
     return {
       active: this.active,
-      schedule: this.schedule.map(schedule => schedule.serialize()),
-      users: this.users.map(user => user.subSerialize()),
+      schedule: this.schedule.map((schedule) => schedule.serialize()),
+      users: this.users.map((user) => user.subSerialize()),
     };
   }
 }

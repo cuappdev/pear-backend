@@ -3,9 +3,7 @@ import { SerializedInterest } from '../common/types';
 import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import InterestRepo from '../repos/InterestRepo';
 
-class GetInterestsRouter extends AuthenticatedAppplicationRouter<
-  SerializedInterest[]
-> {
+class GetInterestsRouter extends AuthenticatedAppplicationRouter<SerializedInterest[]> {
   constructor() {
     super('GET');
   }
@@ -16,7 +14,7 @@ class GetInterestsRouter extends AuthenticatedAppplicationRouter<
 
   async content(req: Request): Promise<SerializedInterest[]> {
     const interests = await InterestRepo.getInterests();
-    return interests.map(interestObject => interestObject.serialize());
+    return interests.map((interest) => interest.serialize());
   }
 }
 

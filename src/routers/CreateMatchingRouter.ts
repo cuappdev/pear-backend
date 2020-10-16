@@ -5,9 +5,7 @@ import Constants from '../common/constants';
 import MatchingRepo from '../repos/MatchingRepo';
 import UserRepo from '../repos/UserRepo';
 
-class CreateMatchingRouter extends AuthenticatedAppplicationRouter<
-  SerializedMatching
-> {
+class CreateMatchingRouter extends AuthenticatedAppplicationRouter<SerializedMatching> {
   constructor() {
     super('POST');
   }
@@ -19,35 +17,24 @@ class CreateMatchingRouter extends AuthenticatedAppplicationRouter<
   async content(req: Request): Promise<SerializedMatching> {
     const { netIDs, schedule } = req.body;
     const daySchedules = [];
-    for (const ds of schedule) {
+    schedule.forEach(async (ds) => {
       if (!Constants.VALID_DAYS.includes(ds.day)) {
-        throw Error(
-          'Invalid day ' + ds.day + ' is not in [' + Constants.VALID_DAYS + ']'
-        );
+        throw Error(`Invalid day ${ds.day} is not in [${Constants.VALID_DAYS}]`);
       }
-      for (const time of ds.times) {
+      ds.times.forEach((time: number) => {
         if (!Constants.VALID_TIMES.includes(time)) {
-          throw Error(
-            'Invalid time ' +
-              time +
-              ' is not in [' +
-              Constants.VALID_TIMES +
-              ']'
-          );
+          throw Error(`Invalid time ${time} is not in [${Constants.VALID_TIMES}]`);
         }
-      }
-      const daySchedule = await MatchingRepo.createDaySchedule(
-        ds.day,
-        ds.times
-      );
+      });
+      const daySchedule = await MatchingRepo.createDaySchedule(ds.day, ds.times);
       daySchedules.push(daySchedule);
-    }
+    });
     const users = [];
-    for (const netID of netIDs) {
+    netIDs.forEach(async (netID: string) => {
       const user = await UserRepo.getUserByNetID(netID);
       if (!user) throw Error('User with that netID does not exist');
       users.push(user);
-    }
+    });
     const matching = await MatchingRepo.createMatching(users, daySchedules);
     return matching.serialize();
   }

@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { SerializedClub } from '../common/types';
 import User from './User';
 
@@ -20,10 +14,7 @@ class Club {
   name: string;
 
   /** Users who identify as members of this club */
-  @ManyToMany(
-    type => User,
-    user => user.clubs
-  )
+  @ManyToMany((type) => User, (user) => user.clubs)
   @JoinTable()
   users: User[];
 
