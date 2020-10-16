@@ -1,6 +1,8 @@
 // General utility functions / Objects helpful in a TS setting across
 // all AppDev projects
 
+import { URL } from "url";
+
 /**
  * Check if a string is an AppDev-formatted URL. An AppDev formatted URL is
  * either just a '/', or begins and ends with a `/`, and must have some
@@ -17,10 +19,10 @@ const tryCheckAppDevURL = (path: string): void => {
 };
 
 /**
- * Extracts netid from email
+ * Extracts netID from email
  * @function
  * @param {string} email - Email to extract netid from
- * @return {string} Netid from email
+ * @return {string} netID from email
  */
 const netIDFromEmail = (email: string): string => email.substring(0, email.indexOf('@'));
 
@@ -36,8 +38,27 @@ const randomCode = (length: number): string =>
     .slice(1)
     .toUpperCase();
 
+/**
+ * Validates a possible url
+ * @function
+ * @param {string} url - URL to validate
+ * @returns {boolean} true if URL is valid, false otherwise
+ *
+ * @example validateURL("google") => false
+ * @example validateURL("https://google.com") => true
+*/
+const validateURL = (url: string): boolean => {
+  try {
+    new URL(url);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
 export default {
   netIDFromEmail,
   randomCode,
   tryCheckAppDevURL,
+  validateURL,
 };

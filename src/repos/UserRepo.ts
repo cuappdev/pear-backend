@@ -78,7 +78,17 @@ const getUserByNetID = async (netID: string): Promise<User | undefined> => {
 };
 
 const getUsers = async (): Promise<User[]> => {
-  return db().find();
+  return db().find({
+    relations: [
+      'matches',
+      'matches.users',
+      'matches.schedule',
+      'matches.schedule.times',
+      'clubs',
+      'interests',
+      'major',
+    ],
+  });
 };
 
 export default {
