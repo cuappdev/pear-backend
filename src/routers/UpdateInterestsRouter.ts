@@ -34,7 +34,7 @@ class UpdateInterestsRouter extends AuthenticatedAppplicationRouter<void> {
 
         return collection;
       },
-      Promise.resolve([])
+      Promise.resolve([]),
     );
 
     await UserRepo.updateUser(user, { interests: interestList });

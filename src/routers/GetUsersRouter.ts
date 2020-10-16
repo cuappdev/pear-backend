@@ -14,7 +14,7 @@ class GetUsersRouter extends AuthenticatedAppplicationRouter<SerializedUser[]> {
 
   async content(req: Request): Promise<SerializedUser[]> {
     const users = await UserRepo.getUsers();
-    return users.map(userObject => userObject.serialize());
+    return users.map((userObject) => userObject.serialize());
   }
 }
 

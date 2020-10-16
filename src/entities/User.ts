@@ -1,10 +1,4 @@
-import {
-  PrimaryGeneratedColumn,
-  Column,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-} from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne } from 'typeorm';
 import constants from '../common/constants';
 import { SerializedUser, SubSerializedUser } from '../common/types';
 import Club from './Club';
@@ -42,11 +36,10 @@ class User {
   graduationYear: string | null;
 
   /** User's major */
-  @ManyToOne(
-    type => CornellMajor,
-    major => major.users,
-    { nullable: true, onDelete: 'CASCADE' }
-  )
+  @ManyToOne((type) => CornellMajor, (major) => major.users, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
   major: CornellMajor | null;
 
   /** User's hometown */
@@ -54,19 +47,11 @@ class User {
   hometown: string | null;
 
   /** User's clubs */
-  @ManyToMany(
-    type => Club,
-    club => club.users,
-    { onDelete: 'CASCADE' }
-  )
+  @ManyToMany((type) => Club, (club) => club.users, { onDelete: 'CASCADE' })
   clubs: Club[];
 
   /** User's interests */
-  @ManyToMany(
-    type => Interest,
-    interest => interest.users,
-    { onDelete: 'CASCADE' }
-  )
+  @ManyToMany((type) => Interest, (interest) => interest.users, { onDelete: 'CASCADE' })
   interests: Interest[];
 
   /** User's facebook profile link */
@@ -81,10 +66,7 @@ class User {
   profilePictureURL: string | null;
 
   /** User's matchings */
-  @ManyToMany(
-    type => Matching,
-    matching => matching.users
-  )
+  @ManyToMany((type) => Matching, (matching) => matching.users)
   matches: Matching[];
 
   /**
@@ -96,12 +78,7 @@ class User {
    * @param {string} netID - netID used to create new user
    * @return {User} a new user with supplied arguments
    */
-  static dummy(
-    firstName: string,
-    googleID: string,
-    lastName: string,
-    netID: string
-  ): User {
+  static dummy(firstName: string, googleID: string, lastName: string, netID: string): User {
     const user = new User();
     user.firstName = firstName;
     user.googleID = googleID;
@@ -120,16 +97,12 @@ class User {
       graduationYear: this.graduationYear,
       major: this.major ? this.major.serialize() : constants.UNDECLARED_MAJOR,
       hometown: this.hometown,
-      clubs: this.clubs ? this.clubs.map(club => club.serialize()) : [],
-      interests: this.interests
-        ? this.interests.map(interest => interest.serialize())
-        : [],
+      clubs: this.clubs ? this.clubs.map((club) => club.serialize()) : [],
+      interests: this.interests ? this.interests.map((interest) => interest.serialize()) : [],
       facebook: this.facebook,
       instagram: this.instagram,
       profilePictureURL: this.profilePictureURL,
-      matches: this.matches
-        ? this.matches.map(match => match.subSerialize())
-        : [],
+      matches: this.matches ? this.matches.map((match) => match.subSerialize()) : [],
     };
   }
 

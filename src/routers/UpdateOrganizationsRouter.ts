@@ -29,14 +29,12 @@ class UpdateOrganizationsRouter extends AuthenticatedAppplicationRouter<void> {
 
         if (club) collection.push(club);
         else {
-          LogUtils.logErr(
-            `Organization '${name}' doesn't exist in the database.`
-          );
+          LogUtils.logErr(`Organization '${name}' doesn't exist in the database.`);
         }
 
         return collection;
       },
-      Promise.resolve([])
+      Promise.resolve([]),
     );
 
     await UserRepo.updateUser(user, { clubs: organizations });

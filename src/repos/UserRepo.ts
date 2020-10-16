@@ -3,10 +3,7 @@ import { UserUpdateFields } from '../common/types';
 import User from '../entities/User';
 import LogUtils from '../utils/LogUtils';
 
-const db = (): Repository<User> =>
-  getConnectionManager()
-    .get()
-    .getRepository(User);
+const db = (): Repository<User> => getConnectionManager().get().getRepository(User);
 
 /**
  * Creates a dummy user and saves it to the db (Testing purposes)
@@ -18,10 +15,10 @@ const db = (): Repository<User> =>
  * @return {User} a new user with given args or default Chuck Norris (cnorris) with id googleId
  */
 const createDummyUser = async (
-  firstName: string = 'Chuck',
-  googleID: string = 'googleId',
-  lastName: string = 'Norris',
-  netID: string = 'cnorris'
+  firstName = 'Chuck',
+  googleID = 'googleId',
+  lastName = 'Norris',
+  netID = 'cnorris',
 ): Promise<User> => {
   try {
     const dummyUser = User.dummy(firstName, googleID, lastName, netID);
@@ -37,7 +34,7 @@ const initializeUser = async (
   firstName: string,
   googleID: string,
   lastName: string,
-  netID: string
+  netID: string,
 ): Promise<User> => {
   const possibleUser = await db().findOne({ netID });
   if (possibleUser) {
@@ -58,10 +55,7 @@ const deleteUser = async (user: User): Promise<boolean> => {
   return true;
 };
 
-const updateUser = async (
-  user: User,
-  userFields: UserUpdateFields
-): Promise<boolean> => {
+const updateUser = async (user: User, userFields: UserUpdateFields): Promise<boolean> => {
   db().merge(user, userFields);
   await db().save(user);
   return true;

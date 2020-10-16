@@ -5,21 +5,10 @@ import Time from '../entities/Time';
 import User from '../entities/User';
 
 const dayScheduleDB = (): Repository<DaySchedule> =>
-  getConnectionManager()
-    .get()
-    .getRepository(DaySchedule);
-const matchingDB = (): Repository<Matching> =>
-  getConnectionManager()
-    .get()
-    .getRepository(Matching);
-const timeDB = (): Repository<Time> =>
-  getConnectionManager()
-    .get()
-    .getRepository(Time);
-const userDB = (): Repository<User> =>
-  getConnectionManager()
-    .get()
-    .getRepository(User);
+  getConnectionManager().get().getRepository(DaySchedule);
+const matchingDB = (): Repository<Matching> => getConnectionManager().get().getRepository(Matching);
+const timeDB = (): Repository<Time> => getConnectionManager().get().getRepository(Time);
+const userDB = (): Repository<User> => getConnectionManager().get().getRepository(User);
 
 const createTime = async (time: number): Promise<void> => {
   const possibleTime = await timeDB().findOne({ time });
@@ -31,10 +20,7 @@ const createTime = async (time: number): Promise<void> => {
   }
 };
 
-const createDaySchedule = async (
-  day: string,
-  times: number[]
-): Promise<DaySchedule> => {
+const createDaySchedule = async (day: string, times: number[]): Promise<DaySchedule> => {
   const daySchedule = dayScheduleDB().create({
     day,
     times: [],
@@ -49,10 +35,7 @@ const createDaySchedule = async (
   return daySchedule;
 };
 
-const createMatching = async (
-  users: User[],
-  schedule: DaySchedule[]
-): Promise<Matching> => {
+const createMatching = async (users: User[], schedule: DaySchedule[]): Promise<Matching> => {
   const matching = matchingDB().create({
     users,
     schedule,
@@ -60,9 +43,9 @@ const createMatching = async (
   });
   await matchingDB().save(matching);
   for await (const user of users) {
-    user.matches.forEach(matching => {
+    user.matches.forEach((match) => {
       // Set past matches to false
-      matching.active = false;
+      match.active = false;
     });
     user.matches.push(matching);
     await userDB().save(user);

@@ -1,8 +1,8 @@
 import { Request } from 'express';
+import Fuse from 'fuse.js';
 import { SerializedUser } from '../common/types';
 import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import UserRepo from '../repos/UserRepo';
-import Fuse from 'fuse.js';
 
 class SearchUsersRouter extends AuthenticatedAppplicationRouter<SerializedUser[]> {
   constructor() {
@@ -15,18 +15,17 @@ class SearchUsersRouter extends AuthenticatedAppplicationRouter<SerializedUser[]
 
   async content(req: Request): Promise<SerializedUser[]> {
     const { query } = req.query;
-    if (!query) throw Error("No search query provided");
+    if (!query) throw Error('No search query provided');
 
     const users = await UserRepo.getUsers();
     const options = {
-      keys: [
-        "firstName",
-        "lastName",
-        "netID"
-      ]
+      keys: ['firstName', 'lastName', 'netID'],
     };
-    const fuse = new Fuse(users.map(userObject => userObject.serialize()), options);
-    return fuse.search(query).map(fuseResult => fuseResult.item);
+    const fuse = new Fuse(
+      users.map((userObject) => userObject.serialize()),
+      options,
+    );
+    return fuse.search(query).map((fuseResult) => fuseResult.item);
   }
 }
 

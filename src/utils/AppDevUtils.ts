@@ -6,7 +6,7 @@
  * either just a '/', or begins and ends with a `/`, and must have some
  * characters in between.
  */
-const tryCheckAppDevURL = (path: string) => {
+const tryCheckAppDevURL = (path: string): void => {
   if (path !== '/' && path.length < 2) {
     throw Error('Invalid path');
   } else if (path[0] !== '/') {
@@ -22,8 +22,7 @@ const tryCheckAppDevURL = (path: string) => {
  * @param {string} email - Email to extract netid from
  * @return {string} Netid from email
  */
-const netIDFromEmail = (email: string): string =>
-  email.substring(0, email.indexOf('@'));
+const netIDFromEmail = (email: string): string => email.substring(0, email.indexOf('@'));
 
 /**
  * Generates random alphanumeric string

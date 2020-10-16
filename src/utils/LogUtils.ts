@@ -6,7 +6,7 @@ import util from 'util';
  * @param obj
  * @param error
  */
-function log(obj: {}, error = false) {
+function log(obj: any, error = false) {
   const options = {
     showHidden: false,
     depth: Infinity,
@@ -37,11 +37,7 @@ function log(obj: {}, error = false) {
  * @param disableConsoleOut, disable console.out in development env, for tests
  * @returns {*}
  */
-function logErr(
-  error: {},
-  data: {} = {},
-  note = '' //
-) {
+function logErr(error: any, data: any = {}, note = ''): any {
   try {
     // try block because if the error logging has an error
     if (!error) {

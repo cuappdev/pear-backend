@@ -1,5 +1,4 @@
 import { Request } from 'express';
-import User from '../entities/User';
 import CornellMajorRepo from '../repos/CornellMajorRepo';
 import UserRepo from '../repos/UserRepo';
 import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
@@ -16,23 +15,17 @@ class UpdateDemographicsRouter extends AuthenticatedAppplicationRouter<void> {
   async content(req: Request): Promise<void> {
     const { user, body } = req;
 
-    const validFields = [
-      'graduationYear',
-      'hometown',
-      'major',
-      'profilePictureURL',
-      'pronouns',
-    ];
+    const validFields = ['graduationYear', 'hometown', 'major', 'profilePictureURL', 'pronouns'];
 
     /* sanitize fields */
-    for (const key in body) {
-      if (!validFields.includes(key) || key === 'googleID' || key === 'netID') {
+    Object.keys(body).forEach((key) => {
+      if (!validFields.includes(key)) {
         throw Error(`Invalid field '${key}' identified in request body.`);
       }
-    }
+    });
 
     const { graduationYear, major } = body;
-    if (graduationYear && isNaN(graduationYear)) {
+    if (graduationYear && Number.isNaN(graduationYear)) {
       throw Error('graduationYear must be a valid string containing a year.');
     }
 

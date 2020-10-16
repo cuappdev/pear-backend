@@ -1,10 +1,7 @@
 import { getConnectionManager, Repository } from 'typeorm';
 import CornellMajor from '../entities/CornellMajor';
 
-const db = (): Repository<CornellMajor> =>
-  getConnectionManager()
-    .get()
-    .getRepository(CornellMajor);
+const db = (): Repository<CornellMajor> => getConnectionManager().get().getRepository(CornellMajor);
 
 const createCornellMajor = async (name: string): Promise<void> => {
   const possibleCornellMajor = await db().findOne({ name });
@@ -15,12 +12,9 @@ const createCornellMajor = async (name: string): Promise<void> => {
     });
     await db().save(cornellMajor);
   }
-  return;
 };
 
-const getCornellMajorByName = async (
-  name: string
-): Promise<CornellMajor | undefined> => {
+const getCornellMajorByName = async (name: string): Promise<CornellMajor | undefined> => {
   const major = await db().findOne({ where: { name } });
   return major;
 };

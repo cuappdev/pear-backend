@@ -6,10 +6,7 @@ import UserRepo from './UserRepo';
 import User from '../entities/User';
 import UserSession from '../entities/UserSession';
 
-const db = (): Repository<UserSession> =>
-  getConnectionManager()
-    .get()
-    .getRepository(UserSession);
+const db = (): Repository<UserSession> => getConnectionManager().get().getRepository(UserSession);
 
 /**
  * Create or update session for a user
@@ -17,10 +14,7 @@ const db = (): Repository<UserSession> =>
  * @param {string | undefined} accessToken - Access token to be used for the session
  * @return {UserSession} New or updated session
  */
-const createOrUpdateSession = async (
-  user: User,
-  accessToken?: string
-): Promise<UserSession> => {
+const createOrUpdateSession = async (user: User, accessToken?: string): Promise<UserSession> => {
   let session = await db()
     .createQueryBuilder('usersessions')
     .innerJoin('usersessions.user', 'user', 'user.uuid = :userID')
@@ -42,7 +36,7 @@ const createOrUpdateSession = async (
  * @return {SerializedUserSession} Contains session information for user
  */
 const createUserAndInitializeSession = async (
-  login: LoginTicket
+  login: LoginTicket,
 ): Promise<SerializedUserSession> => {
   const payload = login.getPayload();
 
@@ -80,9 +74,7 @@ const createUserAndInitializeSession = async (
  * @param {string} accessToken - Access token that we want to find the owner
  * @return {User | undefined} User that is associated with the access token. Undefined if not found.
  */
-const getUserFromToken = async (
-  accessToken: string
-): Promise<User | undefined> => {
+const getUserFromToken = async (accessToken: string): Promise<User | undefined> => {
   const session = await db()
     .createQueryBuilder('usersessions')
     .leftJoinAndSelect('usersessions.user', 'user')
@@ -91,9 +83,7 @@ const getUserFromToken = async (
   return session?.user;
 };
 
-const updateSession = async (
-  refreshToken: string
-): Promise<SerializedUserSession | undefined> => {
+const updateSession = async (refreshToken: string): Promise<SerializedUserSession | undefined> => {
   let session = await db()
     .createQueryBuilder('usersessions')
     .leftJoinAndSelect('usersessions.user', 'user')
@@ -123,8 +113,7 @@ const verifySession = async (accessToken: string): Promise<boolean> => {
     .where('usersessions.accessToken = :accessToken', { accessToken })
     .getOne();
   return session
-    ? session.active &&
-        session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
+    ? session.active && session.expiresAt > String(Math.floor(new Date().getTime() / 1000))
     : false;
 };
 
