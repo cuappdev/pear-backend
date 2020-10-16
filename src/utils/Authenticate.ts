@@ -22,11 +22,13 @@ async function ensureAuthenticated(req: Request, res: Response, next: NextFuncti
   if (bearerToken === '') return;
 
   if (!(await UserSessionRepo.verifySession(bearerToken))) {
+    // eslint-disable-next-line consistent-return
     return res.status(401).json(new AppDevResponse(false, { errors: ['Invalid access token'] }));
   }
   const user = await UserSessionRepo.getUserFromToken(bearerToken);
   if (!user) throw Error('No user found with valid access token');
   req.user = user;
+  // eslint-disable-next-line consistent-return
   return next();
 }
 
@@ -37,9 +39,11 @@ async function updateSession(req: Request, res: Response, next: NextFunction) {
 
   const session = await UserSessionRepo.updateSession(bearerToken);
   if (!session) {
+    // eslint-disable-next-line consistent-return
     return res.status(401).json(new AppDevResponse(false, { errors: ['Invalid refresh token'] }));
   }
   req.session = session;
+  // eslint-disable-next-line consistent-return
   return next();
 }
 
