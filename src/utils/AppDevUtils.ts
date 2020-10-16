@@ -1,6 +1,8 @@
 // General utility functions / Objects helpful in a TS setting across
 // all AppDev projects
 
+import { URL } from "url";
+
 /**
  * Check if a string is an AppDev-formatted URL. An AppDev formatted URL is
  * either just a '/', or begins and ends with a `/`, and must have some
@@ -42,16 +44,17 @@ const randomCode = (length: number): string =>
  * @function
  * @param {string} url - URL to validate
  * @returns {boolean} true if URL is valid, false otherwise
- * https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url/49849482
+ *
+ * @example validateURL("google") => false
+ * @example validateURL("https://google.com") => true
 */
 const validateURL = (url: string): boolean => {
-  const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-    '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-  return !!pattern.test(url);
+  try {
+    new URL(url);
+    return true;
+  } catch (err) {
+    return false;
+  }
 };
 
 export default {
