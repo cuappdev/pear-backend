@@ -17,10 +17,10 @@ const tryCheckAppDevURL = (path: string) => {
 };
 
 /**
- * Extracts netid from email
+ * Extracts netID from email
  * @function
  * @param {string} email - Email to extract netid from
- * @return {string} Netid from email
+ * @return {string} netID from email
  */
 const netIDFromEmail = (email: string): string =>
   email.substring(0, email.indexOf('@'));
@@ -37,8 +37,26 @@ const randomCode = (length: number): string =>
     .slice(1)
     .toUpperCase();
 
+/**
+ * Validates a possible url
+ * @function
+ * @param {string} url - URL to validate
+ * @returns {boolean} true if URL is valid, false otherwise
+ * https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url/49849482
+*/
+const validateURL = (url: string): boolean => {
+  const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+  return !!pattern.test(url);
+};
+
 export default {
   netIDFromEmail,
   randomCode,
   tryCheckAppDevURL,
+  validateURL,
 };
