@@ -14,28 +14,20 @@ class UpdateInterestsRouter extends AuthenticatedAppplicationRouter<void> {
 
   async content(req: Request): Promise<void> {
     const { user, body } = req;
-    const { facebook, instagram } = body;
 
-    if (!(facebook || instagram)) {
-      throw Error("At least one of 'facebook' or 'instagram' is required.");
-    }
+    const validFields = ["facebook", "instagram"];
 
-    let payload = {};
-    if (facebook) {
-      if (!AppDevUtils.validateURL(facebook)) {
-        throw Error("URL provided for 'facebook' is not valid.")
+    for (const key in body) {
+      if (!validFields.includes(key)) {
+        throw Error(`Invalid field '${key}' identified in request body.`);
       }
-      payload = { ...payload, facebook };
-    }
 
-    if (instagram) {
-      if (!AppDevUtils.validateURL(instagram)) {
-        throw Error("URL provided for 'instagram' is not valid.")
+      if (!AppDevUtils.validateURL(body[key])) {
+        throw Error(`URL provided for '${key}' is not valid.`);
       }
-      payload = { ...payload, instagram };
     }
 
-    await UserRepo.updateUser(user, payload);
+    await UserRepo.updateUser(user, body);
   }
 }
 
