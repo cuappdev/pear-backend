@@ -1,7 +1,7 @@
 // General utility functions / Objects helpful in a TS setting across
 // all AppDev projects
 
-import { URL } from "url";
+import { URL } from 'url';
 
 /**
  * Check if a string is an AppDev-formatted URL. An AppDev formatted URL is
@@ -46,9 +46,10 @@ const randomCode = (length: number): string =>
  *
  * @example validateURL("google") => false
  * @example validateURL("https://google.com") => true
-*/
+ */
 const validateURL = (url: string): boolean => {
   try {
+    // eslint-disable-next-line no-new
     new URL(url);
     return true;
   } catch (err) {

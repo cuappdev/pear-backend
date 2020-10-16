@@ -15,9 +15,9 @@ class UpdateInterestsRouter extends AuthenticatedAppplicationRouter<void> {
   async content(req: Request): Promise<void> {
     const { user, body } = req;
 
-    const validFields = ["facebook", "instagram"];
+    const validFields = ['facebook', 'instagram'];
 
-    for (const key in body) {
+    Object.keys(body).forEach((key) => {
       if (!validFields.includes(key)) {
         throw Error(`Invalid field '${key}' identified in request body.`);
       }
@@ -25,7 +25,7 @@ class UpdateInterestsRouter extends AuthenticatedAppplicationRouter<void> {
       if (!AppDevUtils.validateURL(body[key])) {
         throw Error(`URL provided for '${key}' is not valid.`);
       }
-    }
+    });
 
     await UserRepo.updateUser(user, body);
   }
