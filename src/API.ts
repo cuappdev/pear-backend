@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import bodyParser from 'body-parser';
 import ApplicationAPI from './utils/ApplicationAPI';
-import CreateMatchingRouter from './routers/CreateMatchingRouter';
 import DeleteUserRouter from './routers/DeleteUserRouter';
 import DocsRouter from './routers/DocsRouter';
 import GetClubsRouter from './routers/GetClubsRouter';
@@ -40,7 +39,6 @@ class API extends ApplicationAPI {
       general: [HelloRouter],
       refresh: [RefreshSessionRouter],
       user: [
-        CreateMatchingRouter,
         DeleteUserRouter,
         GetUserRouter,
         GetUsersRouter,

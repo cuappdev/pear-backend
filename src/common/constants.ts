@@ -1,6 +1,7 @@
-const VALID_DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+const VALID_DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
 const VALID_TIMES = [
+  9,
   9.5,
   10,
   10.5,

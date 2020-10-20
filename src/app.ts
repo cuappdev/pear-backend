@@ -3,11 +3,9 @@
 import cron from 'node-cron';
 import API from './API';
 import ClubRepo from './repos/ClubRepo';
-import Constants from './common/constants';
 import CornellMajorRepo from './repos/CornellMajorRepo';
 import DBConnection from './db/DBConnection';
 import InterestRepo from './repos/InterestRepo';
-import MatchingRepo from './repos/MatchingRepo';
 import scrapeCornellMajors from './utils/WebScraper';
 
 const app = new API();
@@ -17,8 +15,7 @@ const SERVER_ADDRESS = '0.0.0.0';
 
 DBConnection()
   .then(async (connection: any) => {
-    // Pre-populate the database with times, clubs, interests, and majors
-    Constants.VALID_TIMES.forEach((time) => MatchingRepo.createTime(time));
+    // Pre-populate the database with clubs, interests, and majors
     importDataFromFile('PearClubs.txt', ClubRepo.createClub);
     importDataFromFile('PearInterests.txt', InterestRepo.createInterest);
     addCornellMajorsToDB();

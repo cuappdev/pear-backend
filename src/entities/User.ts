@@ -4,7 +4,7 @@ import { SerializedUser, SubSerializedUser } from '../common/types';
 import Club from './Club';
 import CornellMajor from './CornellMajor';
 import Interest from './Interest';
-import Matching from './Matching';
+import Availability from './Availability';
 
 @Entity('pear_user')
 class User {
@@ -65,9 +65,9 @@ class User {
   @Column({ type: 'varchar', nullable: true })
   profilePictureURL: string | null;
 
-  /** User's matchings */
-  @ManyToMany((type) => Matching, (matching) => matching.users)
-  matches: Matching[];
+  /** User's availabilities */
+  @ManyToMany((type) => Availability, (availability) => availability.users)
+  availabilities: Availability[];
 
   /**
    * Method to create a dummy user. (For testing purposes)
@@ -102,7 +102,6 @@ class User {
       facebook: this.facebook,
       instagram: this.instagram,
       profilePictureURL: this.profilePictureURL,
-      matches: this.matches ? this.matches.map((match) => match.subSerialize()) : [],
     };
   }
 
