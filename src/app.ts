@@ -33,7 +33,7 @@ DBConnection()
 async function importDataFromFile(filename: string, fn: (data: string) => Promise<void>) {
   const fs = require('fs');
   const readline = require('readline');
-  const fileStream = fs.createReadStream(`${__dirname}/../../assets/${filename}`);
+  const fileStream = fs.createReadStream(`${__dirname}/../assets/${filename}`);
   const rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity,
