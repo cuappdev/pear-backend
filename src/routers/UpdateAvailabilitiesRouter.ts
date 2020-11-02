@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import CornellMajorRepo from '../repos/CornellMajorRepo';
+import Constants from '../common/constants';
 import UserRepo from '../repos/UserRepo';
 import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
 
@@ -9,33 +9,52 @@ class UpdateAvailabilitiesRouter extends AuthenticatedAppplicationRouter<void> {
   }
 
   getPath(): string {
-    return '/updateAvailabilities/';
+    return '/availabilities/';
   }
 
   async content(req: Request): Promise<void> {
     const { user, body } = req;
 
-    const validFields = ['graduationYear', 'hometown', 'major', 'profilePictureURL', 'pronouns'];
+    const validFields = ['schedule'];
 
-    /* sanitize fields */
     Object.keys(body).forEach((key) => {
       if (!validFields.includes(key)) {
         throw Error(`Invalid field '${key}' identified in request body.`);
       }
     });
 
-    const { graduationYear, major } = body;
-    if (graduationYear && Number.isNaN(graduationYear)) {
-      throw Error('graduationYear must be a valid string containing a year.');
-    }
+    const { schedule } = body;
+    schedule.forEach((availability) => {
+      const validScheduleFields = ['day', 'times'];
 
-    if (major) {
-      const majorEntity = await CornellMajorRepo.getCornellMajorByName(major);
-      if (!majorEntity) throw Error(`Major '${major}' doesn't exist.`);
-      body.major = majorEntity;
-    }
+      Object.keys(availability).forEach((key) => {
+        if (!validScheduleFields.includes(key)) {
+          throw Error(`Invalid field '${key}' identified in schedule list.`);
+        }
+      });
 
-    await UserRepo.updateUser(user, body);
+      const { day, times } = availability;
+
+      if (day) {
+        if (!Constants.VALID_DAYS.includes(day)) {
+          throw Error(`Invalid day '${day}' identified in schedule list.`);
+        }
+      } else {
+        throw Error('Missing day field in schedule list entry.');
+      }
+
+      if (times) {
+        times.forEach((time) => {
+          if (!Constants.VALID_TIMES.includes(time)) {
+            throw Error(`Invalid time '${time}' identified under '${day}'.`);
+          }
+        });
+      } else {
+        throw Error(`Missing times field in schedule list entry under '${day}'.`);
+      }
+    });
+
+    await UserRepo.updateUser(user, { availabilities: schedule });
   }
 }
 

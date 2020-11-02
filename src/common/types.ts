@@ -1,3 +1,4 @@
+import Availability from '../entities/Availability';
 import Club from '../entities/Club';
 import Interest from '../entities/Interest';
 import CornellMajor from '../entities/CornellMajor';
@@ -17,6 +18,7 @@ export interface SerializedUser {
   facebook: string | null;
   instagram: string | null;
   profilePictureURL: string | null;
+  availabilities: SerializedAvailability[];
 }
 
 /* Represents a User without clubs, interests, majors, or matches shown */
@@ -70,4 +72,5 @@ export interface UserUpdateFields {
   facebook?: string;
   instagram?: string;
   profilePictureURL?: string;
+  availabilities?: Availability[];
 }

@@ -1,5 +1,5 @@
 import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne } from 'typeorm';
-import constants from '../common/constants';
+import Constants from '../common/constants';
 import { SerializedUser, SubSerializedUser } from '../common/types';
 import Club from './Club';
 import CornellMajor from './CornellMajor';
@@ -95,13 +95,16 @@ class User {
       netID: this.netID,
       pronouns: this.pronouns,
       graduationYear: this.graduationYear,
-      major: this.major ? this.major.serialize() : constants.UNDECLARED_MAJOR,
+      major: this.major ? this.major.serialize() : Constants.UNDECLARED_MAJOR,
       hometown: this.hometown,
       clubs: this.clubs ? this.clubs.map((club) => club.serialize()) : [],
       interests: this.interests ? this.interests.map((interest) => interest.serialize()) : [],
       facebook: this.facebook,
       instagram: this.instagram,
       profilePictureURL: this.profilePictureURL,
+      availabilities: this.availabilities
+        ? this.availabilities.map((availability) => availability.serialize())
+        : [],
     };
   }
 
@@ -113,7 +116,7 @@ class User {
       netID: this.netID,
       pronouns: this.pronouns,
       graduationYear: this.graduationYear,
-      major: this.major ? this.major.serialize() : constants.UNDECLARED_MAJOR,
+      major: this.major ? this.major.serialize() : Constants.UNDECLARED_MAJOR,
       hometown: this.hometown,
       facebook: this.facebook,
       instagram: this.instagram,
