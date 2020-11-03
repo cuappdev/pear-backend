@@ -1,5 +1,6 @@
 import { Request } from 'express';
-import Constants from '../common/constants';
+import Availability from '../entities/Availability';
+import AvailabilityRepo from '../repos/AvailabilityRepo';
 import UserRepo from '../repos/UserRepo';
 import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
 
@@ -24,7 +25,8 @@ class UpdateAvailabilitiesRouter extends AuthenticatedAppplicationRouter<void> {
     });
 
     const { schedule } = body;
-    schedule.forEach((availability) => {
+    const availabilities: Availability[] = [];
+    await schedule.forEach(async (availability) => {
       const validScheduleFields = ['day', 'times'];
 
       Object.keys(availability).forEach((key) => {
@@ -35,26 +37,30 @@ class UpdateAvailabilitiesRouter extends AuthenticatedAppplicationRouter<void> {
 
       const { day, times } = availability;
 
-      if (day) {
-        if (!Constants.VALID_DAYS.includes(day)) {
-          throw Error(`Invalid day '${day}' identified in schedule list.`);
-        }
-      } else {
-        throw Error('Missing day field in schedule list entry.');
-      }
+      // if (day) {
+      //   if (!Constants.VALID_DAYS.includes(day)) {
+      //     throw Error(`Invalid day '${day}' identified in schedule list.`);
+      //   }
+      // } else {
+      //   throw Error('Missing day field in schedule list entry.');
+      // }
 
-      if (times) {
-        times.forEach((time) => {
-          if (!Constants.VALID_TIMES.includes(time)) {
-            throw Error(`Invalid time '${time}' identified under '${day}'.`);
-          }
-        });
-      } else {
-        throw Error(`Missing times field in schedule list entry under '${day}'.`);
-      }
+      // if (times) {
+      //   times.forEach((time) => {
+      //     if (!Constants.VALID_TIMES.includes(time)) {
+      //       throw Error(`Invalid time '${time}' identified under '${day}'.`);
+      //     }
+      //   });
+      // } else {
+      //   throw Error(`Missing times field in schedule list entry under '${day}'.`);
+      // }
+
+      const availabilityEntity: Availability = await AvailabilityRepo.getAvailability(day, times);
+      console.log(availabilityEntity);
+      availabilities.push(availabilityEntity);
     });
-
-    await UserRepo.updateUser(user, { availabilities: schedule });
+    console.log(availabilities);
+    await UserRepo.updateUser(user, { availabilities });
   }
 }
 

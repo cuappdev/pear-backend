@@ -47,7 +47,7 @@ export interface SerializedUserSession {
 /* Represents an Availability */
 export type SerializedAvailability = {
   day: string;
-  times: number[];
+  times: string[];
   users: SubSerializedUser[];
 };
 

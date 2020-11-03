@@ -14,8 +14,8 @@ class Availability {
   day: string;
 
   /** Times of availability formatted as floats (e.g. 14.5 = 2:30 PM) */
-  @Column({ type: 'float' })
-  times: number[];
+  @Column({ type: 'varchar' })
+  times: string[];
 
   /** Users with this availability */
   @ManyToMany((type) => User, (user) => user.availabilities)
