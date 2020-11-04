@@ -3,7 +3,7 @@ import Availability from '../entities/Availability';
 
 const db = (): Repository<Availability> => getConnectionManager().get().getRepository(Availability);
 
-const createAvailability = async (day: string, times: string[]): Promise<Availability> => {
+const createAvailability = async (day: string, times: number[]): Promise<Availability> => {
   let possibleAvailability = await db().findOne({ where: { day, times } });
   if (!possibleAvailability) {
     const availability = db().create({
@@ -16,7 +16,7 @@ const createAvailability = async (day: string, times: string[]): Promise<Availab
   return possibleAvailability;
 };
 
-const getAvailability = async (day: string, times: string[]): Promise<Availability> => {
+const getAvailability = async (day: string, times: number[]): Promise<Availability> => {
   const availability = await db().findOne({ where: { day, times } });
   if (!availability) {
     return createAvailability(day, times);
