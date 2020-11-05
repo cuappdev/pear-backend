@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import constants from '../common/constants';
+import Constants from '../common/constants';
 import Availability from '../entities/Availability';
 import AvailabilityRepo from '../repos/AvailabilityRepo';
 import UserRepo from '../repos/UserRepo';
@@ -16,29 +16,17 @@ class UpdateAvailabilitiesRouter extends AuthenticatedAppplicationRouter<void> {
 
   async content(req: Request): Promise<void> {
     const { user, body } = req;
-
-    const validFields = ['schedule'];
-
-    Object.keys(body).forEach((key) => {
-      if (!validFields.includes(key)) {
-        throw Error(`Invalid field '${key}' identified in request body.`);
-      }
-    });
-
     const { schedule } = body;
+
+    if (!schedule) {
+      throw Error('Missing schedule list');
+    }
+
     schedule.forEach((availability) => {
-      const validScheduleFields = ['day', 'times'];
-
-      Object.keys(availability).forEach((key) => {
-        if (!validScheduleFields.includes(key)) {
-          throw Error(`Invalid field '${key}' identified in schedule list.`);
-        }
-      });
-
       const { day, times } = availability;
 
       if (day) {
-        if (!constants.VALID_DAYS.includes(day)) {
+        if (!Constants.VALID_DAYS.includes(day)) {
           throw Error(`Invalid day '${day}' identified in schedule list.`);
         }
       } else {
@@ -49,7 +37,7 @@ class UpdateAvailabilitiesRouter extends AuthenticatedAppplicationRouter<void> {
         availability.times = [...new Set(times)]; // remove duplicates then sort
         availability.times.sort();
         times.forEach((time) => {
-          if (!constants.VALID_TIMES.includes(+time)) {
+          if (!Constants.VALID_TIMES.includes(time)) {
             throw Error(`Invalid time '${time}' identified under '${day}'.`);
           }
         });
