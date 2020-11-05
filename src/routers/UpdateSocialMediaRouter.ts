@@ -9,7 +9,7 @@ class UpdateInterestsRouter extends AuthenticatedAppplicationRouter<void> {
   }
 
   getPath(): string {
-    return '/updateSocialMedia/';
+    return '/socialMedia/';
   }
 
   async content(req: Request): Promise<void> {

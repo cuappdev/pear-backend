@@ -9,7 +9,7 @@ class UpdateDemographicsRouter extends AuthenticatedAppplicationRouter<void> {
   }
 
   getPath(): string {
-    return '/updateDemographics/';
+    return '/demographics/';
   }
 
   async content(req: Request): Promise<void> {

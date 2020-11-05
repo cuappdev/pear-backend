@@ -46,6 +46,8 @@ class UpdateAvailabilitiesRouter extends AuthenticatedAppplicationRouter<void> {
       }
 
       if (times) {
+        availability.times = [...new Set(times)]; // remove duplicates then sort
+        availability.times.sort();
         times.forEach((time) => {
           if (!constants.VALID_TIMES.includes(+time)) {
             throw Error(`Invalid time '${time}' identified under '${day}'.`);
