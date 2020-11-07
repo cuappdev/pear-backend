@@ -21,9 +21,7 @@ class Availability {
   times: number[];
 
   /** Users with this availability */
-  @ManyToMany((type) => User, (user) => user.availabilities, {
-    eager: true,
-  })
+  @ManyToMany((type) => User, (user) => user.availabilities)
   @JoinTable()
   users: User[];
 
