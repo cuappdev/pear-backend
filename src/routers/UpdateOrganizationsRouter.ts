@@ -11,7 +11,7 @@ class UpdateOrganizationsRouter extends AuthenticatedAppplicationRouter<void> {
   }
 
   getPath(): string {
-    return '/updateOrganizations/';
+    return '/organizations/';
   }
 
   async content(req: Request): Promise<void> {

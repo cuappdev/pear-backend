@@ -1,3 +1,4 @@
+import Availability from '../entities/Availability';
 import Club from '../entities/Club';
 import Interest from '../entities/Interest';
 import CornellMajor from '../entities/CornellMajor';
@@ -17,7 +18,7 @@ export interface SerializedUser {
   facebook: string | null;
   instagram: string | null;
   profilePictureURL: string | null;
-  matches: SubSerializedMatching[];
+  availabilities: SerializedAvailability[];
 }
 
 /* Represents a User without clubs, interests, majors, or matches shown */
@@ -43,28 +44,12 @@ export interface SerializedUserSession {
   sessionExpiration: string;
 }
 
-/* Represents a matching */
-export interface SerializedMatching {
-  active: boolean;
-  schedule: SerializedDaySchedule[];
-  users: SerializedUser[];
-}
-
-/* Represents a matching with a SubSerialized User */
-export interface SubSerializedMatching {
-  active: boolean;
-  schedule: SerializedDaySchedule[];
-  users: SubSerializedUser[];
-}
-
-/* Represents a DaySchedule */
-export interface SerializedDaySchedule {
+/* Represents an Availability */
+export type SerializedAvailability = {
   day: string;
   times: number[];
-}
-
-/* Represents a Time */
-export type SerializedTime = number;
+  users: SubSerializedUser[];
+};
 
 /* Represents a Club */
 export type SerializedClub = string;
@@ -87,4 +72,5 @@ export interface UserUpdateFields {
   facebook?: string;
   instagram?: string;
   profilePictureURL?: string;
+  availabilities?: Availability[];
 }

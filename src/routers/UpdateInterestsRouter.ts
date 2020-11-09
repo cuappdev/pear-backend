@@ -11,7 +11,7 @@ class UpdateInterestsRouter extends AuthenticatedAppplicationRouter<void> {
   }
 
   getPath(): string {
-    return '/updateInterests/';
+    return '/interests/';
   }
 
   async content(req: Request): Promise<void> {

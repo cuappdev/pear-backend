@@ -1,10 +1,10 @@
 import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne } from 'typeorm';
-import constants from '../common/constants';
+import Constants from '../common/constants';
 import { SerializedUser, SubSerializedUser } from '../common/types';
 import Club from './Club';
 import CornellMajor from './CornellMajor';
 import Interest from './Interest';
-import Matching from './Matching';
+import Availability from './Availability';
 
 @Entity('pear_user')
 class User {
@@ -65,9 +65,9 @@ class User {
   @Column({ type: 'varchar', nullable: true })
   profilePictureURL: string | null;
 
-  /** User's matchings */
-  @ManyToMany((type) => Matching, (matching) => matching.users)
-  matches: Matching[];
+  /** User's availabilities */
+  @ManyToMany((type) => Availability, (availability) => availability.users)
+  availabilities: Availability[];
 
   /**
    * Method to create a dummy user. (For testing purposes)
@@ -95,14 +95,16 @@ class User {
       netID: this.netID,
       pronouns: this.pronouns,
       graduationYear: this.graduationYear,
-      major: this.major ? this.major.serialize() : constants.UNDECLARED_MAJOR,
+      major: this.major ? this.major.serialize() : Constants.UNDECLARED_MAJOR,
       hometown: this.hometown,
       clubs: this.clubs ? this.clubs.map((club) => club.serialize()) : [],
       interests: this.interests ? this.interests.map((interest) => interest.serialize()) : [],
       facebook: this.facebook,
       instagram: this.instagram,
       profilePictureURL: this.profilePictureURL,
-      matches: this.matches ? this.matches.map((match) => match.subSerialize()) : [],
+      availabilities: this.availabilities
+        ? this.availabilities.map((availability) => availability.serialize())
+        : [],
     };
   }
 
@@ -114,7 +116,7 @@ class User {
       netID: this.netID,
       pronouns: this.pronouns,
       graduationYear: this.graduationYear,
-      major: this.major ? this.major.serialize() : constants.UNDECLARED_MAJOR,
+      major: this.major ? this.major.serialize() : Constants.UNDECLARED_MAJOR,
       hometown: this.hometown,
       facebook: this.facebook,
       instagram: this.instagram,

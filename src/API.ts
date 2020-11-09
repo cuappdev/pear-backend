@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import bodyParser from 'body-parser';
 import ApplicationAPI from './utils/ApplicationAPI';
-import CreateMatchingRouter from './routers/CreateMatchingRouter';
 import DeleteUserRouter from './routers/DeleteUserRouter';
 import DocsRouter from './routers/DocsRouter';
 import GetClubsRouter from './routers/GetClubsRouter';
@@ -14,6 +13,7 @@ import InitializeDevSessionRouter from './routers/InitializeDevSessionRouter';
 import InitializeSessionRouter from './routers/InitializeSessionRouter';
 import RefreshSessionRouter from './routers/RefreshSessionRouter';
 import SearchUsersRouter from './routers/SearchUsersRouter';
+import UpdateAvailabilitiesRouter from './routers/UpdateAvailabilitiesRouter';
 import UpdateDemographicsRouter from './routers/UpdateDemographicsRouter';
 import UpdateInterestsRouter from './routers/UpdateInterestsRouter';
 import UpdateOrganizationsRouter from './routers/UpdateOrganizationsRouter';
@@ -40,7 +40,6 @@ class API extends ApplicationAPI {
       general: [HelloRouter],
       refresh: [RefreshSessionRouter],
       user: [
-        CreateMatchingRouter,
         DeleteUserRouter,
         GetUserRouter,
         GetUsersRouter,
@@ -48,6 +47,7 @@ class API extends ApplicationAPI {
         GetCornellMajorsRouter,
         GetInterestsRouter,
         SearchUsersRouter,
+        UpdateAvailabilitiesRouter,
         UpdateDemographicsRouter,
         UpdateInterestsRouter,
         UpdateOrganizationsRouter,
