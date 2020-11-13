@@ -1,9 +1,9 @@
 import { Request } from 'express';
 import CornellMajorRepo from '../repos/CornellMajorRepo';
 import UserRepo from '../repos/UserRepo';
-import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
+import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 
-class UpdateDemographicsRouter extends AuthenticatedAppplicationRouter<void> {
+class UpdateDemographicsRouter extends AuthenticatedApplicationRouter<void> {
   constructor() {
     super('POST');
   }

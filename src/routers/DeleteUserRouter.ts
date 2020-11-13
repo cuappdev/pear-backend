@@ -1,8 +1,8 @@
 import { Request } from 'express';
-import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
+import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import UserRepo from '../repos/UserRepo';
 
-class DeleteUserRouter extends AuthenticatedAppplicationRouter<void> {
+class DeleteUserRouter extends AuthenticatedApplicationRouter<void> {
   constructor() {
     super('DELETE');
   }

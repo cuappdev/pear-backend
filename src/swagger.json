@@ -7,92 +7,52 @@
   },
   "tags": [
     {
-      "name": "Users",
-      "description": "Operations on Pear users. These routes require authorization."
+      "name": "Authentication",
+      "description": "Operations to authenticate users. These routes do not require authorization."
     },
     {
-      "name": "Authentication",
-      "description": "Operations to authenticate users."
+      "name": "Clubs",
+      "description": "Operations on Pear clubs. These routes require authorization via access token."
+    },
+    {
+      "name": "Development",
+      "description": "Operations to test Pear. These routes are only accessible on the development environment."
     },
     {
       "name": "General",
       "description": "Operations to interact with Pear. These routes do not require authorization."
+    },
+    {
+      "name": "Interests",
+      "description": "Operations on Pear interests. These routes require authorization via access token."
+    },
+    {
+      "name": "Majors",
+      "description": "Operations on Pear majors. These routes require authorization via access token."
+    },
+    {
+      "name": "Users",
+      "description": "Operations on Pear users. These routes require authorization via access token."
     }
   ],
   "paths": {
-    "/user/": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Gets information about the user.",
-        "responses": {
-          "200": {
-            "description": "{success: true, data: [User]}"
-          },
-          "401": {
-            "description": "{success: false, data: {errors: [string]}}"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Delete the user",
-        "responses": {
-          "200": {
-            "description": "{success: true, data: []}"
-          },
-          "401": {
-            "description": "{success: false, data: {errors: [string]}}"
-          }
-        }
-      }
-    },
-    "/user/clubs/": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Gets the clubs of the user",
-        "responses": {
-          "200": {
-            "description": "{success: true, data: [Club]}"
-          },
-          "401": {
-            "description": "{success: false, data: {errors: [string]}}"
-          }
-        }
-      }
-    },
-    "/user/matching/": {
+    "/auth/login/": {
       "post": {
         "tags": [
-          "Users"
+          "Authentication"
         ],
-        "summary": "Creates the matchings of users",
+        "summary": "Authenticates an ID token from Google and creates a user for that Google account if one does not already exist. Returns a session for the user.",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
-                  "netIDs",
-                  "schedule"
+                  "idToken"
                 ],
                 "properties": {
-                  "netIDs": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "schedule": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/DaySchedule"
-                    }
+                  "idToken": {
+                    "type": "string"
                   }
                 }
               }
@@ -102,42 +62,418 @@
         },
         "responses": {
           "200": {
-            "description": "{success: true, data: Matching}"
-          },
-          "401": {
-            "description": "{success: false, data: {errors: [string]}}"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/UserSession"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/user/majors/": {
+    "/refresh/": {
       "get": {
         "tags": [
-          "Users"
+          "Authentication"
         ],
-        "summary": "Gets the major of the user",
+        "summary": "Authenticates the refresh token and returns a new user session.",
         "responses": {
           "200": {
-            "description": "{success: true, data: CornellMajor}"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/UserSession"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "{success: false, data: {errors: [string]}}"
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/user/interests/": {
+    "/club/all/": {
+      "get": {
+        "tags": [
+          "Clubs"
+        ],
+        "summary": "Gets all clubs",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Club"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dev/login/": {
+      "get": {
+        "tags": [
+          "Development"
+        ],
+        "summary": "Creates a dummy user for testing purposes.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/UserSession"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/general/hello/": {
+      "get": {
+        "tags": [
+          "General"
+        ],
+        "summary": "Sanity check to see if the application is running.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": "Hello world!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interest/all/": {
+      "get": {
+        "tags": [
+          "Interests"
+        ],
+        "summary": "Gets all interests",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Interest"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/major/all/": {
+      "get": {
+        "tags": [
+          "Majors"
+        ],
+        "summary": "Gets all majors",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CornellMajor"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/all/": {
       "get": {
         "tags": [
           "Users"
         ],
-        "summary": "Gets the interests of the user",
+        "summary": "Gets all users.",
         "responses": {
           "200": {
-            "description": "{success: true, data: [Interest]}"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "{success: false, data: {errors: [string]}}"
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets another user's information, given their netID. If none provided, gets current user.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "netID",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user's netID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete the current user.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -203,72 +539,6 @@
           }
         }
       }
-    },
-    "/auth/login/": {
-      "post": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Authenticates an ID token from Google and creates a user for that Google account if one does not already exist. Returns a session for the user.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "idToken"
-                ],
-                "properties": {
-                  "idToken": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "{success: true, data: UserSession}"
-          },
-          "401": {
-            "description": "{success: false, data: {errors: [string]}}"
-          }
-        }
-      }
-    },
-    "/refresh/": {
-      "get": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Authenticates the refresh token and returns a new user session.",
-        "responses": {
-          "200": {
-            "description": "{success: true, data: UserSession}"
-          },
-          "401": {
-            "description": "{success: false, data: {errors: [string]}}"
-          }
-        }
-      }
-    },
-    "/general/hello/": {
-      "get": {
-        "tags": [
-          "General"
-        ],
-        "summary": "Sanity check to see if the application is running.",
-        "responses": {
-          "200": {
-            "description": "{success: true, data: \"Hello world!\" }"
-          },
-          "401": {
-            "description": "{success: false, data: {errors: [string]}}"
-          }
-        }
-      }
     }
   },
   "externalDocs": {
@@ -289,42 +559,59 @@
       }
     },
     "schemas": {
-      "User": {
+      "Availability": {
         "type": "object",
         "properties": {
-          "clubs": {
+          "day": {
+            "type": "string",
+            "example": "monday"
+          },
+          "times": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Club"
+              "type": "number",
+              "example": 18.5
             }
           },
-          "facebook": {
-            "type": "string",
-            "nullable": true
-          },
-          "firstName": {
-            "type": "string"
-          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubUser"
+            }
+          }
+        }
+      },
+      "Club": {
+        "type": "string",
+        "example": "Cornell AppDev"
+      },
+      "CornellMajor": {
+        "type": "string",
+        "nullable": true
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "Something went wrong :("
+            }
+          }
+        }
+      },
+      "Interest": {
+        "type": "string"
+      },
+      "SubUser": {
+        "type": "object",
+        "properties": {
           "googleID": {
             "type": "string"
           },
-          "graduationYear": {
-            "type": "string",
-            "nullable": true
-          },
-          "hometown": {
-            "type": "string",
-            "nullable": true
-          },
-          "instagram": {
-            "type": "string",
-            "nullable": true
-          },
-          "interests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Interest"
-            }
+          "firstName": {
+            "type": "string"
           },
           "lastName": {
             "type": "string"
@@ -332,22 +619,97 @@
           "netID": {
             "type": "string"
           },
+          "pronouns": {
+            "type": "string",
+            "nullable": true
+          },
+          "graduationYear": {
+            "type": "string",
+            "nullable": true
+          },
           "major": {
             "$ref": "#/components/schemas/CornellMajor"
           },
-          "matches": {
+          "hometown": {
+            "type": "string",
+            "nullable": true
+          },
+          "facebook": {
+            "type": "string",
+            "nullable": true
+          },
+          "instagram": {
+            "type": "string",
+            "nullable": true
+          },
+          "profilePictureURL": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Time": {
+        "type": "number"
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "googleID": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "netID": {
+            "type": "string"
+          },
+          "pronouns": {
+            "type": "string",
+            "nullable": true
+          },
+          "graduationYear": {
+            "type": "string",
+            "nullable": true
+          },
+          "major": {
+            "$ref": "#/components/schemas/CornellMajor"
+          },
+          "hometown": {
+            "type": "string",
+            "nullable": true
+          },
+          "clubs": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Matching"
+              "$ref": "#/components/schemas/Club"
             }
+          },
+          "interests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Interest"
+            }
+          },
+          "facebook": {
+            "type": "string",
+            "nullable": true
+          },
+          "instagram": {
+            "type": "string",
+            "nullable": true
           },
           "profilePictureURL": {
             "type": "string",
             "nullable": true
           },
-          "pronouns": {
-            "type": "string",
-            "nullable": true
+          "availabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Availability"
+            }
           }
         }
       },
@@ -368,94 +730,6 @@
           }
         }
       },
-      "Matching": {
-        "type": "object",
-        "properties": {
-          "active": {
-            "type": "boolean"
-          },
-          "schedule": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DaySchedule"
-            }
-          },
-          "users": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SubUser"
-            }
-          }
-        }
-      },
-      "DaySchedule": {
-        "type": "object",
-        "properties": {
-          "day": {
-            "type": "string"
-          },
-          "times": {
-            "type": "array",
-            "items": {
-              "type": "number"
-            }
-          }
-        }
-      },
-      "SubUser": {
-        "type": "object",
-        "properties": {
-          "facebook": {
-            "type": "string",
-            "nullable": true
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "googleID": {
-            "type": "string"
-          },
-          "graduationYear": {
-            "type": "string",
-            "nullable": true
-          },
-          "hometown": {
-            "type": "string",
-            "nullable": true
-          },
-          "instagram": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "netID": {
-            "type": "string"
-          },
-          "profilePictureURL": {
-            "type": "string",
-            "nullable": true
-          },
-          "pronouns": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "Time": {
-        "type": "number"
-      },
-      "Club": {
-        "type": "string"
-      },
-      "CornellMajor": {
-        "type": "string",
-        "nullable": true
-      },
-      "Interest": {
-        "type": "string"
-      }
     }
   }
 }

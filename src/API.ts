@@ -35,17 +35,17 @@ class API extends ApplicationAPI {
   routerGroups(): { [index: string]: Router[] } {
     return {
       auth: [InitializeSessionRouter],
+      club: [GetClubsRouter],
       dev: [InitializeDevSessionRouter],
       docs: [DocsRouter],
       general: [HelloRouter],
+      interest: [GetInterestsRouter],
+      major: [GetCornellMajorsRouter],
       refresh: [RefreshSessionRouter],
       user: [
         DeleteUserRouter,
         GetUserRouter,
         GetUsersRouter,
-        GetClubsRouter,
-        GetCornellMajorsRouter,
-        GetInterestsRouter,
         SearchUsersRouter,
         UpdateAvailabilitiesRouter,
         UpdateDemographicsRouter,

@@ -1,15 +1,15 @@
 import { Request } from 'express';
 import { SerializedInterest } from '../common/types';
-import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
+import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import InterestRepo from '../repos/InterestRepo';
 
-class GetInterestsRouter extends AuthenticatedAppplicationRouter<SerializedInterest[]> {
+class GetInterestsRouter extends AuthenticatedApplicationRouter<SerializedInterest[]> {
   constructor() {
     super('GET');
   }
 
   getPath(): string {
-    return '/interests/';
+    return '/all/';
   }
 
   async content(req: Request): Promise<SerializedInterest[]> {

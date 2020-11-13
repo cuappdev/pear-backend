@@ -1,9 +1,9 @@
 import { Request } from 'express';
 import { SerializedUser } from '../common/types';
-import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
+import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import UserRepo from '../repos/UserRepo';
 
-class GetUserRouter extends AuthenticatedAppplicationRouter<SerializedUser> {
+class GetUserRouter extends AuthenticatedApplicationRouter<SerializedUser> {
   constructor() {
     super('GET');
   }
@@ -14,8 +14,13 @@ class GetUserRouter extends AuthenticatedAppplicationRouter<SerializedUser> {
 
   async content(req: Request): Promise<SerializedUser> {
     const { netID } = req.query;
-    const user = await UserRepo.getUserByNetID(netID);
-    if (!user) throw Error('User with that netID does not exist');
+    let user;
+    if (netID) {
+      user = await UserRepo.getUserByNetID(netID);
+      if (!user) throw Error('User with that netID does not exist');
+    } else {
+      user = req.user;
+    }
     return user.serialize();
   }
 }

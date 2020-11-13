@@ -1,15 +1,15 @@
 import { Request } from 'express';
 import { SerializedCornellMajor } from '../common/types';
-import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
+import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import CornellMajorRepo from '../repos/CornellMajorRepo';
 
-class GetCornellMajorsRouter extends AuthenticatedAppplicationRouter<SerializedCornellMajor[]> {
+class GetCornellMajorsRouter extends AuthenticatedApplicationRouter<SerializedCornellMajor[]> {
   constructor() {
     super('GET');
   }
 
   getPath(): string {
-    return '/majors/';
+    return '/all/';
   }
 
   async content(req: Request): Promise<SerializedCornellMajor[]> {

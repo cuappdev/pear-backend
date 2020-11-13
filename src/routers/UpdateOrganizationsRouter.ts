@@ -2,10 +2,10 @@ import { Request } from 'express';
 import Club from '../entities/Club';
 import ClubRepo from '../repos/ClubRepo';
 import UserRepo from '../repos/UserRepo';
-import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
+import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import LogUtils from '../utils/LogUtils';
 
-class UpdateOrganizationsRouter extends AuthenticatedAppplicationRouter<void> {
+class UpdateOrganizationsRouter extends AuthenticatedApplicationRouter<void> {
   constructor() {
     super('POST');
   }

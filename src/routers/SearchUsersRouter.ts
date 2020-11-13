@@ -1,10 +1,10 @@
 import { Request } from 'express';
 import Fuse from 'fuse.js';
 import { SerializedUser } from '../common/types';
-import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
+import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import UserRepo from '../repos/UserRepo';
 
-class SearchUsersRouter extends AuthenticatedAppplicationRouter<SerializedUser[]> {
+class SearchUsersRouter extends AuthenticatedApplicationRouter<SerializedUser[]> {
   constructor() {
     super('GET');
   }

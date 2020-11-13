@@ -1,9 +1,9 @@
 import { Request } from 'express';
 import UserRepo from '../repos/UserRepo';
-import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
+import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import AppDevUtils from '../utils/AppDevUtils';
 
-class UpdateInterestsRouter extends AuthenticatedAppplicationRouter<void> {
+class UpdateInterestsRouter extends AuthenticatedApplicationRouter<void> {
   constructor() {
     super('POST');
   }

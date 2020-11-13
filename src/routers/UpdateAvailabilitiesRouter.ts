@@ -3,9 +3,9 @@ import Constants from '../common/constants';
 import Availability from '../entities/Availability';
 import AvailabilityRepo from '../repos/AvailabilityRepo';
 import UserRepo from '../repos/UserRepo';
-import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
+import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 
-class UpdateAvailabilitiesRouter extends AuthenticatedAppplicationRouter<void> {
+class UpdateAvailabilitiesRouter extends AuthenticatedApplicationRouter<void> {
   constructor() {
     super('POST');
   }
