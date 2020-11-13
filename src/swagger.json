@@ -717,6 +717,7 @@
               }
             }
           },
+          "description": "Ensure that day and times are valid.",
           "required": true
         },
         "responses": {
