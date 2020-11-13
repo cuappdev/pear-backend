@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import ApplicationAPI from './utils/ApplicationAPI';
 import DeleteUserRouter from './routers/DeleteUserRouter';
 import DocsRouter from './routers/DocsRouter';
-import GetClubsRouter from './routers/GetClubsRouter';
+import GetGroupsRouter from './routers/GetGroupsRouter';
 import GetCornellMajorsRouter from './routers/GetCornellMajorsRouter';
 import GetInterestsRouter from './routers/GetInterestsRouter';
 import GetUserRouter from './routers/GetUserRouter';
@@ -16,7 +16,7 @@ import SearchUsersRouter from './routers/SearchUsersRouter';
 import UpdateAvailabilitiesRouter from './routers/UpdateAvailabilitiesRouter';
 import UpdateDemographicsRouter from './routers/UpdateDemographicsRouter';
 import UpdateInterestsRouter from './routers/UpdateInterestsRouter';
-import UpdateOrganizationsRouter from './routers/UpdateOrganizationsRouter';
+import UpdateGroupsRouter from './routers/UpdateGroupsRouter';
 import UpdateSocialMediaRouter from './routers/UpdateSocialMediaRouter';
 
 class API extends ApplicationAPI {
@@ -35,10 +35,10 @@ class API extends ApplicationAPI {
   routerGroups(): { [index: string]: Router[] } {
     return {
       auth: [InitializeSessionRouter],
-      club: [GetClubsRouter],
       dev: [InitializeDevSessionRouter],
       docs: [DocsRouter],
       general: [HelloRouter],
+      group: [GetGroupsRouter],
       interest: [GetInterestsRouter],
       major: [GetCornellMajorsRouter],
       refresh: [RefreshSessionRouter],
@@ -50,7 +50,7 @@ class API extends ApplicationAPI {
         UpdateAvailabilitiesRouter,
         UpdateDemographicsRouter,
         UpdateInterestsRouter,
-        UpdateOrganizationsRouter,
+        UpdateGroupsRouter,
         UpdateSocialMediaRouter,
       ],
     };

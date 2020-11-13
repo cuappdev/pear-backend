@@ -1,5 +1,5 @@
 import Availability from '../entities/Availability';
-import Club from '../entities/Club';
+import Group from '../entities/Group';
 import Interest from '../entities/Interest';
 import CornellMajor from '../entities/CornellMajor';
 
@@ -13,7 +13,7 @@ export interface SerializedUser {
   graduationYear: string | null;
   major: SerializedCornellMajor | null;
   hometown: string | null;
-  clubs: SerializedClub[];
+  groups: SerializedGroup[];
   interests: SerializedInterest[];
   facebook: string | null;
   instagram: string | null;
@@ -21,7 +21,7 @@ export interface SerializedUser {
   availabilities: SerializedAvailability[];
 }
 
-/* Represents a User without clubs, interests, majors, or matches shown */
+/* Represents a User without groups, interests, majors, or matches shown */
 export interface SubSerializedUser {
   googleID: string;
   firstName: string;
@@ -51,8 +51,8 @@ export type SerializedAvailability = {
   users: SubSerializedUser[];
 };
 
-/* Represents a Club */
-export type SerializedClub = string;
+/* Represents a Group */
+export type SerializedGroup = string;
 
 /* Represents a Cornell Major */
 export type SerializedCornellMajor = string;
@@ -67,7 +67,7 @@ export interface UserUpdateFields {
   graduationYear?: string;
   major?: CornellMajor;
   hometown?: string;
-  clubs?: Club[];
+  groups?: Group[];
   interests?: Interest[];
   facebook?: string;
   instagram?: string;

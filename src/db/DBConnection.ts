@@ -1,14 +1,14 @@
 import { Connection, ConnectionOptions, createConnection } from 'typeorm';
-import Club from '../entities/Club';
-import CornellMajor from '../entities/CornellMajor';
-import Interest from '../entities/Interest';
 import Availability from '../entities/Availability';
+import CornellMajor from '../entities/CornellMajor';
+import Group from '../entities/Group';
+import Interest from '../entities/Interest';
 import User from '../entities/User';
 import UserSession from '../entities/UserSession';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const models = [Club, CornellMajor, Interest, Availability, User, UserSession];
+const models = [Availability, CornellMajor, Group, Interest, User, UserSession];
 
 const connectionOptions: ConnectionOptions = {
   database: process.env.DB_NAME,

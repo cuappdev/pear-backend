@@ -1,7 +1,7 @@
 import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne } from 'typeorm';
 import Constants from '../common/constants';
 import { SerializedUser, SubSerializedUser } from '../common/types';
-import Club from './Club';
+import Group from './Group';
 import CornellMajor from './CornellMajor';
 import Interest from './Interest';
 import Availability from './Availability';
@@ -46,9 +46,9 @@ class User {
   @Column({ type: 'varchar', nullable: true })
   hometown: string | null;
 
-  /** User's clubs */
-  @ManyToMany((type) => Club, (club) => club.users, { onDelete: 'CASCADE' })
-  clubs: Club[];
+  /** User's groups */
+  @ManyToMany((type) => Group, (group) => group.users, { onDelete: 'CASCADE' })
+  groups: Group[];
 
   /** User's interests */
   @ManyToMany((type) => Interest, (interest) => interest.users, { onDelete: 'CASCADE' })
@@ -66,7 +66,7 @@ class User {
   profilePictureURL: string | null;
 
   /** User's availabilities */
-  @ManyToMany((type) => Availability, (availability) => availability.users)
+  @ManyToMany((type) => Availability, (availability) => availability.users, { onDelete: 'CASCADE' })
   availabilities: Availability[];
 
   /**
@@ -97,7 +97,7 @@ class User {
       graduationYear: this.graduationYear,
       major: this.major ? this.major.serialize() : Constants.UNDECLARED_MAJOR,
       hometown: this.hometown,
-      clubs: this.clubs ? this.clubs.map((club) => club.serialize()) : [],
+      groups: this.groups ? this.groups.map((group) => group.serialize()) : [],
       interests: this.interests ? this.interests.map((interest) => interest.serialize()) : [],
       facebook: this.facebook,
       instagram: this.instagram,

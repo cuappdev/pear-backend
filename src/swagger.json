@@ -11,16 +11,16 @@
       "description": "Operations to authenticate users. These routes do not require authorization."
     },
     {
-      "name": "Clubs",
-      "description": "Operations on Pear clubs. These routes require authorization via access token."
-    },
-    {
       "name": "Development",
       "description": "Operations to test Pear. These routes are only accessible on the development environment."
     },
     {
       "name": "General",
       "description": "Operations to interact with Pear. These routes do not require authorization."
+    },
+    {
+      "name": "Groups",
+      "description": "Operations on Pear groups. These routes require authorization via access token."
     },
     {
       "name": "Interests",
@@ -128,12 +128,12 @@
         }
       }
     },
-    "/club/all/": {
+    "/group/all/": {
       "get": {
         "tags": [
-          "Clubs"
+          "Groups"
         ],
-        "summary": "Gets all clubs",
+        "summary": "Gets all groups",
         "responses": {
           "200": {
             "description": "OK",
@@ -148,7 +148,7 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/Club"
+                        "$ref": "#/components/schemas/Group"
                       }
                     }
                   }
@@ -490,7 +490,7 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "clubs",
+                  "groups",
                   "graduationYear",
                   "hometown",
                   "interest",
@@ -499,7 +499,7 @@
                   "pronouns"
                 ],
                 "properties": {
-                  "clubs": {
+                  "groups": {
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -581,7 +581,7 @@
           }
         }
       },
-      "Club": {
+      "Group": {
         "type": "string",
         "example": "Cornell AppDev"
       },
@@ -681,10 +681,10 @@
             "type": "string",
             "nullable": true
           },
-          "clubs": {
+          "groups": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Club"
+              "$ref": "#/components/schemas/Group"
             }
           },
           "interests": {

@@ -2,7 +2,7 @@
 /* eslint-disable global-require */
 import cron from 'node-cron';
 import API from './API';
-import ClubRepo from './repos/ClubRepo';
+import GroupRepo from './repos/GroupRepo';
 import CornellMajorRepo from './repos/CornellMajorRepo';
 import DBConnection from './db/DBConnection';
 import InterestRepo from './repos/InterestRepo';
@@ -15,8 +15,8 @@ const SERVER_ADDRESS = '0.0.0.0';
 
 DBConnection()
   .then(async (connection: any) => {
-    // Pre-populate the database with clubs, interests, and majors
-    importDataFromFile('PearClubs.txt', ClubRepo.createClub);
+    // Pre-populate the database with groups, interests, and majors
+    importDataFromFile('PearGroups.txt', GroupRepo.createGroup);
     importDataFromFile('PearInterests.txt', InterestRepo.createInterest);
     addCornellMajorsToDB();
     setupMajorScraperCron();

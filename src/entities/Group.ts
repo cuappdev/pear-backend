@@ -1,26 +1,26 @@
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { SerializedClub } from '../common/types';
+import { SerializedGroup } from '../common/types';
 import User from './User';
 
-@Entity('club')
-class Club {
+@Entity('group')
+class Group {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  /** Club name */
+  /** Group name */
   @Column({
     type: 'varchar',
   })
   name: string;
 
-  /** Users who identify as members of this club */
-  @ManyToMany((type) => User, (user) => user.clubs)
+  /** Users who identify as members of this group */
+  @ManyToMany((type) => User, (user) => user.groups)
   @JoinTable()
   users: User[];
 
-  serialize(): SerializedClub {
+  serialize(): SerializedGroup {
     return this.name;
   }
 }
 
-export default Club;
+export default Group;
