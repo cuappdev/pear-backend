@@ -7,6 +7,8 @@ import CornellMajorRepo from './repos/CornellMajorRepo';
 import DBConnection from './db/DBConnection';
 import InterestRepo from './repos/InterestRepo';
 import scrapeCornellMajors from './utils/WebScraper';
+import Constants from './common/constants';
+import GoalRepo from './repos/GoalRepo';
 
 const app = new API();
 const server = app.getServer(false);
@@ -18,6 +20,7 @@ DBConnection()
     // Pre-populate the database with groups, interests, and majors
     importDataFromFile('PearGroups.txt', GroupRepo.createGroup);
     importDataFromFile('PearInterests.txt', InterestRepo.createInterest);
+    addGoalsToDB();
     addCornellMajorsToDB();
     setupMajorScraperCron();
     app.express.listen(PORT, () => {
@@ -49,6 +52,12 @@ async function addCornellMajorsToDB() {
       CornellMajorRepo.createCornellMajor(major);
     });
   }
+}
+
+async function addGoalsToDB() {
+  Constants.GOALS.forEach((goal) => {
+    GoalRepo.createGoal(goal);
+  });
 }
 
 async function setupMajorScraperCron() {

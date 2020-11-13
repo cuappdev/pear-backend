@@ -29,8 +29,27 @@ const VALID_TIMES = [
 
 const UNDECLARED_MAJOR = 'Undeclared';
 
+const JUST_CHATTING = 'Just chatting';
+const FINDING_MY_PEOPLE = 'Finding my people';
+const MEETING_SOMEONE_DIFFERENT = 'Meeting someone different';
+const LEARNING_FROM_MENTORS = 'Learning from mentors';
+const GUIDING_MENTEES = 'Guiding mentees';
+const GOALS = [
+  JUST_CHATTING,
+  FINDING_MY_PEOPLE,
+  MEETING_SOMEONE_DIFFERENT,
+  LEARNING_FROM_MENTORS,
+  GUIDING_MENTEES,
+];
+
 export default {
   VALID_DAYS,
   VALID_TIMES,
   UNDECLARED_MAJOR,
+  JUST_CHATTING,
+  FINDING_MY_PEOPLE,
+  MEETING_SOMEONE_DIFFERENT,
+  LEARNING_FROM_MENTORS,
+  GUIDING_MENTEES,
+  GOALS,
 };

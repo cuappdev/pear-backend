@@ -15,6 +15,7 @@ export interface SerializedUser {
   hometown: string | null;
   groups: SerializedGroup[];
   interests: SerializedInterest[];
+  goals: SerializedGoal[];
   facebook: string | null;
   instagram: string | null;
   profilePictureURL: string | null;
@@ -59,6 +60,9 @@ export type SerializedCornellMajor = string;
 
 /* Represents an Interest */
 export type SerializedInterest = string;
+
+/* Represents a Goal */
+export type SerializedGoal = string;
 
 export interface UserUpdateFields {
   firstName?: string;

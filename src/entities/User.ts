@@ -1,6 +1,7 @@
 import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne } from 'typeorm';
 import Constants from '../common/constants';
 import { SerializedUser, SubSerializedUser } from '../common/types';
+import Goal from './Goal';
 import Group from './Group';
 import CornellMajor from './CornellMajor';
 import Interest from './Interest';
@@ -54,6 +55,9 @@ class User {
   @ManyToMany((type) => Interest, (interest) => interest.users, { onDelete: 'CASCADE' })
   interests: Interest[];
 
+  @ManyToMany((type) => Goal, (goal) => goal.users, { onDelete: 'CASCADE' })
+  goals: Goal[];
+
   /** User's facebook profile link */
   @Column({ type: 'varchar', nullable: true })
   facebook: string | null;
@@ -99,6 +103,7 @@ class User {
       hometown: this.hometown,
       groups: this.groups ? this.groups.map((group) => group.serialize()) : [],
       interests: this.interests ? this.interests.map((interest) => interest.serialize()) : [],
+      goals: this.goals ? this.goals.map((goal) => goal.serialize()) : [],
       facebook: this.facebook,
       instagram: this.instagram,
       profilePictureURL: this.profilePictureURL,
