@@ -2,10 +2,10 @@ import { Request } from 'express';
 import Interest from '../entities/Interest';
 import InterestRepo from '../repos/InterestRepo';
 import UserRepo from '../repos/UserRepo';
-import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
+import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import LogUtils from '../utils/LogUtils';
 
-class UpdateInterestsRouter extends AuthenticatedAppplicationRouter<void> {
+class UpdateInterestsRouter extends AuthenticatedApplicationRouter<void> {
   constructor() {
     super('POST');
   }

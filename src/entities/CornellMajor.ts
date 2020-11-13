@@ -7,13 +7,13 @@ class CornellMajor {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  /** Club name */
+  /** Major name */
   @Column({
     type: 'varchar',
   })
   name: string;
 
-  /** Users who identify as members of this club */
+  /** Users who identify as members of this major */
   @OneToMany((type) => User, (user) => user.major)
   users: User[];
 

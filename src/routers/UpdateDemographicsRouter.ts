@@ -1,9 +1,9 @@
 import { Request } from 'express';
 import CornellMajorRepo from '../repos/CornellMajorRepo';
 import UserRepo from '../repos/UserRepo';
-import AuthenticatedAppplicationRouter from '../utils/AuthenticatedApplicationRouter';
+import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 
-class UpdateDemographicsRouter extends AuthenticatedAppplicationRouter<void> {
+class UpdateDemographicsRouter extends AuthenticatedApplicationRouter<void> {
   constructor() {
     super('POST');
   }
@@ -15,7 +15,7 @@ class UpdateDemographicsRouter extends AuthenticatedAppplicationRouter<void> {
   async content(req: Request): Promise<void> {
     const { user, body } = req;
 
-    const validFields = ['graduationYear', 'hometown', 'major', 'profilePictureURL', 'pronouns'];
+    const validFields = ['pronouns', 'graduationYear', 'major', 'hometown', 'profilePictureURL'];
 
     /* sanitize fields */
     Object.keys(body).forEach((key) => {

@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
-import { SerializedClub } from '../common/types';
+import { SerializedInterest } from '../common/types';
 import User from './User';
 
 @Entity('interest')
@@ -7,7 +7,7 @@ class Interest {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  /** Club name */
+  /** Interest name */
   @Column({
     type: 'varchar',
   })
@@ -18,7 +18,7 @@ class Interest {
   @JoinTable()
   users: User[];
 
-  serialize(): SerializedClub {
+  serialize(): SerializedInterest {
     return this.name;
   }
 }

@@ -16,7 +16,7 @@ const db = (): Repository<User> => getConnectionManager().get().getRepository(Us
  */
 const createDummyUser = async (
   firstName = 'Chuck',
-  googleID = 'googleId',
+  googleID = 'googleID',
   lastName = 'Norris',
   netID = 'cnorris',
 ): Promise<User> => {
@@ -64,14 +64,14 @@ const updateUser = async (user: User, userFields: UserUpdateFields): Promise<boo
 const getUserByNetID = async (netID: string): Promise<User | undefined> => {
   const user = await db().findOne({
     where: { netID },
-    relations: ['availabilities', 'availabilities.users', 'clubs', 'interests', 'major'],
+    relations: ['availabilities', 'availabilities.users', 'groups', 'interests', 'major'],
   });
   return user;
 };
 
 const getUsers = async (): Promise<User[]> => {
   return db().find({
-    relations: ['availabilities', 'availabilities.users', 'clubs', 'interests', 'major'],
+    relations: ['availabilities', 'availabilities.users', 'groups', 'interests', 'major'],
   });
 };
 
