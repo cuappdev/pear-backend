@@ -9,6 +9,7 @@ import InterestRepo from './repos/InterestRepo';
 import scrapeCornellMajors from './utils/WebScraper';
 import Constants from './common/constants';
 import GoalRepo from './repos/GoalRepo';
+import TalkingPointRepo from './repos/TalkingPointRepo';
 
 const app = new API();
 const server = app.getServer(false);
@@ -18,8 +19,14 @@ const SERVER_ADDRESS = '0.0.0.0';
 DBConnection()
   .then(async (connection: any) => {
     // Pre-populate the database with groups, interests, and majors
-    importDataFromFile('PearGroups.txt', GroupRepo.createGroup);
-    importDataFromFile('PearInterests.txt', InterestRepo.createInterest);
+    importDataFromFile('PearGroups.txt', [
+      GroupRepo.createGroup,
+      TalkingPointRepo.createTalkingPoint,
+    ]);
+    importDataFromFile('PearInterests.txt', [
+      InterestRepo.createInterest,
+      TalkingPointRepo.createTalkingPoint,
+    ]);
     addGoalsToDB();
     addCornellMajorsToDB();
     setupMajorScraperCron();
@@ -30,7 +37,7 @@ DBConnection()
   })
   .catch((error: any) => console.log(error));
 
-async function importDataFromFile(filename: string, fn: (data: string) => Promise<void>) {
+async function importDataFromFile(filename: string, fns: ((data: string) => Promise<void>)[]) {
   const fs = require('fs');
   const readline = require('readline');
   const fileStream = fs.createReadStream(`${__dirname}/../assets/${filename}`);
@@ -40,7 +47,7 @@ async function importDataFromFile(filename: string, fn: (data: string) => Promis
   });
   for await (const line of rl) {
     if (line.trim()) {
-      fn(line);
+      fns.forEach((fn) => fn(line));
     }
   }
 }

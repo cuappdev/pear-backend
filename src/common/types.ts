@@ -3,6 +3,7 @@ import Group from '../entities/Group';
 import Interest from '../entities/Interest';
 import CornellMajor from '../entities/CornellMajor';
 import Goal from '../entities/Goal';
+import TalkingPoint from '../entities/TalkingPoint';
 
 /* Represents a User */
 export interface SerializedUser {
@@ -17,6 +18,7 @@ export interface SerializedUser {
   groups: SerializedGroup[];
   interests: SerializedInterest[];
   goals: SerializedGoal[];
+  talkingPoints: SerializedTalkingPoint[];
   facebook: string | null;
   instagram: string | null;
   profilePictureURL: string | null;
@@ -65,6 +67,9 @@ export type SerializedInterest = string;
 /* Represents a Goal */
 export type SerializedGoal = string;
 
+/* Represents a Talking Point */
+export type SerializedTalkingPoint = string;
+
 export interface UserUpdateFields {
   firstName?: string;
   lastName?: string;
@@ -75,6 +80,7 @@ export interface UserUpdateFields {
   groups?: Group[];
   interests?: Interest[];
   goals?: Goal[];
+  talkingPoints?: TalkingPoint[];
   facebook?: string;
   instagram?: string;
   profilePictureURL?: string;
