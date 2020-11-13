@@ -18,6 +18,7 @@ import UpdateDemographicsRouter from './routers/UpdateDemographicsRouter';
 import UpdateInterestsRouter from './routers/UpdateInterestsRouter';
 import UpdateGroupsRouter from './routers/UpdateGroupsRouter';
 import UpdateSocialMediaRouter from './routers/UpdateSocialMediaRouter';
+import UpdateGoalsRouter from './routers/UpdateGoalsRouter';
 
 class API extends ApplicationAPI {
   getPath(): string {
@@ -50,6 +51,7 @@ class API extends ApplicationAPI {
         UpdateAvailabilitiesRouter,
         UpdateDemographicsRouter,
         UpdateInterestsRouter,
+        UpdateGoalsRouter,
         UpdateGroupsRouter,
         UpdateSocialMediaRouter,
       ],

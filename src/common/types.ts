@@ -2,6 +2,7 @@ import Availability from '../entities/Availability';
 import Group from '../entities/Group';
 import Interest from '../entities/Interest';
 import CornellMajor from '../entities/CornellMajor';
+import Goal from '../entities/Goal';
 
 /* Represents a User */
 export interface SerializedUser {
@@ -73,6 +74,7 @@ export interface UserUpdateFields {
   hometown?: string;
   groups?: Group[];
   interests?: Interest[];
+  goals?: Goal[];
   facebook?: string;
   instagram?: string;
   profilePictureURL?: string;
