@@ -14,13 +14,8 @@ class GetUserRouter extends AuthenticatedApplicationRouter<SerializedUser> {
 
   async content(req: Request): Promise<SerializedUser> {
     const { netID } = req.query;
-    let user;
-    if (netID) {
-      user = await UserRepo.getUserByNetID(netID);
-      if (!user) throw Error('User with that netID does not exist');
-    } else {
-      user = req.user;
-    }
+    const user = await UserRepo.getUserByNetID(netID || req.user.netID);
+    if (!user) throw Error('User with that netID does not exist');
     return user.serialize();
   }
 }

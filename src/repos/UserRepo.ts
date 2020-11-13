@@ -16,7 +16,7 @@ const db = (): Repository<User> => getConnectionManager().get().getRepository(Us
  */
 const createDummyUser = async (
   firstName = 'Chuck',
-  googleID = 'googleId',
+  googleID = 'googleID',
   lastName = 'Norris',
   netID = 'cnorris',
 ): Promise<User> => {

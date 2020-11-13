@@ -15,7 +15,7 @@ class UpdateDemographicsRouter extends AuthenticatedApplicationRouter<void> {
   async content(req: Request): Promise<void> {
     const { user, body } = req;
 
-    const validFields = ['graduationYear', 'hometown', 'major', 'profilePictureURL', 'pronouns'];
+    const validFields = ['pronouns', 'graduationYear', 'major', 'hometown', 'profilePictureURL'];
 
     /* sanitize fields */
     Object.keys(body).forEach((key) => {
