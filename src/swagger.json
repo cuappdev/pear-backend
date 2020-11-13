@@ -817,6 +817,128 @@
         }
       }
     },
+    "/user/goals/": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update the goals for the current user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "goals": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Goal"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/talkingPoints/": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update the talking points for the current user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "goals": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TalkingPoint"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/socialMedia/": {
       "post": {
         "tags": [
@@ -942,6 +1064,14 @@
       "Interest": {
         "type": "string"
       },
+      "Goal": {
+        "type": "string",
+        "example": "Finding my people"
+      },
+      "TalkingPoint": {
+        "type": "string",
+        "example": "Tech"
+      },
       "SubUser": {
         "type": "object",
         "properties": {
@@ -1026,6 +1156,18 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Interest"
+            }
+          },
+          "goals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Goal"
+            }
+          },
+          "talkingPoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TalkingPoint"
             }
           },
           "facebook": {
