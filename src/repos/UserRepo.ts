@@ -64,14 +64,30 @@ const updateUser = async (user: User, userFields: UserUpdateFields): Promise<boo
 const getUserByNetID = async (netID: string): Promise<User | undefined> => {
   const user = await db().findOne({
     where: { netID },
-    relations: ['availabilities', 'availabilities.users', 'groups', 'interests', 'major'],
+    relations: [
+      'availabilities',
+      'availabilities.users',
+      'talkingPoints',
+      'goals',
+      'groups',
+      'interests',
+      'major',
+    ],
   });
   return user;
 };
 
 const getUsers = async (): Promise<User[]> => {
   return db().find({
-    relations: ['availabilities', 'availabilities.users', 'groups', 'interests', 'major'],
+    relations: [
+      'availabilities',
+      'availabilities.users',
+      'talkingPoints',
+      'goals',
+      'groups',
+      'interests',
+      'major',
+    ],
   });
 };
 
