@@ -1032,12 +1032,6 @@
               "type": "number",
               "example": 18.5
             }
-          },
-          "users": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SubUser"
-            }
           }
         }
       },

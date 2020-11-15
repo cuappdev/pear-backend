@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import Constants from '../common/constants';
 import { SerializedUser, SubSerializedUser } from '../common/types';
 import Goal from './Goal';
@@ -76,7 +76,7 @@ class User {
   profilePictureURL: string | null;
 
   /** User's availabilities */
-  @ManyToMany((type) => Availability, (availability) => availability.users, { onDelete: 'CASCADE' })
+  @OneToMany((type) => Availability, (availability) => availability.user)
   availabilities: Availability[];
 
   /**

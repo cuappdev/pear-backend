@@ -9,7 +9,6 @@ const createAvailability = async (day: string, times: number[]): Promise<Availab
     const availability = db().create({
       day,
       times,
-      users: [],
     });
     possibleAvailability = await db().save(availability);
   }
