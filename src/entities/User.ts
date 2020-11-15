@@ -1,10 +1,12 @@
 import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import Constants from '../common/constants';
 import { SerializedUser, SubSerializedUser } from '../common/types';
+import Goal from './Goal';
 import Group from './Group';
 import CornellMajor from './CornellMajor';
 import Interest from './Interest';
 import Availability from './Availability';
+import TalkingPoint from './TalkingPoint';
 
 @Entity('pear_user')
 class User {
@@ -54,6 +56,14 @@ class User {
   @ManyToMany((type) => Interest, (interest) => interest.users, { onDelete: 'CASCADE' })
   interests: Interest[];
 
+  @ManyToMany((type) => Goal, (goal) => goal.users, { onDelete: 'CASCADE' })
+  goals: Goal[];
+
+  @ManyToMany((type) => TalkingPoint, (talkingPoint) => talkingPoint.users, {
+    onDelete: 'CASCADE',
+  })
+  talkingPoints: TalkingPoint[];
+
   /** User's facebook profile link */
   @Column({ type: 'varchar', nullable: true })
   facebook: string | null;
@@ -99,6 +109,8 @@ class User {
       hometown: this.hometown,
       groups: this.groups ? this.groups.map((group) => group.serialize()) : [],
       interests: this.interests ? this.interests.map((interest) => interest.serialize()) : [],
+      goals: this.goals ? this.goals.map((goal) => goal.serialize()) : [],
+      talkingPoints: this.talkingPoints ? this.talkingPoints.map((topic) => topic.serialize()) : [],
       facebook: this.facebook,
       instagram: this.instagram,
       profilePictureURL: this.profilePictureURL,
