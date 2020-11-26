@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { SerializedAvailability } from '../common/types';
+import Match from './Match';
 import User from './User';
 
 @Entity('availability')
@@ -23,6 +24,10 @@ class Availability {
   /** User with this availability */
   @ManyToOne((type) => User, (user) => user.availabilities, { onDelete: 'CASCADE' })
   user: User;
+
+  /** Match with this availability */
+  @ManyToOne((type) => Match, (match) => match.availabilities, { onDelete: 'CASCADE' })
+  match: Match;
 
   serialize(): SerializedAvailability {
     return {

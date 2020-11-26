@@ -7,6 +7,7 @@ import CornellMajor from './CornellMajor';
 import Interest from './Interest';
 import Availability from './Availability';
 import TalkingPoint from './TalkingPoint';
+import Match from './Match';
 
 @Entity('pear_user')
 class User {
@@ -78,6 +79,10 @@ class User {
   /** User's availabilities */
   @OneToMany((type) => Availability, (availability) => availability.user)
   availabilities: Availability[];
+
+  /** User's matches */
+  @ManyToOne((type) => Match, (match) => match.users, { onDelete: 'CASCADE' })
+  match: Match;
 
   /**
    * Method to create a dummy user. (For testing purposes)

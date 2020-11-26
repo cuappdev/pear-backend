@@ -42,9 +42,20 @@ const GOALS = [
   GUIDING_MENTEES,
 ];
 
+const MATCH_CREATED = 'created';
+const MATCH_PROPOSED = 'proposed';
+const MATCH_CANCELED = 'canceled';
+const MATCH_ACTIVE = 'active';
+const MATCH_INACTIVE = 'inactive';
+
 export default {
   VALID_DAYS,
   VALID_TIMES,
   UNDECLARED_MAJOR,
   GOALS,
+  MATCH_CREATED,
+  MATCH_PROPOSED,
+  MATCH_CANCELED,
+  MATCH_ACTIVE,
+  MATCH_INACTIVE,
 };

@@ -54,6 +54,13 @@ export type SerializedAvailability = {
   times: number[];
 };
 
+export type SerializedMatch = {
+  status: string;
+  meetingTime: Date;
+  users: SubSerializedUser[];
+  availabilities: SerializedAvailability[];
+};
+
 /* Represents a Group */
 export type SerializedGroup = string;
 
@@ -83,5 +90,11 @@ export interface UserUpdateFields {
   facebook?: string;
   instagram?: string;
   profilePictureURL?: string;
+  availabilities?: Availability[];
+}
+
+export interface MatchUpdateFields {
+  status?: string;
+  meetingTime?: Date;
   availabilities?: Availability[];
 }
