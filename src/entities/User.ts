@@ -122,6 +122,7 @@ class User {
       availabilities: this.availabilities
         ? this.availabilities.map((availability) => availability.serialize())
         : [],
+      match: this.match?.serialize(),
     };
   }
 
