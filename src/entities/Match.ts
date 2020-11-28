@@ -1,4 +1,12 @@
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { SerializedMatch } from '../common/types';
 import Availability from './Availability';
 import User from './User';
@@ -8,7 +16,8 @@ class Match {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToMany((type) => User, (user) => user.match)
+  @ManyToMany((type) => User, (user) => user.matches)
+  @JoinTable()
   users: User[];
 
   @OneToMany((type) => Availability, (availability) => availability.match)

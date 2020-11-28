@@ -81,8 +81,8 @@ class User {
   availabilities: Availability[];
 
   /** User's matches */
-  @ManyToOne((type) => Match, (match) => match.users, { onDelete: 'CASCADE' })
-  match: Match;
+  @ManyToMany((type) => Match, (match) => match.users, { onDelete: 'CASCADE' })
+  matches: Match[];
 
   /**
    * Method to create a dummy user. (For testing purposes)
@@ -122,7 +122,11 @@ class User {
       availabilities: this.availabilities
         ? this.availabilities.map((availability) => availability.serialize())
         : [],
-      match: this.match?.serialize(),
+      matches: this.matches
+        ? this.matches
+            .filter((match) => match.status !== Constants.MATCH_INACTIVE)
+            .map((match) => match.serialize())
+        : [],
     };
   }
 
