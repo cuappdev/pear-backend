@@ -44,7 +44,7 @@ const GOALS = [
 
 const MATCH_CREATED = 'created';
 const MATCH_PROPOSED = 'proposed';
-const MATCH_CANCELED = 'canceled';
+const MATCH_CANCELED = 'cancelled';
 const MATCH_ACTIVE = 'active';
 const MATCH_INACTIVE = 'inactive';
 
