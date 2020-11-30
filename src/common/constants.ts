@@ -44,7 +44,7 @@ const GOALS = [
 
 const MATCH_CREATED = 'created';
 const MATCH_PROPOSED = 'proposed';
-const MATCH_CANCELED = 'cancelled';
+const MATCH_CANCELED = 'canceled';
 const MATCH_ACTIVE = 'active';
 const MATCH_INACTIVE = 'inactive';
 
@@ -52,6 +52,8 @@ export default {
   VALID_DAYS,
   VALID_TIMES,
   UNDECLARED_MAJOR,
+  FINDING_MY_PEOPLE,
+  MEETING_SOMEONE_DIFFERENT,
   GOALS,
   MATCH_CREATED,
   MATCH_PROPOSED,

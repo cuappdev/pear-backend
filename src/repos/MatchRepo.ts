@@ -7,7 +7,7 @@ import UserRepo from './UserRepo';
 
 const db = (): Repository<Match> => getConnectionManager().get().getRepository(Match);
 
-const isActiveMatch = (match: Match) => {
+const isWeeklyMatch = (match: Match) => {
   return match.status !== Constants.MATCH_INACTIVE && match.status !== Constants.MATCH_CANCELED;
 };
 
@@ -27,10 +27,15 @@ const createMatch = async (users: User[]): Promise<void> => {
   }
 };
 
-const getActiveMatchesByNetID = async (netID: string): Promise<Match[]> => {
+const getWeeklyMatchesByNetID = async (netID: string): Promise<Match[]> => {
   const user = await UserRepo.getUserByNetID(netID);
-  if (user && user.matches) return user.matches.filter(isActiveMatch).sort(sortMatchByMeetingTime);
+  if (user && user.matches) return user.matches.filter(isWeeklyMatch).sort(sortMatchByMeetingTime);
   return [];
+};
+
+const getWeeklyMatches = async (): Promise<Match[]> => {
+  const matches = await db().find({ relations: ['users', 'availabilities'] });
+  return matches ? matches.filter(isWeeklyMatch).sort(sortMatchByMeetingTime) : [];
 };
 
 const getMatchHistoryByNetID = async (netID: string): Promise<Match[]> => {
@@ -52,7 +57,8 @@ const updateMatch = async (match: Match, matchFields: MatchUpdateFields): Promis
 
 export default {
   createMatch,
-  getActiveMatchesByNetID,
+  getWeeklyMatchesByNetID,
+  getWeeklyMatches,
   getMatchHistoryByNetID,
   getMatchHistory,
   updateMatch,

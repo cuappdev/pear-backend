@@ -2,13 +2,14 @@
 /* eslint-disable global-require */
 import cron from 'node-cron';
 import API from './API';
-import GroupRepo from './repos/GroupRepo';
+import Constants from './common/constants';
 import CornellMajorRepo from './repos/CornellMajorRepo';
 import DBConnection from './db/DBConnection';
-import InterestRepo from './repos/InterestRepo';
-import scrapeCornellMajors from './utils/WebScraper';
-import Constants from './common/constants';
 import GoalRepo from './repos/GoalRepo';
+import GroupRepo from './repos/GroupRepo';
+import InterestRepo from './repos/InterestRepo';
+import matcher from './utils/Matcher';
+import scrapeCornellMajors from './utils/WebScraper';
 import TalkingPointRepo from './repos/TalkingPointRepo';
 
 const app = new API();
@@ -30,6 +31,7 @@ DBConnection()
     addGoalsToDB();
     addCornellMajorsToDB();
     setupMajorScraperCron();
+    setupMatchingCron();
     app.express.listen(PORT, () => {
       console.log(`App is running on ${SERVER_ADDRESS}:${PORT}...`);
       console.log('Press CTRL-C to stop\n');
@@ -71,6 +73,13 @@ async function setupMajorScraperCron() {
   // Scrape cornell list of majors and update db weekly
   cron.schedule('0 0 * * 0', async () => {
     addCornellMajorsToDB();
+  });
+}
+
+async function setupMatchingCron() {
+  // Match users with one another every 5 minutes (testing purposes - will be weekly later)
+  cron.schedule('*/5 * * * *', async () => {
+    matcher();
   });
 }
 
