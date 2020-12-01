@@ -8,6 +8,7 @@ import Interest from './Interest';
 import Availability from './Availability';
 import TalkingPoint from './TalkingPoint';
 import Match from './Match';
+import AppDevUtils from '../utils/AppDevUtils';
 
 @Entity('pear_user')
 class User {
@@ -123,9 +124,7 @@ class User {
         ? this.availabilities.map((availability) => availability.serialize())
         : [],
       matches: this.matches
-        ? this.matches
-            .filter((match) => match.status !== Constants.MATCH_INACTIVE)
-            .map((match) => match.serialize())
+        ? this.matches.filter(AppDevUtils.isWeeklyMatch).map((match) => match.serialize())
         : [],
     };
   }
