@@ -3,7 +3,7 @@ import { SerializedMatch } from '../common/types';
 import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import MatchRepo from '../repos/MatchRepo';
 
-class GetActiveMatchRouter extends AuthenticatedApplicationRouter<SerializedMatch[]> {
+class GetWeeklyMatchRouter extends AuthenticatedApplicationRouter<SerializedMatch[]> {
   constructor() {
     super('GET');
   }
@@ -20,4 +20,4 @@ class GetActiveMatchRouter extends AuthenticatedApplicationRouter<SerializedMatc
   }
 }
 
-export default new GetActiveMatchRouter().router;
+export default new GetWeeklyMatchRouter().router;

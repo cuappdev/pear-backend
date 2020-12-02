@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import ApplicationAPI from './utils/ApplicationAPI';
 import DeleteUserRouter from './routers/DeleteUserRouter';
 import DocsRouter from './routers/DocsRouter';
-import GetActiveMatchRouter from './routers/GetActiveMatchRouter';
+import GetWeeklyMatchRouter from './routers/GetWeeklyMatchRouter';
 import GetGroupsRouter from './routers/GetGroupsRouter';
 import GetCornellMajorsRouter from './routers/GetCornellMajorsRouter';
 import GetInterestsRouter from './routers/GetInterestsRouter';
@@ -44,7 +44,7 @@ class API extends ApplicationAPI {
       group: [GetGroupsRouter],
       interest: [GetInterestsRouter],
       major: [GetCornellMajorsRouter],
-      match: [GetActiveMatchRouter],
+      match: [GetWeeklyMatchRouter],
       refresh: [RefreshSessionRouter],
       user: [
         DeleteUserRouter,
