@@ -58,7 +58,7 @@ export type SerializedAvailability = {
 export type SerializedMatch = {
   status: string;
   meetingTime: Date;
-  users: SubSerializedUser[];
+  users: string[];
   availabilities: SerializedAvailability[];
 };
 

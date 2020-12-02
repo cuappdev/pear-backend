@@ -8,15 +8,14 @@ import AppDevUtils from '../utils/AppDevUtils';
 
 const db = (): Repository<Match> => getConnectionManager().get().getRepository(Match);
 
-const createMatch = async (users: User[]): Promise<void> => {
-  const possibleMatch = await db().findOne({ where: { users } });
-  if (!possibleMatch) {
-    const match = db().create({
-      status: Constants.MATCH_CREATED,
-      users: [],
-    });
-    await db().save(match);
-  }
+const createMatch = async (users: User[]): Promise<boolean> => {
+  if (users.length < 2) return false;
+  const match = db().create({
+    users,
+    status: Constants.MATCH_CREATED,
+  });
+  await db().save(match);
+  return true;
 };
 
 const getActiveMatchesByNetID = async (netID: string): Promise<Match[]> => {
