@@ -18,7 +18,7 @@ const createMatch = async (users: User[]): Promise<boolean> => {
   return true;
 };
 
-const getActiveMatchesByNetID = async (netID: string): Promise<Match[]> => {
+const getWeeklyMatchesByNetID = async (netID: string): Promise<Match[]> => {
   const user = await UserRepo.getUserByNetID(netID);
   if (user && user.matches)
     return user.matches.filter(AppDevUtils.isWeeklyMatch).sort(AppDevUtils.sortMatchByMeetingTime);
@@ -44,7 +44,7 @@ const updateMatch = async (match: Match, matchFields: MatchUpdateFields): Promis
 
 export default {
   createMatch,
-  getActiveMatchesByNetID,
+  getWeeklyMatchesByNetID,
   getMatchHistoryByNetID,
   getMatchHistory,
   updateMatch,
