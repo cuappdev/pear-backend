@@ -20,15 +20,16 @@ const createMatch = async (users: User[]): Promise<boolean> => {
 
 const getWeeklyMatchesByNetID = async (netID: string): Promise<Match[]> => {
   const user = await UserRepo.getUserByNetID(netID);
-  if (user && user.matches)
-    return user.matches.filter(AppDevUtils.isWeeklyMatch).sort(AppDevUtils.sortMatchByMeetingTime);
-  return [];
+  if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);
+  return user.matches
+    ? user.matches.filter(AppDevUtils.isWeeklyMatch).sort(AppDevUtils.sortMatchByMeetingTime)
+    : [];
 };
 
 const getMatchHistoryByNetID = async (netID: string): Promise<Match[]> => {
   const user = await UserRepo.getUserByNetID(netID);
-  if (user && user.matches) return user.matches.sort(AppDevUtils.sortMatchByMeetingTime);
-  return [];
+  if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);
+  return user.matches ? user.matches.sort(AppDevUtils.sortMatchByMeetingTime) : [];
 };
 
 const getMatchHistory = async (): Promise<Match[]> => {
