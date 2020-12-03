@@ -7,6 +7,8 @@ import CornellMajor from './CornellMajor';
 import Interest from './Interest';
 import Availability from './Availability';
 import TalkingPoint from './TalkingPoint';
+import Match from './Match';
+import AppDevUtils from '../utils/AppDevUtils';
 
 @Entity('pear_user')
 class User {
@@ -79,6 +81,10 @@ class User {
   @OneToMany((type) => Availability, (availability) => availability.user)
   availabilities: Availability[];
 
+  /** User's matches */
+  @ManyToMany((type) => Match, (match) => match.users, { onDelete: 'CASCADE' })
+  matches: Match[];
+
   /**
    * Method to create a dummy user. (For testing purposes)
    * @function
@@ -116,6 +122,9 @@ class User {
       profilePictureURL: this.profilePictureURL,
       availabilities: this.availabilities
         ? this.availabilities.map((availability) => availability.serialize())
+        : [],
+      matches: this.matches
+        ? this.matches.filter(AppDevUtils.isWeeklyMatch).map((match) => match.serialize())
         : [],
     };
   }

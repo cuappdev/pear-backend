@@ -2,6 +2,8 @@
 // all AppDev projects
 
 import { URL } from 'url';
+import Match from '../entities/Match';
+import Constants from '../common/constants';
 
 /**
  * Check if a string is an AppDev-formatted URL. An AppDev formatted URL is
@@ -57,9 +59,21 @@ const validateURL = (url: string): boolean => {
   }
 };
 
+/* Sort matches by meetingTime in descending order */
+const sortMatchByMeetingTime = (x: Match, y: Match) => {
+  return y.meetingTime.getTime() - x.meetingTime.getTime();
+};
+
+/* Checks whether match is a weekly match or not */
+const isWeeklyMatch = (match: Match) => {
+  return match.status !== Constants.MATCH_INACTIVE && match.status !== Constants.MATCH_CANCELED;
+};
+
 export default {
+  isWeeklyMatch,
   netIDFromEmail,
   randomCode,
+  sortMatchByMeetingTime,
   tryCheckAppDevURL,
   validateURL,
 };
