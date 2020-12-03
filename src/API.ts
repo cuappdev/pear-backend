@@ -20,6 +20,7 @@ import UpdateGroupsRouter from './routers/UpdateGroupsRouter';
 import UpdateSocialMediaRouter from './routers/UpdateSocialMediaRouter';
 import UpdateGoalsRouter from './routers/UpdateGoalsRouter';
 import UpdateTalkingPointsRouter from './routers/UpdateTalkingPointsRouter';
+import CreateDevMatchRouter from './routers/CreateDevMatchRouter';
 
 class API extends ApplicationAPI {
   getPath(): string {
@@ -37,7 +38,7 @@ class API extends ApplicationAPI {
   routerGroups(): { [index: string]: Router[] } {
     return {
       auth: [InitializeSessionRouter],
-      dev: [InitializeDevSessionRouter],
+      dev: [CreateDevMatchRouter, InitializeDevSessionRouter],
       docs: [DocsRouter],
       general: [HelloRouter],
       group: [GetGroupsRouter],

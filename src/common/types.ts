@@ -23,6 +23,7 @@ export interface SerializedUser {
   instagram: string | null;
   profilePictureURL: string | null;
   availabilities: SerializedAvailability[];
+  matches: SerializedMatch[];
 }
 
 /* Represents a User without groups, interests, majors, or matches shown */
@@ -57,7 +58,7 @@ export type SerializedAvailability = {
 export type SerializedMatch = {
   status: string;
   meetingTime: Date;
-  users: SubSerializedUser[];
+  users: string[];
   availabilities: SerializedAvailability[];
 };
 
