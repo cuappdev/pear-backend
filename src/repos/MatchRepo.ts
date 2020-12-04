@@ -18,6 +18,12 @@ const createMatch = async (users: User[]): Promise<boolean> => {
   return true;
 };
 
+const getMatchByID = async (id: string): Promise<Match> => {
+  const match = await db().findOne(id);
+  if (!match) throw Error(`Match with id: '${id}' doesn't exist in the database.`);
+  return match;
+};
+
 const getWeeklyMatchesByNetID = async (netID: string): Promise<Match[]> => {
   const user = await UserRepo.getUserByNetID(netID);
   if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);
@@ -45,6 +51,7 @@ const updateMatch = async (match: Match, matchFields: MatchUpdateFields): Promis
 
 export default {
   createMatch,
+  getMatchByID,
   getWeeklyMatchesByNetID,
   getMatchHistoryByNetID,
   getMatchHistory,

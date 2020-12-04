@@ -32,6 +32,7 @@ class Match {
 
   serialize(): SerializedMatch {
     return {
+      matchID: this.id,
       status: this.status,
       meetingTime: this.meetingTime,
       users: this.users ? this.users.map((user) => user.netID) : [],

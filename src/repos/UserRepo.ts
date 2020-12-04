@@ -73,6 +73,7 @@ const getUserByNetID = async (netID: string): Promise<User | undefined> => {
       'major',
       'matches',
       'matches.users',
+      'matches.availabilities',
     ],
   });
   return user;
@@ -88,7 +89,6 @@ const getUsers = async (): Promise<User[]> => {
       'interests',
       'major',
       'matches',
-      'matches.users',
     ],
   });
 };

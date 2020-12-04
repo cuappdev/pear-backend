@@ -22,6 +22,8 @@ import UpdateGoalsRouter from './routers/UpdateGoalsRouter';
 import UpdateTalkingPointsRouter from './routers/UpdateTalkingPointsRouter';
 import CreateDevMatchRouter from './routers/CreateDevMatchRouter';
 import GetMatchHistoryRouter from './routers/GetMatchHistoryRouter';
+import UpdateMatchAvailabilitiesRouter from './routers/UpdateMatchAvailabilitiesRouter';
+import CancelMatchRouter from './routers/CancelMatchRouter';
 
 class API extends ApplicationAPI {
   getPath(): string {
@@ -44,7 +46,7 @@ class API extends ApplicationAPI {
       general: [HelloRouter],
       group: [GetGroupsRouter],
       interest: [GetInterestsRouter],
-      match: [GetMatchHistoryRouter],
+      match: [CancelMatchRouter, GetMatchHistoryRouter, UpdateMatchAvailabilitiesRouter],
       major: [GetCornellMajorsRouter],
       refresh: [RefreshSessionRouter],
       user: [
