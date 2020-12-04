@@ -17,7 +17,8 @@ class UpdateMatchAvailabilitiesRouter extends AuthenticatedApplicationRouter<voi
     if (!matchID) throw Error('Missing required matchID');
 
     const match = await MatchRepo.getMatchByID(matchID);
-    await MatchRepo.updateMatch(match, { status: Constants.MATCH_CANCELED });
+    if (match.status !== Constants.MATCH_ACTIVE || match.status !== Constants.MATCH_INACTIVE)
+      await MatchRepo.updateMatch(match, { status: Constants.MATCH_CANCELED });
   }
 }
 

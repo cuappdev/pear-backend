@@ -386,7 +386,7 @@
               }
             }
           },
-          "description": "Ensure that day and times are valid.",
+          "description": "Ensure that given day(s) and time(s) are valid.",
           "required": true
         },
         "responses": {

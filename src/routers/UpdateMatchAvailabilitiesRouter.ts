@@ -20,21 +20,21 @@ class UpdateMatchAvailabilitiesRouter extends AuthenticatedApplicationRouter<voi
     if (!matchID) throw Error('Missing required matchID');
     if (!schedule) throw Error('Missing required schedule list');
 
-    // Logic to update match status
+    let status;
     const match = await MatchRepo.getMatchByID(matchID);
-    let status = Constants.MATCH_CREATED;
-    if (match.status !== Constants.MATCH_CREATED && match.status !== Constants.MATCH_PROPOSED) {
-      throw Error('Cannot update match availability at this stage!');
-    }
+
+    // Logic to update match status
     if (match.status === Constants.MATCH_CREATED) {
       status = Constants.MATCH_PROPOSED;
-    }
-    if (match.status === Constants.MATCH_PROPOSED) {
+    } else if (match.status === Constants.MATCH_PROPOSED) {
       status = Constants.MATCH_ACTIVE;
+      // Meeting time has to be finalized if match is moving forward from status = active
       if (schedule.length !== 1 || schedule[0].times.length !== 1) {
         throw Error('Schedule must contain exactly one day and one time to finalize the match!');
       }
       // TODO: set meeting time properly
+    } else {
+      throw Error('Cannot update match availability at this stage!');
     }
 
     schedule.forEach((availability) => {
