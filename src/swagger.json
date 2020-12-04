@@ -31,6 +31,10 @@
       "description": "Operations on Pear majors. These routes require authorization via access token."
     },
     {
+      "name": "Match",
+      "description": "Operations on Pear matches. These routes require authorization via access token."
+    },
+    {
       "name": "Users",
       "description": "Operations on Pear users. These routes require authorization via access token."
     }
@@ -329,6 +333,185 @@
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/CornellMajor"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/match/availabilities/": {
+      "post": {
+        "tags": [
+          "Match"
+        ],
+        "summary": "Update the availabilities for the given match.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "matchID": {
+                    "type": "string"
+                  },
+                  "schedule": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Availability"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "Ensure that day and times are valid.",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/match/cancel/": {
+      "post": {
+        "tags": [
+          "Match"
+        ],
+        "summary": "Cancels match provided the matchID.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "matchID",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The match's ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/match/history/": {
+      "get": {
+        "tags": [
+          "Match"
+        ],
+        "summary": "Gets match history for provided netID. If none provided, gets current user's history.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "netID",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "The user's netID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Match"
                       }
                     }
                   }
@@ -890,7 +1073,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "goals": {
+                  "talkingPoints": {
                     "type": "array",
                     "items": {
                       "$ref": "#/components/schemas/TalkingPoint"
@@ -1051,6 +1234,10 @@
           }
         }
       },
+      "Goal": {
+        "type": "string",
+        "example": "Finding my people"
+      },
       "Group": {
         "type": "string",
         "example": "Cornell AppDev"
@@ -1058,13 +1245,33 @@
       "Interest": {
         "type": "string"
       },
-      "Goal": {
-        "type": "string",
-        "example": "Finding my people"
-      },
-      "TalkingPoint": {
-        "type": "string",
-        "example": "Tech"
+      "Match": {
+        "type": "object",
+        "properties": {
+          "matchID": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "example": "active"
+          },
+          "meetingTime": {
+            "type": "number"
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "ms3236"
+            }
+          },
+          "availabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Availability"
+            }
+          }
+        }
       },
       "SubUser": {
         "type": "object",
@@ -1109,6 +1316,10 @@
             "nullable": true
           }
         }
+      },
+      "TalkingPoint": {
+        "type": "string",
+        "example": "Tech"
       },
       "User": {
         "type": "object",
@@ -1180,6 +1391,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Availability"
+            }
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Match"
             }
           }
         }

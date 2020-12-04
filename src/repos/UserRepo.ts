@@ -89,6 +89,8 @@ const getUsers = async (): Promise<User[]> => {
       'interests',
       'major',
       'matches',
+      'matches.users',
+      'matches.availabilities',
     ],
   });
 };
