@@ -78,7 +78,7 @@ async function setupMajorScraperCron() {
 
 async function setupMatchingCron() {
   // Match users with one another every 5 minutes (testing purposes - will be weekly later)
-  cron.schedule('*/5 * * * *', async () => {
+  cron.schedule('* * * * *', async () => {
     matcher();
   });
 }

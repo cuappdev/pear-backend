@@ -56,9 +56,10 @@ export type SerializedAvailability = {
 };
 
 export type SerializedMatch = {
+  matchID: string;
   status: string;
   meetingTime: Date;
-  users: SubSerializedUser[];
+  users: string[];
   availabilities: SerializedAvailability[];
 };
 

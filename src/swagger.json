@@ -374,6 +374,7 @@
             "schema": {
               "type": "string"
             },
+            "required": false,
             "description": "The user's netID"
           }
         ],
@@ -390,6 +391,185 @@
                     },
                     "data": {
                       "$ref": "#/components/schemas/Match"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/match/availabilities/": {
+      "post": {
+        "tags": [
+          "Match"
+        ],
+        "summary": "Update the availabilities for the given match.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "matchID": {
+                    "type": "string"
+                  },
+                  "schedule": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Availability"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "Ensure that given day(s) and time(s) are valid.",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/match/cancel/": {
+      "post": {
+        "tags": [
+          "Match"
+        ],
+        "summary": "Cancels match provided the matchID.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "matchID",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The match's ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/match/history/": {
+      "get": {
+        "tags": [
+          "Match"
+        ],
+        "summary": "Gets match history for provided netID. If none provided, gets current user's history.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "netID",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "The user's netID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Match"
+                      }
                     }
                   }
                 }
@@ -950,7 +1130,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "goals": {
+                  "talkingPoints": {
                     "type": "array",
                     "items": {
                       "$ref": "#/components/schemas/TalkingPoint"
@@ -1111,6 +1291,10 @@
           }
         }
       },
+      "Goal": {
+        "type": "string",
+        "example": "Finding my people"
+      },
       "Group": {
         "type": "string",
         "example": "Cornell AppDev"
@@ -1118,17 +1302,24 @@
       "Interest": {
         "type": "string"
       },
-      "Goal": {
-        "type": "string",
-        "example": "Finding my people"
-      },
       "Match": {
         "type": "object",
         "properties": {
+          "matchID": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "example": "active"
+          },
+          "meetingTime": {
+            "type": "number"
+          },
           "users": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/User"
+              "type": "string",
+              "example": "ms3236"
             }
           },
           "availabilities": {
@@ -1136,20 +1327,8 @@
             "items": {
               "$ref": "#/components/schemas/Availability"
             }
-          },
-          "status": {
-            "type": "string",
-            "example": "created/proposed/cancelled/active/inactive"
-          },
-          "meetingTime": {
-            "type": "date",
-            "example": "Sat Nov 28 2020 22:49:41 GMT-0500 (Eastern Standard Time)"
           }
         }
-      },
-      "TalkingPoint": {
-        "type": "string",
-        "example": "Tech"
       },
       "SubUser": {
         "type": "object",
@@ -1194,6 +1373,10 @@
             "nullable": true
           }
         }
+      },
+      "TalkingPoint": {
+        "type": "string",
+        "example": "Tech"
       },
       "User": {
         "type": "object",

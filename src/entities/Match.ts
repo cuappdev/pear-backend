@@ -27,14 +27,15 @@ class Match {
   @Column({ type: 'varchar' })
   status: string;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', nullable: true })
   meetingTime: Date;
 
   serialize(): SerializedMatch {
     return {
+      matchID: this.id,
       status: this.status,
       meetingTime: this.meetingTime,
-      users: this.users ? this.users.map((user) => user.subSerialize()) : [],
+      users: this.users ? this.users.map((user) => user.netID) : [],
       availabilities: this.availabilities
         ? this.availabilities.map((availability) => availability.serialize())
         : [],
