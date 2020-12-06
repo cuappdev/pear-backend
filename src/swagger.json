@@ -421,7 +421,7 @@
     "/match/availabilities/": {
       "post": {
         "tags": [
-          "Match"
+          "Matches"
         ],
         "summary": "Update the availabilities for the given match.",
         "requestBody": {
@@ -486,7 +486,7 @@
     "/match/cancel/": {
       "post": {
         "tags": [
-          "Match"
+          "Matches"
         ],
         "summary": "Cancels match provided the matchID.",
         "parameters": [
@@ -540,7 +540,7 @@
     "/match/history/": {
       "get": {
         "tags": [
-          "Match"
+          "Matches"
         ],
         "summary": "Gets match history for provided netID. If none provided, gets current user's history.",
         "parameters": [
