@@ -31,7 +31,7 @@
       "description": "Operations on Pear majors. These routes require authorization via access token."
     },
     {
-      "name": "Match",
+      "name": "Matches",
       "description": "Operations on Pear matches. These routes require authorization via access token."
     },
     {
@@ -361,10 +361,67 @@
         }
       }
     },
+    "/match/": {
+      "get": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Gets another user's matches, given their netID. If none provided, gets current user's matches.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "netID",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "The user's netID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Match"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/match/availabilities/": {
       "post": {
         "tags": [
-          "Match"
+          "Matches"
         ],
         "summary": "Update the availabilities for the given match.",
         "requestBody": {
@@ -429,7 +486,7 @@
     "/match/cancel/": {
       "post": {
         "tags": [
-          "Match"
+          "Matches"
         ],
         "summary": "Cancels match provided the matchID.",
         "parameters": [
@@ -483,7 +540,7 @@
     "/match/history/": {
       "get": {
         "tags": [
-          "Match"
+          "Matches"
         ],
         "summary": "Gets match history for provided netID. If none provided, gets current user's history.",
         "parameters": [
@@ -1190,7 +1247,7 @@
   },
   "servers": [
     {
-      "url": "https://pear-backend.cornellappdev.com/api/v1"
+      "url": "http://pear-backend.cornellappdev.com/api/v1"
     }
   ],
   "components": {
