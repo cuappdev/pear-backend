@@ -3,7 +3,7 @@ import Constants from '../common/constants';
 import MatchRepo from '../repos/MatchRepo';
 import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 
-class UpdateMatchAvailabilitiesRouter extends AuthenticatedApplicationRouter<void> {
+class CancelMatchRouter extends AuthenticatedApplicationRouter<void> {
   constructor() {
     super('POST');
   }
@@ -22,4 +22,4 @@ class UpdateMatchAvailabilitiesRouter extends AuthenticatedApplicationRouter<voi
   }
 }
 
-export default new UpdateMatchAvailabilitiesRouter().router;
+export default new CancelMatchRouter().router;

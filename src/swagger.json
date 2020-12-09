@@ -178,6 +178,50 @@
         }
       }
     },
+    "/dev/match/": {
+      "get": {
+        "tags": [
+          "Development"
+        ],
+        "summary": "Creates a dummy match for testing purposes.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "netIDs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": ["os92", "sdc76", "ms3236", "gg387"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "Must provide at least 2 netIDs."
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/dev/login/": {
       "get": {
         "tags": [

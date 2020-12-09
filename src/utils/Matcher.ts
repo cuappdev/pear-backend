@@ -6,12 +6,16 @@ import User from '../entities/User';
 
 // MATCHER CONSTANTS
 
+const TOTAL_SCORE = 100;
+
+// TODO: Decide on appropriate weights? (random for now)
 const MAX_SCORE = {
-  availabilities: 20,
-  major: 20,
-  interests: 20,
-  groups: 20,
-  talkingPoints: 20,
+  availabilities: TOTAL_SCORE * 0.3,
+  locations: TOTAL_SCORE * 0.1,
+  major: TOTAL_SCORE * 0.2,
+  interests: TOTAL_SCORE * 0.2,
+  groups: TOTAL_SCORE * 0.2,
+  talkingPoints: TOTAL_SCORE * 0.2,
 };
 
 // PREVIOUS WEEK FUNCTIONS
@@ -109,6 +113,18 @@ const availabilityScorer = (chooser: User, choice: User): number => {
  * @function
  * @param chooser - the user whose user preferences are being calculated
  * @param choice - the user whose match score is being calculated
+ * @return the score assigned to choice based on their similarities with chooser's preferred locations
+ */
+const locationScorer = (chooser: User, choice: User): number => {
+  // TODO: Implement after deciding best way to approach this (plus look at other scorers and comment better next time
+  //       because I don't know what I was thinking then.
+  return 0;
+};
+
+/**
+ * @function
+ * @param chooser - the user whose user preferences are being calculated
+ * @param choice - the user whose match score is being calculated
  * @return the score assigned to choice based on their similarities with chooser's major
  */
 const majorScorer = (chooser: User, choice: User): number => {
@@ -161,6 +177,7 @@ const createUserPreferences = async (): Promise<Record<string, User[]>> => {
       if (choosingUser !== choiceUser) {
         const scorers = [
           availabilityScorer,
+          locationScorer,
           majorScorer,
           interestScorer,
           groupScorer,
