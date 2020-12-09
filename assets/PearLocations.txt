@@ -1,0 +1,14 @@
+Campus|Atrium Cafe
+Campus|Cafe Jennie
+Campus|Gimme Coffee
+Campus|Goldie's Cafe
+Campus|Green Dragon
+Campus|Libe Cafe
+Campus|Mac's Cafe
+Campus|Martha's Cafe
+Campus|Mattin's Cafe
+Campus|Temple of Zeus
+Collegetown|Kung Fu Tea
+Collegetown|Starbucks
+Collegetown|CTB
+Collegetown|U Tea

@@ -9,9 +9,7 @@ class Availability {
   id: string;
 
   /** Day of availability */
-  @Column({
-    type: 'varchar',
-  })
+  @Column({ type: 'varchar' })
   day: string;
 
   /** Times of availability formatted as floats (e.g. 14.5 = 2:30 PM) */

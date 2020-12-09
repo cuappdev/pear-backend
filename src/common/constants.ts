@@ -1,3 +1,9 @@
+// ASSETS
+
+const ASSET_SPLITTER = '|';
+
+// AVAILABILITIES
+
 const VALID_DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
 const VALID_TIMES = [
@@ -27,7 +33,11 @@ const VALID_TIMES = [
   20.5,
 ];
 
+// CORNELL MAJORS
+
 const UNDECLARED_MAJOR = 'Undeclared';
+
+// GOALS
 
 const JUST_CHATTING = 'Just chatting';
 const FINDING_MY_PEOPLE = 'Finding my people';
@@ -42,6 +52,8 @@ const GOALS = [
   GUIDING_MENTEES,
 ];
 
+// MATCHING
+
 const MATCH_CREATED = 'created';
 const MATCH_PROPOSED = 'proposed';
 const MATCH_CANCELED = 'canceled';
@@ -49,6 +61,7 @@ const MATCH_ACTIVE = 'active';
 const MATCH_INACTIVE = 'inactive';
 
 export default {
+  ASSET_SPLITTER,
   VALID_DAYS,
   VALID_TIMES,
   UNDECLARED_MAJOR,

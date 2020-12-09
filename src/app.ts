@@ -11,6 +11,7 @@ import InterestRepo from './repos/InterestRepo';
 import matcher from './utils/Matcher';
 import scrapeCornellMajors from './utils/WebScraper';
 import TalkingPointRepo from './repos/TalkingPointRepo';
+import LocationRepo from './repos/LocationRepo';
 
 const app = new API();
 const server = app.getServer(false);
@@ -28,6 +29,7 @@ DBConnection()
       InterestRepo.createInterest,
       TalkingPointRepo.createTalkingPoint,
     ]);
+    importDataFromFile('PearLocations.txt', [LocationRepo.createLocation]);
     addGoalsToDB();
     addCornellMajorsToDB();
     setupMajorScraperCron();
@@ -39,7 +41,7 @@ DBConnection()
   })
   .catch((error: any) => console.log(error));
 
-async function importDataFromFile(filename: string, fns: ((data: string) => Promise<void>)[]) {
+async function importDataFromFile(filename: string, fns: ((...data: string[]) => Promise<void>)[]) {
   const fs = require('fs');
   const readline = require('readline');
   const fileStream = fs.createReadStream(`${__dirname}/../assets/${filename}`);
@@ -49,7 +51,7 @@ async function importDataFromFile(filename: string, fns: ((data: string) => Prom
   });
   for await (const line of rl) {
     if (line.trim()) {
-      fns.forEach((fn) => fn(line));
+      fns.forEach((fn) => fn(...line.split(Constants.ASSET_SPLITTER)));
     }
   }
 }

@@ -5,7 +5,7 @@ import CornellMajor from '../entities/CornellMajor';
 import Goal from '../entities/Goal';
 import TalkingPoint from '../entities/TalkingPoint';
 
-/* Represents a User */
+/** Represents a User */
 export interface SerializedUser {
   googleID: string;
   firstName: string;
@@ -23,10 +23,11 @@ export interface SerializedUser {
   instagram: string | null;
   profilePictureURL: string | null;
   availabilities: SerializedAvailability[];
+  preferredLocations: SerializedLocation[];
   matches: SerializedMatch[];
 }
 
-/* Represents a User without groups, interests, majors, or matches shown */
+/** Represents a User without groups, interests, majors, or matches shown */
 export interface SubSerializedUser {
   googleID: string;
   firstName: string;
@@ -41,7 +42,7 @@ export interface SubSerializedUser {
   profilePictureURL: string | null;
 }
 
-/* Represents a User session */
+/** Represents a User session */
 export interface SerializedUserSession {
   accessToken: string;
   active: boolean;
@@ -49,12 +50,19 @@ export interface SerializedUserSession {
   sessionExpiration: string;
 }
 
-/* Represents an Availability */
+/** Represents an Availability */
 export type SerializedAvailability = {
   day: string;
   times: number[];
 };
 
+/** Represents a Location */
+export type SerializedLocation = {
+  area: string;
+  name: string;
+};
+
+/** Represents a Match */
 export type SerializedMatch = {
   matchID: string;
   status: string;
@@ -63,19 +71,19 @@ export type SerializedMatch = {
   availabilities: SerializedAvailability[];
 };
 
-/* Represents a Group */
+/** Represents a Group */
 export type SerializedGroup = string;
 
-/* Represents a Cornell Major */
+/** Represents a Cornell Major */
 export type SerializedCornellMajor = string;
 
-/* Represents an Interest */
+/** Represents an Interest */
 export type SerializedInterest = string;
 
-/* Represents a Goal */
+/** Represents a Goal */
 export type SerializedGoal = string;
 
-/* Represents a Talking Point */
+/** Represents a Talking Point */
 export type SerializedTalkingPoint = string;
 
 export interface UserUpdateFields {
@@ -93,6 +101,7 @@ export interface UserUpdateFields {
   instagram?: string;
   profilePictureURL?: string;
   availabilities?: Availability[];
+  // preferredLocations?: Location[];
 }
 
 export interface MatchUpdateFields {

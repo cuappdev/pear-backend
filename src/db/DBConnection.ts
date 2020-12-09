@@ -4,6 +4,7 @@ import CornellMajor from '../entities/CornellMajor';
 import Goal from '../entities/Goal';
 import Group from '../entities/Group';
 import Interest from '../entities/Interest';
+import Location from '../entities/Location';
 import Match from '../entities/Match';
 import TalkingPoint from '../entities/TalkingPoint';
 import User from '../entities/User';
@@ -17,6 +18,7 @@ const models = [
   Goal,
   Group,
   Interest,
+  Location,
   Match,
   TalkingPoint,
   User,
