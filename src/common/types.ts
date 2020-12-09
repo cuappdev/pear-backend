@@ -1,8 +1,9 @@
 import Availability from '../entities/Availability';
-import Group from '../entities/Group';
-import Interest from '../entities/Interest';
 import CornellMajor from '../entities/CornellMajor';
 import Goal from '../entities/Goal';
+import Group from '../entities/Group';
+import Interest from '../entities/Interest';
+import Location from '../entities/Location';
 import TalkingPoint from '../entities/TalkingPoint';
 
 /** Represents a User */
@@ -101,7 +102,7 @@ export interface UserUpdateFields {
   instagram?: string;
   profilePictureURL?: string;
   availabilities?: Availability[];
-  // preferredLocations?: Location[];
+  preferredLocations?: Location[];
 }
 
 export interface MatchUpdateFields {

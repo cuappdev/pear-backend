@@ -935,6 +935,67 @@
         }
       }
     },
+    "/user/goals/": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update the goals for the current user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "goals": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Goal"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/groups/": {
       "post": {
         "tags": [
@@ -1057,83 +1118,22 @@
         }
       }
     },
-    "/user/goals/": {
+    "/user/preferredLocations/": {
       "post": {
         "tags": [
           "Users"
         ],
-        "summary": "Update the goals for the current user.",
+        "summary": "Update the preferred locations for the current user.",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "goals": {
+                  "preferences": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/Goal"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": false
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/Error"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/user/talkingPoints/": {
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Update the talking points for the current user.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "talkingPoints": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/TalkingPoint"
+                      "$ref": "#/components/schemas/Location"
                     }
                   }
                 }
@@ -1239,6 +1239,67 @@
           }
         }
       }
+    },
+    "/user/talkingPoints/": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update the talking points for the current user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "talkingPoints": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TalkingPoint"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "externalDocs": {
@@ -1300,7 +1361,19 @@
         "example": "Cornell AppDev"
       },
       "Interest": {
-        "type": "string"
+        "type": "string",
+        "example": "Reading"
+      },
+      "Location": {
+        "type": "object",
+        "properties": {
+          "area": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
       },
       "Match": {
         "type": "object",

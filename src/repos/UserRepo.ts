@@ -66,14 +66,15 @@ const getUserByNetID = async (netID: string): Promise<User | undefined> => {
     where: { netID },
     relations: [
       'availabilities',
-      'talkingPoints',
       'goals',
       'groups',
       'interests',
       'major',
       'matches',
-      'matches.users',
       'matches.availabilities',
+      'matches.users',
+      'preferredLocations',
+      'talkingPoints',
     ],
   });
   return user;
@@ -83,14 +84,15 @@ const getUsers = async (): Promise<User[]> => {
   return db().find({
     relations: [
       'availabilities',
-      'talkingPoints',
       'goals',
       'groups',
       'interests',
       'major',
       'matches',
-      'matches.users',
       'matches.availabilities',
+      'matches.users',
+      'preferredLocations',
+      'talkingPoints',
     ],
   });
 };

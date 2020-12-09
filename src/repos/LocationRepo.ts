@@ -15,8 +15,8 @@ const createLocation = async (area: string, name: string): Promise<void> => {
   }
 };
 
-const getLocationByName = async (name: string): Promise<Location | undefined> => {
-  const location = await db().findOne({ where: { name } });
+const getLocation = async (area: string, name: string): Promise<Location | undefined> => {
+  const location = await db().findOne({ where: { area, name } });
   return location;
 };
 
@@ -26,6 +26,6 @@ const getLocations = async (): Promise<Location[]> => {
 
 export default {
   createLocation,
-  getLocationByName,
+  getLocation,
   getLocations,
 };

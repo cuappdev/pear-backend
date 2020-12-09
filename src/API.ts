@@ -23,6 +23,7 @@ import UpdateGoalsRouter from './routers/UpdateGoalsRouter';
 import UpdateGroupsRouter from './routers/UpdateGroupsRouter';
 import UpdateInterestsRouter from './routers/UpdateInterestsRouter';
 import UpdateMatchAvailabilitiesRouter from './routers/UpdateMatchAvailabilitiesRouter';
+import UpdatePreferredLocationsRouter from './routers/UpdatePreferredLocationsRouter';
 import UpdateSocialMediaRouter from './routers/UpdateSocialMediaRouter';
 import UpdateTalkingPointsRouter from './routers/UpdateTalkingPointsRouter';
 
@@ -65,6 +66,7 @@ class API extends ApplicationAPI {
         UpdateInterestsRouter,
         UpdateGoalsRouter,
         UpdateGroupsRouter,
+        UpdatePreferredLocationsRouter,
         UpdateSocialMediaRouter,
         UpdateTalkingPointsRouter,
       ],

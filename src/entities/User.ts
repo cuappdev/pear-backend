@@ -80,6 +80,7 @@ class User {
   @Column({ type: 'varchar', nullable: true })
   profilePictureURL: string | null;
 
+  /** User's preferred locations */
   @OneToMany((type) => Location, (location) => location.user)
   preferredLocations: Location[];
 
