@@ -6,10 +6,7 @@ const db = (): Repository<Goal> => getConnectionManager().get().getRepository(Go
 const createGoal = async (name: string): Promise<void> => {
   const possibleGoal = await db().findOne({ name });
   if (!possibleGoal) {
-    const goal = db().create({
-      name,
-      users: [],
-    });
+    const goal = db().create({ name });
     await db().save(goal);
   }
 };

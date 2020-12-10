@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 import { SerializedAvailability } from '../common/types';
 import Match from './Match';
 import User from './User';
@@ -20,11 +20,13 @@ class Availability {
   times: number[];
 
   /** User with this availability */
-  @ManyToOne((type) => User, (user) => user.availabilities, { onDelete: 'CASCADE' })
-  user: User;
+  @ManyToMany((type) => User, (user) => user.availabilities, { onDelete: 'CASCADE' })
+  @JoinTable()
+  users: User[];
 
   /** Match with this availability */
-  @ManyToOne((type) => Match, (match) => match.availabilities, { onDelete: 'CASCADE' })
+  @ManyToMany((type) => Match, (match) => match.availabilities, { onDelete: 'CASCADE' })
+  @JoinTable()
   match: Match;
 
   serialize(): SerializedAvailability {

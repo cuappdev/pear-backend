@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne } from 'typeorm';
 import Constants from '../common/constants';
 import { SerializedUser, SubSerializedUser } from '../common/types';
 import Availability from './Availability';
@@ -81,11 +81,11 @@ class User {
   profilePictureURL: string | null;
 
   /** User's preferred locations */
-  @OneToMany((type) => Location, (location) => location.user)
+  @ManyToMany((type) => Location, (location) => location.users, { onDelete: 'CASCADE' })
   preferredLocations: Location[];
 
   /** User's availabilities */
-  @OneToMany((type) => Availability, (availability) => availability.user)
+  @ManyToMany((type) => Availability, (availability) => availability.users, { onDelete: 'CASCADE' })
   availabilities: Availability[];
 
   /** User's matches */

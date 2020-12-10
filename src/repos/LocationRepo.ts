@@ -9,7 +9,6 @@ const createLocation = async (area: string, name: string): Promise<void> => {
     const location = db().create({
       area,
       name,
-      user: null,
     });
     await db().save(location);
   }

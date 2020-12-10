@@ -1,4 +1,4 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, Index, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 import { SerializedLocation } from '../common/types';
 import User from './User';
 
@@ -16,9 +16,10 @@ class Location {
   @Column({ type: 'varchar' })
   name: string;
 
-  /** User that prefers this location */
-  @ManyToOne((type) => User, (user) => user.preferredLocations, { onDelete: 'CASCADE' })
-  user: User;
+  /** Users that prefer this location */
+  @ManyToMany((type) => User, (user) => user.preferredLocations)
+  @JoinTable()
+  users: User[];
 
   serialize(): SerializedLocation {
     return {

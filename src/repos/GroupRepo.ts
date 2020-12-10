@@ -6,10 +6,7 @@ const db = (): Repository<Group> => getConnectionManager().get().getRepository(G
 const createGroup = async (name: string): Promise<void> => {
   const possibleGroup = await db().findOne({ name });
   if (!possibleGroup) {
-    const group = db().create({
-      name,
-      users: [],
-    });
+    const group = db().create({ name });
     await db().save(group);
   }
 };
