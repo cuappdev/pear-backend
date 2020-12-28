@@ -1,0 +1,17 @@
+version: "3.6"
+
+services:
+  web:
+    build: .
+    image: "cornellappdev/pear:${IMAGE_TAG}"
+    env_file: node.env
+    ports:
+      - "80:5000"
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        failure_action: rollback
+        order: start-first
+      restart_policy:
+        condition: any
