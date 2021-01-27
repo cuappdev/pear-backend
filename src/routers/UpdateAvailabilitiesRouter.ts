@@ -1,5 +1,6 @@
 import { Request } from 'express';
 import Constants from '../common/constants';
+import { SerializedAvailability } from '../common/types';
 import Availability from '../entities/Availability';
 import AvailabilityRepo from '../repos/AvailabilityRepo';
 import UserRepo from '../repos/UserRepo';
@@ -47,7 +48,7 @@ class UpdateAvailabilitiesRouter extends AuthenticatedApplicationRouter<void> {
     });
 
     const availabilities = await schedule.reduce(
-      async (availabilitiesList: Promise<Availability[]>, availability) => {
+      async (availabilitiesList: Promise<Availability[]>, availability: SerializedAvailability) => {
         const collection = await availabilitiesList;
         const { day, times } = availability;
 

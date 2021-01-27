@@ -29,7 +29,7 @@ class UpdateGroupsRouter extends AuthenticatedApplicationRouter<void> {
 
         if (group) collection.push(group);
         else {
-          LogUtils.logErr(`Organization '${name}' doesn't exist in the database.`);
+          LogUtils.logErr(`Group '${name}' doesn't exist in the database.`);
         }
 
         return collection;

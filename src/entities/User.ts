@@ -1,13 +1,14 @@
-import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne } from 'typeorm';
 import Constants from '../common/constants';
 import { SerializedUser, SubSerializedUser } from '../common/types';
+import Availability from './Availability';
+import CornellMajor from './CornellMajor';
 import Goal from './Goal';
 import Group from './Group';
-import CornellMajor from './CornellMajor';
 import Interest from './Interest';
-import Availability from './Availability';
-import TalkingPoint from './TalkingPoint';
+import Location from './Location';
 import Match from './Match';
+import TalkingPoint from './TalkingPoint';
 import AppDevUtils from '../utils/AppDevUtils';
 
 @Entity('pear_user')
@@ -58,9 +59,11 @@ class User {
   @ManyToMany((type) => Interest, (interest) => interest.users, { onDelete: 'CASCADE' })
   interests: Interest[];
 
+  /** User's matching goals */
   @ManyToMany((type) => Goal, (goal) => goal.users, { onDelete: 'CASCADE' })
   goals: Goal[];
 
+  /** User's talking points */
   @ManyToMany((type) => TalkingPoint, (talkingPoint) => talkingPoint.users, {
     onDelete: 'CASCADE',
   })
@@ -77,8 +80,12 @@ class User {
   @Column({ type: 'varchar', nullable: true })
   profilePictureURL: string | null;
 
+  /** User's preferred locations */
+  @ManyToMany((type) => Location, (location) => location.users, { onDelete: 'CASCADE' })
+  preferredLocations: Location[];
+
   /** User's availabilities */
-  @OneToMany((type) => Availability, (availability) => availability.user)
+  @ManyToMany((type) => Availability, (availability) => availability.users, { onDelete: 'CASCADE' })
   availabilities: Availability[];
 
   /** User's matches */
@@ -120,6 +127,9 @@ class User {
       facebook: this.facebook,
       instagram: this.instagram,
       profilePictureURL: this.profilePictureURL,
+      preferredLocations: this.preferredLocations
+        ? this.preferredLocations.map((location) => location.serialize())
+        : [],
       availabilities: this.availabilities
         ? this.availabilities.map((availability) => availability.serialize())
         : [],

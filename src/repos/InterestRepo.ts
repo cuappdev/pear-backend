@@ -6,10 +6,7 @@ const db = (): Repository<Interest> => getConnectionManager().get().getRepositor
 const createInterest = async (name: string): Promise<void> => {
   const possibleInterest = await db().findOne({ name });
   if (!possibleInterest) {
-    const interest = db().create({
-      name,
-      users: [],
-    });
+    const interest = db().create({ name });
     await db().save(interest);
   }
 };

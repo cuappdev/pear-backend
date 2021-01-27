@@ -6,10 +6,7 @@ const db = (): Repository<CornellMajor> => getConnectionManager().get().getRepos
 const createCornellMajor = async (name: string): Promise<void> => {
   const possibleCornellMajor = await db().findOne({ name });
   if (!possibleCornellMajor) {
-    const cornellMajor = db().create({
-      name,
-      users: [],
-    });
+    const cornellMajor = db().create({ name });
     await db().save(cornellMajor);
   }
 };

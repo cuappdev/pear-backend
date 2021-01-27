@@ -6,10 +6,7 @@ const db = (): Repository<TalkingPoint> => getConnectionManager().get().getRepos
 const createTalkingPoint = async (name: string): Promise<void> => {
   const possibleTalkingPoint = await db().findOne({ name });
   if (!possibleTalkingPoint) {
-    const talkingPoint = db().create({
-      name,
-      users: [],
-    });
+    const talkingPoint = db().create({ name });
     await db().save(talkingPoint);
   }
 };
