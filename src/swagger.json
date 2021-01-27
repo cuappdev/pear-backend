@@ -1412,10 +1412,12 @@
         "type": "object",
         "properties": {
           "area": {
-            "type": "string"
+            "type": "string",
+            "example": "Campus"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "example": "Mattin's Café"
           }
         }
       },

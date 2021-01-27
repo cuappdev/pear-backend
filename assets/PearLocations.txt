@@ -1,12 +1,12 @@
-Campus|Atrium Cafe
-Campus|Cafe Jennie
+Campus|Atrium Café
+Campus|Café Jennie
 Campus|Gimme Coffee
-Campus|Goldie's Cafe
+Campus|Goldie's Café
 Campus|Green Dragon
-Campus|Libe Cafe
-Campus|Mac's Cafe
-Campus|Martha's Cafe
-Campus|Mattin's Cafe
+Campus|Libe Café
+Campus|Mac's Café
+Campus|Martha's Café
+Campus|Mattin's Café
 Campus|Temple of Zeus
 Collegetown|Kung Fu Tea
 Collegetown|Starbucks

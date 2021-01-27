@@ -7,12 +7,12 @@ class Location {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  /** General area of location */
+  /** General area of location such as Campus or Collegetown */
   @Index()
   @Column({ type: 'varchar' })
   area: string;
 
-  /** Name of the location */
+  /** Name of the location such as Green Dragon or Starbucks */
   @Column({ type: 'varchar' })
   name: string;
 
