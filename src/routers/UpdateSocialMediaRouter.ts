@@ -1,7 +1,6 @@
 import { Request } from 'express';
 import UserRepo from '../repos/UserRepo';
 import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
-import AppDevUtils from '../utils/AppDevUtils';
 
 class UpdateInterestsRouter extends AuthenticatedApplicationRouter<void> {
   constructor() {
@@ -20,10 +19,6 @@ class UpdateInterestsRouter extends AuthenticatedApplicationRouter<void> {
     Object.keys(body).forEach((key) => {
       if (!validFields.includes(key)) {
         throw Error(`Invalid field '${key}' identified in request body.`);
-      }
-
-      if (!AppDevUtils.validateURL(body[key])) {
-        throw Error(`URL provided for '${key}' is not valid.`);
       }
     });
 
