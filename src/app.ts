@@ -8,7 +8,7 @@ import DBConnection from './db/DBConnection';
 import GoalRepo from './repos/GoalRepo';
 import GroupRepo from './repos/GroupRepo';
 import InterestRepo from './repos/InterestRepo';
-import matcher from './utils/Matcher';
+// import matcher from './utils/Matcher';
 import scrapeCornellMajors from './utils/WebScraper';
 import TalkingPointRepo from './repos/TalkingPointRepo';
 import LocationRepo from './repos/LocationRepo';
@@ -33,7 +33,7 @@ DBConnection()
     addGoalsToDB();
     addCornellMajorsToDB();
     setupMajorScraperCron();
-    setupMatchingCron();
+    // setupMatchingCron();
     app.express.listen(PORT, () => {
       console.log(`App is running on ${SERVER_ADDRESS}:${PORT}...`);
       console.log('Press CTRL-C to stop\n');
@@ -78,11 +78,11 @@ async function setupMajorScraperCron() {
   });
 }
 
-async function setupMatchingCron() {
-  // Match users with one another every 10 minutes (testing purposes - will be weekly later)
-  cron.schedule('*/10 * * * *', async () => {
-    matcher();
-  });
-}
+// async function setupMatchingCron() {
+//   // Match users with one another every 10 minutes (testing purposes - will be weekly later)
+//   cron.schedule('*/10 * * * *', async () => {
+//     matcher();
+//   });
+// }
 
 export { server };
