@@ -1,5 +1,6 @@
 import { Connection, ConnectionOptions, createConnection } from 'typeorm';
 import Availability from '../entities/Availability';
+import Constants from '../common/constants';
 import CornellMajor from '../entities/CornellMajor';
 import Goal from '../entities/Goal';
 import Group from '../entities/Group';
@@ -9,8 +10,6 @@ import Match from '../entities/Match';
 import TalkingPoint from '../entities/TalkingPoint';
 import User from '../entities/User';
 import UserSession from '../entities/UserSession';
-
-const isProduction = process.env.NODE_ENV === 'production';
 
 const models = [
   Availability,
@@ -29,7 +28,7 @@ const connectionOptions: ConnectionOptions = {
   database: process.env.DB_NAME,
   entities: models,
   extra: {
-    ssl: isProduction,
+    ssl: Constants.IS_PRODUCTION,
   },
   host: process.env.DB_HOST,
   port: +process.env.DB_PORT,

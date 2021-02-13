@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import { SerializedUserSession } from '../common/types';
 import ApplicationRouter from '../utils/ApplicationRouter';
+import Constants from '../common/constants';
 import LogUtils from '../utils/LogUtils';
 import UserRepo from '../repos/UserRepo';
 import UserSessionRepo from '../repos/UserSessionRepo';
@@ -15,7 +16,7 @@ class InitializeDevSessionRouter extends ApplicationRouter<SerializedUserSession
   }
 
   async content(req: Request): Promise<SerializedUserSession> {
-    if (process.env.NODE_ENV !== 'development') {
+    if (!Constants.IS_DEVELOPMENT) {
       throw LogUtils.logErr('Must be on development environment to access this endpoint.');
     }
 

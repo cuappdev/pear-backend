@@ -37,6 +37,13 @@ const VALID_TIMES = [
 
 const UNDECLARED_MAJOR = 'Undeclared';
 
+// ENVIRONMENT TYPE
+
+// Uses SSL
+const IS_PRODUCTION = process.env.NODE_PROD_ENV === 'true';
+// Allows access to dev routes
+const IS_DEVELOPMENT = process.env.NODE_DEV_ENV === 'true';
+
 // GOALS
 
 const JUST_CHATTING = 'Just chatting';
@@ -65,6 +72,8 @@ export default {
   VALID_DAYS,
   VALID_TIMES,
   UNDECLARED_MAJOR,
+  IS_PRODUCTION,
+  IS_DEVELOPMENT,
   FINDING_MY_PEOPLE,
   MEETING_SOMEONE_DIFFERENT,
   GOALS,
