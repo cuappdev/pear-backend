@@ -1,4 +1,5 @@
 import util from 'util';
+import Constants from '../common/constants';
 
 /**
  * Write object to console, if in production, condense message
@@ -16,7 +17,7 @@ function log(obj: any, error = false) {
     compact: false,
   };
 
-  if (process.env.NODE_ENV === 'production') {
+  if (Constants.IS_PRODUCTION) {
     options.compact = true;
     options.colors = false;
   }

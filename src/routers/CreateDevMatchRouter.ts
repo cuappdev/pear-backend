@@ -1,5 +1,6 @@
 import { Request } from 'express';
 import ApplicationRouter from '../utils/ApplicationRouter';
+import Constants from '../common/constants';
 import LogUtils from '../utils/LogUtils';
 import UserRepo from '../repos/UserRepo';
 import User from '../entities/User';
@@ -15,7 +16,7 @@ class CreateDevMatchRouter extends ApplicationRouter<void> {
   }
 
   async content(req: Request): Promise<void> {
-    if (process.env.NODE_ENV !== 'development') {
+    if (!Constants.IS_DEVELOPMENT) {
       throw LogUtils.logErr('Must be on development environment to access this endpoint.');
     }
 

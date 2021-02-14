@@ -7,7 +7,8 @@ declare namespace NodeJS {
     DB_PASSWORD: string;
     DB_NAME: string;
     GOOGLE_CLIENT_ID: string;
-    NODE_ENV: 'development' | 'production';
+    NODE_DEV_ENV: string;
+    NODE_PROD_ENV: string;
     PORT: string;
   }
 }
