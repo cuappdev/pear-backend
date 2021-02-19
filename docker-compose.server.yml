@@ -6,7 +6,7 @@ services:
     image: "cornellappdev/pear:${IMAGE_TAG}"
     env_file: node.env
     ports:
-      - "8080:5000"
+      - "80:5000"
     deploy:
       replicas: 1
       update_config:
