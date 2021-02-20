@@ -87,6 +87,24 @@ export type SerializedGoal = string;
 /** Represents a Talking Point */
 export type SerializedTalkingPoint = string;
 
+/** Represents the demographic subset of a User */
+export interface UserDemographics {
+  googleID: string;
+  firstName: string;
+  lastName: string;
+  pronouns: string;
+  graduationYear: string;
+  major: SerializedCornellMajor;
+  hometown: string;
+  profilePictureURL: string;
+}
+
+/** Represents the social medias of a User */
+export interface UserSocialMedia {
+  facebook: string;
+  instagram: string;
+}
+
 export interface UserUpdateFields {
   firstName?: string;
   lastName?: string;

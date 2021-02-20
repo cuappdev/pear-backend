@@ -14,8 +14,8 @@ class GetWeeklyMatchRouter extends AuthenticatedApplicationRouter<SerializedMatc
 
   async content(req: Request): Promise<SerializedMatch[]> {
     const { netID } = req.query;
-    const matches = await MatchRepo.getWeeklyMatchesByNetID(netID || req.user.netID);
-    return matches.map((match) => match.serialize());
+    const weeklyMatches = await MatchRepo.getWeeklyMatchesByNetID(netID || req.user.netID);
+    return weeklyMatches.map((match) => match.serialize());
   }
 }
 

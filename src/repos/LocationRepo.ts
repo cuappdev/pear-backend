@@ -1,5 +1,6 @@
 import { getConnectionManager, Repository } from 'typeorm';
 import Location from '../entities/Location';
+import UserRepo from './UserRepo';
 
 const db = (): Repository<Location> => getConnectionManager().get().getRepository(Location);
 
@@ -19,6 +20,12 @@ const getLocation = async (area: string, name: string): Promise<Location | undef
   return location;
 };
 
+const getLocationsByNetID = async (netID: string): Promise<Location[]> => {
+  const user = await UserRepo.getUserByNetID(netID);
+  if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);
+  return user.preferredLocations;
+};
+
 const getLocations = async (): Promise<Location[]> => {
   return db().find();
 };
@@ -26,5 +33,6 @@ const getLocations = async (): Promise<Location[]> => {
 export default {
   createLocation,
   getLocation,
+  getLocationsByNetID,
   getLocations,
 };

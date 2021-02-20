@@ -11,6 +11,14 @@ import GetInterestsRouter from './routers/GetInterestsRouter';
 import GetMatchHistoryRouter from './routers/GetMatchHistoryRouter';
 import GetUserRouter from './routers/GetUserRouter';
 import GetUsersRouter from './routers/GetUsersRouter';
+import GetUserAvailabilitiesRouter from './routers/GetUserAvailabilitiesRouter';
+import GetUserDemographicsRouter from './routers/GetUserDemographicsRouter';
+import GetUserGoalsRouter from './routers/GetUserGoalsRouter';
+import GetUserGroupsRouter from './routers/GetUserGroupsRouter';
+import GetUserInterestsRouter from './routers/GetUserInterestsRouter';
+import GetUserLocationsRouter from './routers/GetUserLocationsRouter';
+import GetUserSocialMediaRouter from './routers/GetUserSocialMediaRouter';
+import GetUserTalkingPointsRouter from './routers/GetUserTalkingPointsRouter';
 import GetWeeklyMatchRouter from './routers/GetWeeklyMatchRouter';
 import HelloRouter from './routers/HelloRouter';
 import InitializeDevSessionRouter from './routers/InitializeDevSessionRouter';
@@ -61,13 +69,21 @@ class API extends ApplicationAPI {
         GetUserRouter,
         GetUsersRouter,
         SearchUsersRouter,
+        GetUserAvailabilitiesRouter,
         UpdateAvailabilitiesRouter,
+        GetUserDemographicsRouter,
         UpdateDemographicsRouter,
+        GetUserInterestsRouter,
         UpdateInterestsRouter,
+        GetUserGoalsRouter,
         UpdateGoalsRouter,
+        GetUserGroupsRouter,
         UpdateGroupsRouter,
+        GetUserLocationsRouter,
         UpdatePreferredLocationsRouter,
+        GetUserSocialMediaRouter,
         UpdateSocialMediaRouter,
+        GetUserTalkingPointsRouter,
         UpdateTalkingPointsRouter,
       ],
     };

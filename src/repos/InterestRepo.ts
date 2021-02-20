@@ -1,5 +1,6 @@
 import { getConnectionManager, Repository } from 'typeorm';
 import Interest from '../entities/Interest';
+import UserRepo from './UserRepo';
 
 const db = (): Repository<Interest> => getConnectionManager().get().getRepository(Interest);
 
@@ -16,6 +17,12 @@ const getInterestByName = async (name: string): Promise<Interest | undefined> =>
   return interest;
 };
 
+const getInterestsByNetID = async (netID: string): Promise<Interest[]> => {
+  const user = await UserRepo.getUserByNetID(netID);
+  if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);
+  return user.interests;
+};
+
 const getInterests = async (): Promise<Interest[]> => {
   return db().find();
 };
@@ -23,5 +30,6 @@ const getInterests = async (): Promise<Interest[]> => {
 export default {
   createInterest,
   getInterestByName,
+  getInterestsByNetID,
   getInterests,
 };
