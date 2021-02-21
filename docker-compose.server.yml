@@ -2,7 +2,6 @@ version: "3.6"
 
 services:
   web:
-    build: .
     image: "cornellappdev/pear:${IMAGE_TAG}"
     env_file: node.env
     ports:
