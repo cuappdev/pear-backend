@@ -18,7 +18,7 @@ const getTalkingPointByName = async (name: string): Promise<TalkingPoint | undef
 };
 
 const getTalkingPointsByNetID = async (netID: string): Promise<TalkingPoint[]> => {
-  const user = await UserRepo.getUserByNetID(netID);
+  const user = await UserRepo.getUserByNetID(netID, ['talkingPoints']);
   if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);
   return user.talkingPoints;
 };

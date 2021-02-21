@@ -18,7 +18,7 @@ const getGroupByName = async (name: string): Promise<Group | undefined> => {
 };
 
 const getGroupsByNetID = async (netID: string): Promise<Group[]> => {
-  const user = await UserRepo.getUserByNetID(netID);
+  const user = await UserRepo.getUserByNetID(netID, ['groups']);
   if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);
   return user.groups;
 };

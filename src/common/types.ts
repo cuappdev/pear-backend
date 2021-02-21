@@ -43,6 +43,20 @@ export interface SubSerializedUser {
   profilePictureURL: string | null;
 }
 
+/** Represents a User with the information necessary to be displayed on the Weekly Pear & Community screen */
+export interface SerializedCommunityUser {
+  netID: string;
+  firstName: string;
+  lastName: string;
+  hometown: string | null;
+  profilePictureURL: string | null;
+  major: SerializedCornellMajor | null;
+  graduationYear: string | null;
+  pronouns: string | null;
+  interests: SerializedInterest[];
+  groups: SerializedGroup[];
+}
+
 /** Represents a User session */
 export interface SerializedUserSession {
   accessToken: string;

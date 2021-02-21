@@ -21,7 +21,7 @@ const getLocation = async (area: string, name: string): Promise<Location | undef
 };
 
 const getLocationsByNetID = async (netID: string): Promise<Location[]> => {
-  const user = await UserRepo.getUserByNetID(netID);
+  const user = await UserRepo.getUserByNetID(netID, ['preferredLocations']);
   if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);
   return user.preferredLocations;
 };

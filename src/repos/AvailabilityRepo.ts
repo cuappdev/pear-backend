@@ -25,7 +25,7 @@ const getAvailability = async (day: string, times: number[]): Promise<Availabili
 };
 
 const getAvailabilitiesByNetID = async (netID: string): Promise<Availability[]> => {
-  const user = await UserRepo.getUserByNetID(netID);
+  const user = await UserRepo.getUserByNetID(netID, ['availabilities']);
   if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);
   return user.availabilities;
 };

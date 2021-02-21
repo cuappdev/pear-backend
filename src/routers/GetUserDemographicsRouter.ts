@@ -14,7 +14,7 @@ class GetUserDemographicsRouter extends AuthenticatedApplicationRouter<UserDemog
 
   async content(req: Request): Promise<UserDemographics> {
     const { netID } = req.query;
-    const user = await UserRepo.getUserByNetID(netID || req.user.netID);
+    const user = await UserRepo.getUserByNetID(netID || req.user.netID, ['major']);
     if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);
     return {
       googleID: user.googleID,

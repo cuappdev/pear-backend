@@ -18,7 +18,7 @@ const getGoalByName = async (name: string): Promise<Goal | undefined> => {
 };
 
 const getGoalsByNetID = async (netID: string): Promise<Goal[]> => {
-  const user = await UserRepo.getUserByNetID(netID);
+  const user = await UserRepo.getUserByNetID(netID, ['goals']);
   if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);
   return user.goals;
 };

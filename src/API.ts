@@ -5,12 +5,12 @@ import CancelMatchRouter from './routers/CancelMatchRouter';
 import CreateDevMatchRouter from './routers/CreateDevMatchRouter';
 import DeleteUserRouter from './routers/DeleteUserRouter';
 import DocsRouter from './routers/DocsRouter';
+import GetCommunityUserRouter from './routers/GetCommunityUserRouter';
+import GetCommunityUsersRouter from './routers/GetCommunityUsersRouter';
 import GetCornellMajorsRouter from './routers/GetCornellMajorsRouter';
 import GetGroupsRouter from './routers/GetGroupsRouter';
 import GetInterestsRouter from './routers/GetInterestsRouter';
 import GetMatchHistoryRouter from './routers/GetMatchHistoryRouter';
-import GetUserRouter from './routers/GetUserRouter';
-import GetUsersRouter from './routers/GetUsersRouter';
 import GetUserAvailabilitiesRouter from './routers/GetUserAvailabilitiesRouter';
 import GetUserDemographicsRouter from './routers/GetUserDemographicsRouter';
 import GetUserGoalsRouter from './routers/GetUserGoalsRouter';
@@ -66,8 +66,8 @@ class API extends ApplicationAPI {
       refresh: [RefreshSessionRouter],
       user: [
         DeleteUserRouter,
-        GetUserRouter,
-        GetUsersRouter,
+        GetCommunityUserRouter,
+        GetCommunityUsersRouter,
         SearchUsersRouter,
         GetUserAvailabilitiesRouter,
         UpdateAvailabilitiesRouter,
