@@ -11,12 +11,15 @@ const TOTAL_SCORE = 100;
 // TODO: Decide on appropriate weights? (random for now)
 const MAX_SCORE = {
   availabilities: TOTAL_SCORE * 0.3,
-  locations: TOTAL_SCORE * 0.1,
+  preferredLocations: TOTAL_SCORE * 0.1,
   major: TOTAL_SCORE * 0.2,
   interests: TOTAL_SCORE * 0.2,
   groups: TOTAL_SCORE * 0.2,
   talkingPoints: TOTAL_SCORE * 0.2,
 };
+
+// User attributes to retrieve when getting a user
+const relevantUserRelations = [...Object.keys(MAX_SCORE), 'goals'];
 
 // PREVIOUS WEEK FUNCTIONS
 
@@ -56,10 +59,10 @@ const calculateSimilarity = (chooserItems: any[], choiceItems: any[]): number =>
 const generalSingleScorer = (chooser: User, choice: User, property: string): number => {
   let score = MAX_SCORE[property];
   if (Constants.FINDING_MY_PEOPLE in chooser.goals) {
-    score -= chooser.major !== choice.major ? MAX_SCORE[property] / 2 : 0;
+    score -= chooser[property] !== choice[property] ? MAX_SCORE[property] / 2 : 0;
   }
   if (Constants.MEETING_SOMEONE_DIFFERENT in chooser.goals) {
-    score -= chooser.major === choice.major ? MAX_SCORE[property] / 2 : 0;
+    score -= chooser[property] === choice[property] ? MAX_SCORE[property] / 2 : 0;
   }
   return score;
 };
@@ -168,13 +171,15 @@ const talkingPointsScorer = (chooser: User, choice: User): number => {
  * @return a dictionary whose keys are user's netIDs and whose values are that user's user preference list
  */
 const createUserPreferences = async (): Promise<Record<string, User[]>> => {
-  const users = await UserRepo.getUsers();
+  const userNetIDs = await UserRepo.getUserNetIDS();
   const preferences = {};
-  users.forEach((choosingUser) => {
+  for (const choosingUserNetID of userNetIDs) {
+    const choosingUser = await UserRepo.getUserByNetID(choosingUserNetID, relevantUserRelations);
     const scoreData = [];
-    users.forEach((choiceUser) => {
+    for (const choiceUserNetID of userNetIDs) {
       // Score each choiceUser based on choosingUser's goals
-      if (choosingUser !== choiceUser) {
+      if (choosingUserNetID !== choiceUserNetID) {
+        const choiceUser = await UserRepo.getUserByNetID(choiceUserNetID, relevantUserRelations);
         const scorers = [
           availabilityScorer,
           locationScorer,
@@ -190,7 +195,7 @@ const createUserPreferences = async (): Promise<Record<string, User[]>> => {
           }, 0);
         scoreData.push([choosingUser, score]);
       }
-    });
+    }
     // Convert scoresInfo list to list of users in order of descending score
     const sortedUsers = scoreData.sort((scoreDataA, scoreDataB) => {
       return scoreDataB[1] - scoreDataA[1];
@@ -198,7 +203,7 @@ const createUserPreferences = async (): Promise<Record<string, User[]>> => {
     preferences[choosingUser.netID] = sortedUsers.map((scoreDatum) => {
       return scoreDatum[0];
     });
-  });
+  }
   return preferences;
 };
 
@@ -209,9 +214,25 @@ const createUserPreferences = async (): Promise<Record<string, User[]>> => {
 const matchUsers = async (preferences: Record<string, User[]>) => {
   // TODO: Match w/ SRP - for now, random pairing
   const netIDs = Object.keys(preferences);
+
+  // If there are an odd number of netIDs, someone may not be matched for a week.
+  // Temporary solution is take myself out until we add in an opt out option or > 1 matches
+  if (netIDs.length % 2 !== 0) {
+    const index = netIDs.indexOf('gg387', 0);
+    if (index > -1) {
+      netIDs.splice(index, 1);
+    }
+  }
+
+  // Fisher-Yates shuffle https://javascript.info/task/shuffle
+  for (let i = netIDs.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [netIDs[i], netIDs[j]] = [netIDs[j], netIDs[i]];
+  }
+
   for (let i = 0; i < Math.floor(netIDs.length / 2); i++) {
-    const user1 = await UserRepo.getUserByNetID(netIDs[i]);
-    const user2 = await UserRepo.getUserByNetID(netIDs[i + 1]);
+    const user1 = await UserRepo.getUserByNetID(netIDs[i * 2]);
+    const user2 = await UserRepo.getUserByNetID(netIDs[i * 2 + 1]);
     await MatchRepo.createMatch([user1, user2]);
   }
 };

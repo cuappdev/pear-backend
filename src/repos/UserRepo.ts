@@ -87,6 +87,11 @@ const getUsers = async (relations: string[] = []): Promise<User[]> => {
   });
 };
 
+const getUserNetIDS = async (): Promise<string[]> => {
+  const users = await db().find();
+  return users.map((user) => user.netID);
+};
+
 export default {
   createDummyUser,
   initializeUser,
@@ -94,4 +99,5 @@ export default {
   updateUser,
   getUserByNetID,
   getUsers,
+  getUserNetIDS,
 };
