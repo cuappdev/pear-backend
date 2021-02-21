@@ -1982,7 +1982,7 @@
       "User": {
         "type": "object",
         "properties": {
-          "googleID": {
+          "netID": {
             "type": "string"
           },
           "firstName": {
@@ -1991,53 +1991,7 @@
           "lastName": {
             "type": "string"
           },
-          "netID": {
-            "type": "string"
-          },
-          "pronouns": {
-            "type": "string",
-            "nullable": true
-          },
-          "graduationYear": {
-            "type": "string",
-            "nullable": true
-          },
-          "major": {
-            "$ref": "#/components/schemas/CornellMajor"
-          },
           "hometown": {
-            "type": "string",
-            "nullable": true
-          },
-          "groups": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Group"
-            }
-          },
-          "interests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Interest"
-            }
-          },
-          "goals": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Goal"
-            }
-          },
-          "talkingPoints": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TalkingPoint"
-            }
-          },
-          "facebook": {
-            "type": "string",
-            "nullable": true
-          },
-          "instagram": {
             "type": "string",
             "nullable": true
           },
@@ -2045,16 +1999,27 @@
             "type": "string",
             "nullable": true
           },
-          "availabilities": {
+          "major": {
+            "$ref": "#/components/schemas/CornellMajor"
+          },
+          "graduationYear": {
+            "type": "string",
+            "nullable": true
+          },
+          "pronouns": {
+            "type": "string",
+            "nullable": true
+          },
+          "interests": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Availability"
+              "$ref": "#/components/schemas/Interest"
             }
           },
-          "matches": {
+          "groups": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Match"
+              "$ref": "#/components/schemas/Group"
             }
           }
         }
