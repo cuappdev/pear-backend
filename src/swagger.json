@@ -847,6 +847,63 @@
       }
     },
     "/user/availabilities/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets another user's availabilities, given their netID. If none provided, gets current user.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "netID",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user's netID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Availability"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Users"
@@ -909,6 +966,85 @@
       }
     },
     "/user/demographics/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets another user's demographics, given their netID. If none provided, gets current user.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "netID",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user's netID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "properties": {
+                        "googleID": {
+                          "type": "string"
+                        },
+                        "firstName": {
+                          "type": "string"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        },
+                        "pronouns": {
+                          "type": "string"
+                        },
+                        "graduationYear": {
+                          "type": "string"
+                        },
+                        "major": {
+                          "type": "string"
+                        },
+                        "hometown": {
+                          "type": "string"
+                        },
+                        "profilePictureURL": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Users"
@@ -980,6 +1116,63 @@
       }
     },
     "/user/goals/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets another user's goals, given their netID. If none provided, gets current user.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "netID",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user's netID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Goal"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Users"
@@ -1041,6 +1234,63 @@
       }
     },
     "/user/groups/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets another user's groups, given their netID. If none provided, gets current user.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "netID",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user's netID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Group"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Users"
@@ -1102,6 +1352,63 @@
       }
     },
     "/user/interests/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets another user's interests, given their netID. If none provided, gets current user.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "netID",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user's netID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Interest"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Users"
@@ -1163,6 +1470,63 @@
       }
     },
     "/user/preferredLocations/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets another user's preferred locations, given their netID. If none provided, gets current user.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "netID",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user's netID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Location"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Users"
@@ -1224,6 +1588,67 @@
       }
     },
     "/user/socialMedia/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets another user's social media, given their netID. If none provided, gets current user.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "netID",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user's netID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "properties": {
+                        "facebook": {
+                          "type": "string"
+                        },
+                        "instagram": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Users"
@@ -1285,6 +1710,63 @@
       }
     },
     "/user/talkingPoints/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets another user's preferred locations, given their netID. If none provided, gets current user.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "netID",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user's netID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TalkingPoint"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Users"
@@ -1500,7 +1982,7 @@
       "User": {
         "type": "object",
         "properties": {
-          "googleID": {
+          "netID": {
             "type": "string"
           },
           "firstName": {
@@ -1509,53 +1991,7 @@
           "lastName": {
             "type": "string"
           },
-          "netID": {
-            "type": "string"
-          },
-          "pronouns": {
-            "type": "string",
-            "nullable": true
-          },
-          "graduationYear": {
-            "type": "string",
-            "nullable": true
-          },
-          "major": {
-            "$ref": "#/components/schemas/CornellMajor"
-          },
           "hometown": {
-            "type": "string",
-            "nullable": true
-          },
-          "groups": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Group"
-            }
-          },
-          "interests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Interest"
-            }
-          },
-          "goals": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Goal"
-            }
-          },
-          "talkingPoints": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TalkingPoint"
-            }
-          },
-          "facebook": {
-            "type": "string",
-            "nullable": true
-          },
-          "instagram": {
             "type": "string",
             "nullable": true
           },
@@ -1563,16 +1999,27 @@
             "type": "string",
             "nullable": true
           },
-          "availabilities": {
+          "major": {
+            "$ref": "#/components/schemas/CornellMajor"
+          },
+          "graduationYear": {
+            "type": "string",
+            "nullable": true
+          },
+          "pronouns": {
+            "type": "string",
+            "nullable": true
+          },
+          "interests": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Availability"
+              "$ref": "#/components/schemas/Interest"
             }
           },
-          "matches": {
+          "groups": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Match"
+              "$ref": "#/components/schemas/Group"
             }
           }
         }

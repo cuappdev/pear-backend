@@ -1,6 +1,6 @@
 import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, ManyToOne } from 'typeorm';
 import Constants from '../common/constants';
-import { SerializedUser, SubSerializedUser } from '../common/types';
+import { SerializedUser, SubSerializedUser, SerializedCommunityUser } from '../common/types';
 import Availability from './Availability';
 import CornellMajor from './CornellMajor';
 import Goal from './Goal';
@@ -152,6 +152,21 @@ class User {
       facebook: this.facebook,
       instagram: this.instagram,
       profilePictureURL: this.profilePictureURL,
+    };
+  }
+
+  communitySerialize(): SerializedCommunityUser {
+    return {
+      netID: this.netID,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      hometown: this.hometown,
+      profilePictureURL: this.profilePictureURL,
+      major: this.major ? this.major.serialize() : Constants.UNDECLARED_MAJOR,
+      graduationYear: this.graduationYear,
+      pronouns: this.pronouns,
+      interests: this.interests ? this.interests.map((interest) => interest.serialize()) : [],
+      groups: this.groups ? this.groups.map((group) => group.serialize()) : [],
     };
   }
 }

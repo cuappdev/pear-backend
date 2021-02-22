@@ -43,6 +43,20 @@ export interface SubSerializedUser {
   profilePictureURL: string | null;
 }
 
+/** Represents a User with the information necessary to be displayed on the Weekly Pear & Community screen */
+export interface SerializedCommunityUser {
+  netID: string;
+  firstName: string;
+  lastName: string;
+  hometown: string | null;
+  profilePictureURL: string | null;
+  major: SerializedCornellMajor | null;
+  graduationYear: string | null;
+  pronouns: string | null;
+  interests: SerializedInterest[];
+  groups: SerializedGroup[];
+}
+
 /** Represents a User session */
 export interface SerializedUserSession {
   accessToken: string;
@@ -86,6 +100,24 @@ export type SerializedGoal = string;
 
 /** Represents a Talking Point */
 export type SerializedTalkingPoint = string;
+
+/** Represents the demographic subset of a User */
+export interface UserDemographics {
+  googleID: string;
+  firstName: string;
+  lastName: string;
+  pronouns: string;
+  graduationYear: string;
+  major: SerializedCornellMajor;
+  hometown: string;
+  profilePictureURL: string;
+}
+
+/** Represents the social medias of a User */
+export interface UserSocialMedia {
+  facebook: string;
+  instagram: string;
+}
 
 export interface UserUpdateFields {
   firstName?: string;

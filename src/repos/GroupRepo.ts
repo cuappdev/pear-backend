@@ -1,5 +1,6 @@
 import { getConnectionManager, Repository } from 'typeorm';
 import Group from '../entities/Group';
+import UserRepo from './UserRepo';
 
 const db = (): Repository<Group> => getConnectionManager().get().getRepository(Group);
 
@@ -16,6 +17,12 @@ const getGroupByName = async (name: string): Promise<Group | undefined> => {
   return group;
 };
 
+const getGroupsByNetID = async (netID: string): Promise<Group[]> => {
+  const user = await UserRepo.getUserByNetID(netID, ['groups']);
+  if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);
+  return user.groups;
+};
+
 const getGroups = async (): Promise<Group[]> => {
   return db().find();
 };
@@ -23,5 +30,6 @@ const getGroups = async (): Promise<Group[]> => {
 export default {
   createGroup,
   getGroupByName,
+  getGroupsByNetID,
   getGroups,
 };

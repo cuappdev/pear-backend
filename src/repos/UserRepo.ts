@@ -60,12 +60,7 @@ const updateUser = async (user: User, userFields: UserUpdateFields): Promise<boo
   await db().save(user);
   return true;
 };
-
-const getUserByNetID = async (netID: string): Promise<User | undefined> => {
-  const user = await db().findOne({
-    where: { netID },
-    relations: [
-      'availabilities',
+/* 'availabilities',
       'goals',
       'groups',
       'interests',
@@ -74,14 +69,27 @@ const getUserByNetID = async (netID: string): Promise<User | undefined> => {
       'matches.availabilities',
       'matches.users',
       'preferredLocations',
-      'talkingPoints',
-    ],
+      'talkingPoints', */
+const getUserByNetID = async (
+  netID: string,
+  relations: string[] = [],
+): Promise<User | undefined> => {
+  const user = await db().findOne({
+    where: { netID },
+    relations,
   });
   return user;
 };
 
-const getUsers = async (): Promise<User[]> => {
-  return db().find();
+const getUsers = async (relations: string[] = []): Promise<User[]> => {
+  return db().find({
+    relations,
+  });
+};
+
+const getUserNetIDS = async (): Promise<string[]> => {
+  const users = await db().find();
+  return users.map((user) => user.netID);
 };
 
 export default {
@@ -91,4 +99,5 @@ export default {
   updateUser,
   getUserByNetID,
   getUsers,
+  getUserNetIDS,
 };
