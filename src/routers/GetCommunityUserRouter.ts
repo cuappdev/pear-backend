@@ -1,9 +1,9 @@
 import { Request } from 'express';
-import { SerializedUser } from '../common/types';
+import { SerializedCommunityUser } from '../common/types';
 import AuthenticatedApplicationRouter from '../utils/AuthenticatedApplicationRouter';
 import UserRepo from '../repos/UserRepo';
 
-class GetCommunityUserRouter extends AuthenticatedApplicationRouter<SerializedUser> {
+class GetCommunityUserRouter extends AuthenticatedApplicationRouter<SerializedCommunityUser> {
   constructor() {
     super('GET');
   }
@@ -12,22 +12,14 @@ class GetCommunityUserRouter extends AuthenticatedApplicationRouter<SerializedUs
     return '/';
   }
 
-  async content(req: Request): Promise<SerializedUser> {
+  async content(req: Request): Promise<SerializedCommunityUser> {
     const { netID } = req.query;
     const user = await UserRepo.getUserByNetID(netID || req.user.netID, [
       'groups',
       'interests',
       'major',
-      /** Below are properties to remove once iOS refactors */
-      'availabilities',
-      'goals',
-      'matches',
-      'matches.availabilities',
-      'matches.users',
-      'preferredLocations',
-      'talkingPoints',
     ]);
-    return user.serialize();
+    return user.communitySerialize();
   }
 }
 
