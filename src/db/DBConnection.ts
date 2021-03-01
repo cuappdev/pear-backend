@@ -36,6 +36,7 @@ const connectionOptions: ConnectionOptions = {
   type: 'postgres',
   synchronize: true,
   username: process.env.DB_USERNAME,
+  logging: 'all',
 };
 
 const dbConnection = (): Promise<Connection> => createConnection(connectionOptions);
