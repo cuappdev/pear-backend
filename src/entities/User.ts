@@ -162,6 +162,8 @@ class User {
       lastName: this.lastName,
       hometown: this.hometown,
       profilePictureURL: this.profilePictureURL,
+      facebook: this.facebook,
+      instagram: this.instagram,
       major: this.major ? this.major.serialize() : Constants.UNDECLARED_MAJOR,
       graduationYear: this.graduationYear,
       pronouns: this.pronouns,
