@@ -50,6 +50,8 @@ export interface SerializedCommunityUser {
   lastName: string;
   hometown: string | null;
   profilePictureURL: string | null;
+  facebook: string | null;
+  instagram: string | null;
   major: SerializedCornellMajor | null;
   graduationYear: string | null;
   pronouns: string | null;

@@ -194,7 +194,7 @@
                     "type": "array",
                     "items": {
                       "type": "string",
-                      "example": ["os92", "sdc76", "ms3236", "gg387"]
+                      "example": ["os92", "sdc76", "ms3236", "gg387", "njs99"]
                     }
                   }
                 }
@@ -1931,50 +1931,6 @@
           }
         }
       },
-      "SubUser": {
-        "type": "object",
-        "properties": {
-          "googleID": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "netID": {
-            "type": "string"
-          },
-          "pronouns": {
-            "type": "string",
-            "nullable": true
-          },
-          "graduationYear": {
-            "type": "string",
-            "nullable": true
-          },
-          "major": {
-            "$ref": "#/components/schemas/CornellMajor"
-          },
-          "hometown": {
-            "type": "string",
-            "nullable": true
-          },
-          "facebook": {
-            "type": "string",
-            "nullable": true
-          },
-          "instagram": {
-            "type": "string",
-            "nullable": true
-          },
-          "profilePictureURL": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
       "TalkingPoint": {
         "type": "string",
         "example": "Tech"
@@ -1996,6 +1952,14 @@
             "nullable": true
           },
           "profilePictureURL": {
+            "type": "string",
+            "nullable": true
+          },
+          "facebook": {
+            "type": "string",
+            "nullable": true
+          },
+          "instagram": {
             "type": "string",
             "nullable": true
           },
