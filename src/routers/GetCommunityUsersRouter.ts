@@ -14,7 +14,8 @@ class GetCommunityUsersRouter extends AuthenticatedApplicationRouter<SerializedC
 
   async content(req: Request): Promise<SerializedCommunityUser[]> {
     const users = await UserRepo.getUsers(['groups', 'interests', 'major']);
-    return users.map((userObject) => userObject.communitySerialize());
+    const onboardedUsers = users.filter((userObject) => userObject.didOnboard);
+    return onboardedUsers.map((userObject) => userObject.communitySerialize());
   }
 }
 
