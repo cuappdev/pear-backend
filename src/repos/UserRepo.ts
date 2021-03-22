@@ -45,6 +45,7 @@ const initializeUser = async (
     firstName,
     lastName,
     netID,
+    didOnboard: false,
   });
   await db().save(user);
   return user;
@@ -60,16 +61,7 @@ const updateUser = async (user: User, userFields: UserUpdateFields): Promise<boo
   await db().save(user);
   return true;
 };
-/* 'availabilities',
-      'goals',
-      'groups',
-      'interests',
-      'major',
-      'matches',
-      'matches.availabilities',
-      'matches.users',
-      'preferredLocations',
-      'talkingPoints', */
+
 const getUserByNetID = async (
   netID: string,
   relations: string[] = [],

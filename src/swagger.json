@@ -1621,6 +1621,9 @@
                         },
                         "instagram": {
                           "type": "string"
+                        },
+                        "didOnboard": {
+                          "type": "boolean"
                         }
                       }
                     }
@@ -1665,6 +1668,9 @@
                   },
                   "instagram": {
                     "type": "string"
+                  },
+                  "didOnboard": {
+                    "type": "boolean"
                   }
                 }
               }
@@ -1985,6 +1991,9 @@
             "items": {
               "$ref": "#/components/schemas/Group"
             }
+          },
+          "didOnboard": {
+            "type": "boolean"
           }
         }
       },

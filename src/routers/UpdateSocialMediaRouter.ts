@@ -14,7 +14,7 @@ class UpdateInterestsRouter extends AuthenticatedApplicationRouter<void> {
   async content(req: Request): Promise<void> {
     const { user, body } = req;
 
-    const validFields = ['facebook', 'instagram'];
+    const validFields = ['facebook', 'instagram', 'didOnboard'];
 
     Object.keys(body).forEach((key) => {
       if (!validFields.includes(key)) {

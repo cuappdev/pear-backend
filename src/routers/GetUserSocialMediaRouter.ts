@@ -19,6 +19,7 @@ class GetUserSocialMediaRouter extends AuthenticatedApplicationRouter<UserSocial
     return {
       facebook: user.facebook,
       instagram: user.instagram,
+      didOnboard: user.didOnboard,
     };
   }
 }

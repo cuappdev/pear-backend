@@ -26,6 +26,7 @@ export interface SerializedUser {
   availabilities: SerializedAvailability[];
   preferredLocations: SerializedLocation[];
   matches: SerializedMatch[];
+  didOnboard: boolean;
 }
 
 /** Represents a User without groups, interests, majors, or matches shown */
@@ -41,6 +42,7 @@ export interface SubSerializedUser {
   facebook: string | null;
   instagram: string | null;
   profilePictureURL: string | null;
+  didOnboard: boolean;
 }
 
 /** Represents a User with the information necessary to be displayed on the Weekly Pear & Community screen */
@@ -57,6 +59,7 @@ export interface SerializedCommunityUser {
   pronouns: string | null;
   interests: SerializedInterest[];
   groups: SerializedGroup[];
+  didOnboard: boolean;
 }
 
 /** Represents a User session */
@@ -119,6 +122,7 @@ export interface UserDemographics {
 export interface UserSocialMedia {
   facebook: string;
   instagram: string;
+  didOnboard: boolean;
 }
 
 export interface UserUpdateFields {

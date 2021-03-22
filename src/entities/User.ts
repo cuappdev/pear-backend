@@ -92,6 +92,10 @@ class User {
   @ManyToMany((type) => Match, (match) => match.users, { onDelete: 'CASCADE' })
   matches: Match[];
 
+  /** User onboarding status */
+  @Column({ type: 'boolean', nullable: true })
+  didOnboard: boolean;
+
   /**
    * Method to create a dummy user. (For testing purposes)
    * @function
@@ -107,6 +111,7 @@ class User {
     user.googleID = googleID;
     user.lastName = lastName;
     user.netID = netID;
+    user.didOnboard = false;
     return user;
   }
 
@@ -136,6 +141,7 @@ class User {
       matches: this.matches
         ? this.matches.filter(AppDevUtils.isWeeklyMatch).map((match) => match.serialize())
         : [],
+      didOnboard: this.didOnboard,
     };
   }
 
@@ -152,6 +158,7 @@ class User {
       facebook: this.facebook,
       instagram: this.instagram,
       profilePictureURL: this.profilePictureURL,
+      didOnboard: this.didOnboard,
     };
   }
 
@@ -169,6 +176,7 @@ class User {
       pronouns: this.pronouns,
       interests: this.interests ? this.interests.map((interest) => interest.serialize()) : [],
       groups: this.groups ? this.groups.map((group) => group.serialize()) : [],
+      didOnboard: this.didOnboard,
     };
   }
 }
