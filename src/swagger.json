@@ -482,6 +482,12 @@
                     "items": {
                       "$ref": "#/components/schemas/Availability"
                     }
+                  },
+                  "preferences": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Location"
+                    }
                   }
                 }
               }
