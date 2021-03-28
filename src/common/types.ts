@@ -89,6 +89,7 @@ export type SerializedMatch = {
   meetingTime: Date;
   users: string[];
   availabilities: SerializedAvailability[];
+  preferredLocations: SerializedLocation[];
 };
 
 /** Represents a Group */
@@ -147,4 +148,5 @@ export interface MatchUpdateFields {
   status?: string;
   meetingTime?: Date;
   availabilities?: Availability[];
+  preferredLocations?: Location[];
 }

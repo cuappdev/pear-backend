@@ -28,6 +28,7 @@ const getWeeklyMatchesByNetID = async (netID: string): Promise<Match[]> => {
   const user = await UserRepo.getUserByNetID(netID, [
     'matches',
     'matches.availabilities',
+    'matches.preferredLocations',
     'matches.users',
   ]);
   if (!user) throw Error(`User with netID: '${netID}' doesn't exist in the database.`);

@@ -1,6 +1,7 @@
 import { Column, Entity, Index, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { SerializedMatch } from '../common/types';
 import Availability from './Availability';
+import Location from './Location';
 import User from './User';
 
 @Entity('match')
@@ -14,6 +15,9 @@ class Match {
 
   @ManyToMany((type) => Availability, (availability) => availability.match)
   availabilities: Availability[];
+
+  @ManyToMany((type) => Location, (location) => location.match)
+  preferredLocations: Location[];
 
   @Index()
   @Column({ type: 'varchar' })
@@ -30,6 +34,9 @@ class Match {
       users: this.users ? this.users.map((user) => user.netID) : [],
       availabilities: this.availabilities
         ? this.availabilities.map((availability) => availability.serialize())
+        : [],
+      preferredLocations: this.preferredLocations
+        ? this.preferredLocations.map((location) => location.serialize())
         : [],
     };
   }

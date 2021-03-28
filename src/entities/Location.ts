@@ -1,5 +1,6 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 import { SerializedLocation } from '../common/types';
+import Match from './Match';
 import User from './User';
 
 @Entity('location')
@@ -20,6 +21,11 @@ class Location {
   @ManyToMany((type) => User, (user) => user.preferredLocations)
   @JoinTable()
   users: User[];
+
+  /** Match with this location */
+  @ManyToMany((type) => Match, (match) => match.preferredLocations, { onDelete: 'CASCADE' })
+  @JoinTable()
+  match: Match;
 
   serialize(): SerializedLocation {
     return {
